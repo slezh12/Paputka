@@ -3,13 +3,14 @@ use paputka;
 
 create table Users (
 	ID int auto_increment not null primary key,
+	UserName varchar(20) unique,
 	FirstName varchar(20),
 	LastName varchar(20),
 	Gender boolean,
 	BirthDate date,
 	Status varchar(200),
 	Password varchar(64),
-	EMail varchar(40) unique
+	EMail varchar(40) 
 );
 
 create table Avatars(
