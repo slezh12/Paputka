@@ -100,7 +100,11 @@ h3 img {
 	margin-top:0px;
 	margin-bottom:10px;	
 }
-input[type="submit"]:hover{
+input[class="login"]:hover{
+  opacity:1;
+  cursor:pointer;
+}
+input[class="register"]:hover{
   opacity:1;
   cursor:pointer;
 }
@@ -130,7 +134,7 @@ input[type="submit"]:hover{
   margin-top: 200px;
   margin-bottom:20px;
 }
-input[type="submit"]{
+input[class="login"]{
   width:110px;
   padding:5px;
   border-radius:5px;
@@ -153,7 +157,7 @@ input[type="submit"]{
   margin-top: 10px;
   margin-bottom:20px;
 }
-input[type="button"]{
+input[class="register"]{
   width:110px;
   padding:5px;
   border-radius:5px;
