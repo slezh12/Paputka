@@ -1,21 +1,15 @@
-﻿<!DOCTYPE HTML>
-<html lang="en-US">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<meta charset="UTF-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>Paputka</title>
 		<link rel="shortcut icon" type="image/x-icon" href="style/images/favicon.png" />
 		<link rel="stylesheet" type="text/css" href="style.css" />
-		<!--[if IE 7]>
-		<link rel="stylesheet" type="text/css" href="style/css/ie7.css" media="all" />
-		<![endif]-->
-		<!--[if IE 8]>
-		<link rel="stylesheet" type="text/css" href="style/css/ie8.css" media="all" />
-		<![endif]-->
-		<!--[if IE 9]>
-		<link rel="stylesheet" type="text/css" href="style/css/ie9.css" media="all" />
-		<![endif]-->
+		
 		<script type="text/javascript" src="style/js/jquery-1.6.4.min.js"></script>
 		<script type="text/javascript" src="style/js/ddsmoothmenu.js"></script>
+		<script type="text/javascript" src="style/js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="style/js/jquery.leanModal.min.js"></script>
 	</head>
 	<body>
 		<!-- Begin Wrapper -->
@@ -40,13 +34,37 @@
 					<input type="password" name="pass" placeholder="Password">
 					<br>
 					<input type="submit" class="login" value="Login"> 
-					<input type="button" class="register" value="Registration" onClick="parent.location='registration.html'">
-				</form>
-				<!--End Login & Registration -->
+					<div class="register"
+					<a href="#registermodal" id="modaltrigger">Register</a>
+					</div>
+				</form>	 
+				<div id="registermodal" style="display:none;">
+					<h1>ახალი მომხმარებლის რეგისტრაცია</h1>
+					<form action="RegisterServlet"id="registerform" name="registerform" method="post" >
+					  <label>UserName:</label>
+					  <input type="text" name="username" id="username" class="txtfield" tabindex="1">
+					  
+					  <label>სახელი:</label>
+					  <input type="text" name="firstname" id="username" class="txtfield" tabindex="2">
+					  
+					  <label>გვარი:</label>
+					  <input type="text" name="lastname" id="username" class="txtfield" tabindex="3">
+					  
+					  <label>ელ-ფოსტა:</label>
+					  <input type="text" name="mail" id="username" class="txtfield" tabindex="4">
+					  
+					  <label>პაროლი</label>
+					  <input type="password" name="password1" id="password" class="txtfield" tabindex="5">
+					  
+					  <label>გაიმეორეთ პაროლი:</label>
+					  <input type="password" name="password2" id="password" class="txtfield" tabindex="6">
+					  <div class="center"><input type="submit" name="registerbtn" id="registerbtn" class="flatbtn-blu hidemodal" value="რეგისტრაცია" tabindex="7"></div>
+					</form>
+				</div>
 				<div class="sidebox">
 					<ul class="share">
-						<li><a id="facebook" href="#"><img src="style/images/fb.png" alt="Facebook" /></a></li>
-						<li><a id="google" href="#"><img src="style/images/g+.png"  alt="G+" /></a></li>
+						<li><a class="facebook" style="margin:20px"href="#"><img src="style/images/fb.png" alt="Facebook" /></a></li>
+						<li><a class="google" href="#"><img src="style/images/g+.png"  alt="G+" /></a></li>
 					</ul>
 				</div>
 			</div>
@@ -89,11 +107,14 @@
 				<!-- End Content -->
 			</div>
 		</div>
-			
-		<!-- End Wrapper -->
-		<script type="text/javascript" src="style/js/scripts.js"></script>
-		<!--[if !IE]> -->
-		<script type="text/javascript" src="style/js/jquery.corner.js"></script>
-		<!-- <![endif]-->
-	</body>
+<script type="text/javascript">
+$(function(){
+  $('#registerform').submit(function(e){
+    return false;
+  });
+  $('#modaltrigger').leanModal({ top:5, overlay: 0.45, closeButton: ".hidemodal" });
+});
+</script>
+
+</body>
 </html>
