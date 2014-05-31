@@ -2,9 +2,11 @@ package ServletPackage;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -51,6 +53,19 @@ public class LoginServlet extends HttpServlet {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
+			ResultSet rs = stmt
+					.executeQuery("SELECT * FROM Users where EMail = \""
+							+ name + "\"");
+			// passwordi unda davhashot aq
+			RequestDispatcher dispatch;
+			if (rs !=  null && rs.getString("Password").equals(password)) {
+				dispatch = request
+						.getRequestDispatcher("UserPage.jsp");
+			} else {
+				dispatch = request
+						.getRequestDispatcher("InvalidLogin.html");
+			}
+			dispatch.forward(request, response);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
