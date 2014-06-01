@@ -18,10 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import JavaPackage.BaseConnection;
 import JavaPackage.Hash;
 import JavaPackage.MyDBInfo;
-
-
 
 /**
  * Servlet implementation class LoginServlet
@@ -29,50 +28,47 @@ import JavaPackage.MyDBInfo;
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public LoginServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public LoginServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		String name = request.getParameter("name");
 		String password = request.getParameter("pass");
 		ServletContext context = getServletContext();
-		DataSource source = (DataSource) context.getAttribute("connectionPool");
+		BaseConnection base = new BaseConnection(context);
 		try {
-			Connection con = source.getConnection();
-			Statement stmt = con.createStatement();
-			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
-			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM Users where EMail = \""
-							+ name + "\"");
+			ResultSet rs = base.getInfoByMail(name);
 			RequestDispatcher dispatch;
 			if (rs.isBeforeFirst() && rs.getString("Password").equals(password)) {
 				password = Hash.calculateHashCode(password);
 				HttpSession session = request.getSession(true);
 				Integer id = rs.getInt("ID");
 				session.setAttribute("id", id);
-				dispatch = request
-						.getRequestDispatcher("UserPage.jsp");
+				dispatch = request.getRequestDispatcher("UserPage.jsp");
 			} else {
-				dispatch = request
-						.getRequestDispatcher("InvalidLogin.html");
+				dispatch = request.getRequestDispatcher("InvalidLogin.html");
 			}
-			con.close();
+			base.CloseConnection();
 			dispatch.forward(request, response);
 		} catch (SQLException e) {
 			e.printStackTrace();

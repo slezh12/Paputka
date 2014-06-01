@@ -118,7 +118,7 @@ create table Requests(
 	UserID int,
 	EventID int,
 	Text varchar(500),
-	Acception boolean,
+	Acception int,
 	Date datetime,
 	constraint foreign key (UserID) references Users(ID),
 	constraint foreign key (EventID) references Events(ID)
