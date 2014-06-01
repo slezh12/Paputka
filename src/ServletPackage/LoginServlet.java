@@ -60,7 +60,6 @@ public class LoginServlet extends HttpServlet {
 			ResultSet rs = stmt
 					.executeQuery("SELECT * FROM Users where EMail = \""
 							+ name + "\"");
-			con.close();
 			RequestDispatcher dispatch;
 			if (rs.isBeforeFirst() && rs.getString("Password").equals(password)) {
 				password = Hash.calculateHashCode(password);
@@ -73,6 +72,7 @@ public class LoginServlet extends HttpServlet {
 				dispatch = request
 						.getRequestDispatcher("InvalidLogin.html");
 			}
+			con.close();
 			dispatch.forward(request, response);
 		} catch (SQLException e) {
 			e.printStackTrace();
