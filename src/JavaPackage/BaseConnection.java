@@ -23,10 +23,9 @@ public class BaseConnection {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
-	
-	public void CloseConnection(){
+
+	public void CloseConnection() {
 		try {
 			con.close();
 		} catch (SQLException e) {
@@ -38,6 +37,33 @@ public class BaseConnection {
 	public ResultSet getInfoByMail(String name) throws SQLException {
 		ResultSet rs = stmt.executeQuery("SELECT * FROM Users where EMail = \""
 				+ name + "\"");
+		return rs;
+	}
+
+	public ResultSet selectByUserID(String table, int ID, boolean whichTable) {
+		ResultSet rs = null;
+		String columnName = "";
+		if (whichTable) {
+			columnName = "UserID";
+		} else {
+			columnName = "EventID";
+		}
+		try {
+			rs = stmt.executeQuery("SELECT * FROM " + table + " where "
+					+ columnName + " = \"" + ID + "\"");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rs;
+	}
+
+	public ResultSet selectAll(String table) {
+		ResultSet rs = null;
+		try {
+			rs = stmt.executeQuery("SELECT * FROM " + table);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return rs;
 	}
 
