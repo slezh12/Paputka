@@ -108,6 +108,7 @@ input[class="login"]:hover{
   cursor:pointer;
 }
 .register:hover{
+  color:#FFF;
   opacity:1;
   cursor:pointer;
 }
