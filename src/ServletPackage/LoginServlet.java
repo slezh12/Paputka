@@ -1,6 +1,8 @@
 package ServletPackage;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -57,7 +59,9 @@ public class LoginServlet extends HttpServlet {
 			ResultSet rs = stmt
 					.executeQuery("SELECT * FROM Users where EMail = \""
 							+ name + "\"");
-			// passwordi unda davhashot aq
+			
+			password = calculateHashCode(password);
+			
 			RequestDispatcher dispatch;
 			if (rs.isBeforeFirst() && rs.getString("Password").equals(password)) {
 				HttpSession session = request.getSession(true);
@@ -74,5 +78,32 @@ public class LoginServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+	
+	public static String hexToString(byte[] bytes) {
+		StringBuffer buff = new StringBuffer();
+		for (int i = 0; i < bytes.length; i++) {
+			int val = bytes[i];
+			val = val & 0xff; // remove higher bits, sign
+			if (val < 16)
+				buff.append('0'); // leading 0
+			buff.append(Integer.toString(val, 16));
+		}
+		return buff.toString();
+	}
+
+	
+	private static String calculateHashCode(String s) {
+		String res = null;
+		try {
+			MessageDigest md = MessageDigest.getInstance("SHA");
+			md.update(s.getBytes());
+			byte[] mdbytes = md.digest();
+			res = hexToString(mdbytes);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+
 
 }
