@@ -60,11 +60,10 @@ public class LoginServlet extends HttpServlet {
 			ResultSet rs = stmt
 					.executeQuery("SELECT * FROM Users where EMail = \""
 							+ name + "\"");
-			
-			password = Hash.calculateHashCode(password);
-			
+			con.close();
 			RequestDispatcher dispatch;
 			if (rs.isBeforeFirst() && rs.getString("Password").equals(password)) {
+				password = Hash.calculateHashCode(password);
 				HttpSession session = request.getSession(true);
 				Integer id = rs.getInt("ID");
 				session.setAttribute("id", id);
