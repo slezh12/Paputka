@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import JavaPackage.MyDBInfo;
@@ -58,7 +59,10 @@ public class LoginServlet extends HttpServlet {
 							+ name + "\"");
 			// passwordi unda davhashot aq
 			RequestDispatcher dispatch;
-			if (rs !=  null && rs.getString("Password").equals(password)) {
+			if (rs.isBeforeFirst() && rs.getString("Password").equals(password)) {
+				HttpSession session = request.getSession(true);
+				Integer id = rs.getInt("ID");
+				session.setAttribute("id", id);
 				dispatch = request
 						.getRequestDispatcher("UserPage.jsp");
 			} else {
