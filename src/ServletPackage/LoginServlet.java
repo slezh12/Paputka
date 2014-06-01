@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import JavaPackage.Hash;
 import JavaPackage.MyDBInfo;
 
 
@@ -60,7 +61,7 @@ public class LoginServlet extends HttpServlet {
 					.executeQuery("SELECT * FROM Users where EMail = \""
 							+ name + "\"");
 			
-			password = calculateHashCode(password);
+			password = Hash.calculateHashCode(password);
 			
 			RequestDispatcher dispatch;
 			if (rs.isBeforeFirst() && rs.getString("Password").equals(password)) {
@@ -78,32 +79,4 @@ public class LoginServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	
-	public static String hexToString(byte[] bytes) {
-		StringBuffer buff = new StringBuffer();
-		for (int i = 0; i < bytes.length; i++) {
-			int val = bytes[i];
-			val = val & 0xff; // remove higher bits, sign
-			if (val < 16)
-				buff.append('0'); // leading 0
-			buff.append(Integer.toString(val, 16));
-		}
-		return buff.toString();
-	}
-
-	
-	private static String calculateHashCode(String s) {
-		String res = null;
-		try {
-			MessageDigest md = MessageDigest.getInstance("SHA");
-			md.update(s.getBytes());
-			byte[] mdbytes = md.digest();
-			res = hexToString(mdbytes);
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-		return res;
-	}
-
-
 }
