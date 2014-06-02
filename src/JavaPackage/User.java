@@ -1,16 +1,18 @@
 package JavaPackage;
 
+import java.sql.Date;
+
 public class User {
 
 	private int ID;
 	private String FirstName;
 	private String LastName;
 	private boolean gender;
-	private String birthdate;
+	private Date birthdate;
 	private String status;
 	private String email;
 	
-	public User(int ID,String FirstName,String LastName,boolean gender,String birthdate,String status,String email) {
+	public User(int ID,String FirstName,String LastName,boolean gender,Date birthdate,String status,String email) {
 		this.FirstName = FirstName;
 		this.LastName = LastName;
 		this.birthdate = birthdate;
@@ -32,7 +34,7 @@ public class User {
 		return LastName;
 	}
 	
-	public String getBirthdate() {
+	public Date getBirthdate() {
 		return birthdate;
 	}
 	

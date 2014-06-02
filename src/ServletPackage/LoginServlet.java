@@ -21,6 +21,8 @@ import javax.sql.DataSource;
 import JavaPackage.BaseConnection;
 import JavaPackage.Hash;
 import JavaPackage.MyDBInfo;
+import JavaPackage.ParseInfo;
+import JavaPackage.User;
 
 /**
  * Servlet implementation class LoginServlet
@@ -55,23 +57,17 @@ public class LoginServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		String password = request.getParameter("pass");
 		ServletContext context = getServletContext();
-		BaseConnection base = new BaseConnection(context);
-		try {
-			ResultSet rs = base.getInfoByMail(name);
-			RequestDispatcher dispatch;
-			if (rs.isBeforeFirst() && rs.getString("Password").equals(password)) {
-				password = Hash.calculateHashCode(password);
-				HttpSession session = request.getSession(true);
-				Integer id = rs.getInt("ID");
-				session.setAttribute("id", id);
-				dispatch = request.getRequestDispatcher("UserPage.jsp");
-			} else {
-				dispatch = request.getRequestDispatcher("InvalidLogin.html");
-			}
-			base.CloseConnection();
-			dispatch.forward(request, response);
-		} catch (SQLException e) {
-			e.printStackTrace();
+		ParseInfo info = new ParseInfo(context);
+		RequestDispatcher dispatch;
+		User user = info.getUser(name, password);
+		if (user != null) {
+			HttpSession session = request.getSession(true);
+			session.setAttribute("user", user);
+			dispatch = request.getRequestDispatcher("UserPage.jsp");
+		} else {
+			dispatch = request.getRequestDispatcher("InvalidLogin.html");
 		}
+		dispatch.forward(request, response);
+
 	}
 }

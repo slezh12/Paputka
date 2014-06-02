@@ -24,8 +24,6 @@ public class SessionListener implements HttpSessionListener {
      */
     public void sessionCreated(HttpSessionEvent arg0) {
     	HttpSession session = arg0.getSession();
-    	Integer id = 0;
-    	session.setAttribute("id", id);
     }
 
 	/**

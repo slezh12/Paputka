@@ -1,3 +1,4 @@
+drop database if exists paputka;
 create database paputka;
 use paputka;
 
