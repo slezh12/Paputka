@@ -20,7 +20,6 @@ public class BaseConnection {
 			stmt = con.createStatement();
 			stmt.executeQuery("USE " + MyDBInfo.MYSQL_DATABASE_NAME);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -29,7 +28,6 @@ public class BaseConnection {
 		try {
 			con.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -43,11 +41,10 @@ public class BaseConnection {
 	public ResultSet selectByUserID(String table, int ID, boolean whichTable) {
 		ResultSet rs = null;
 		String columnName = "";
-		if (whichTable) {
+		if (whichTable) 
 			columnName = "UserID";
-		} else {
+		else 
 			columnName = "EventID";
-		}
 		try {
 			rs = stmt.executeQuery("SELECT * FROM " + table + " where "
 					+ columnName + " = \"" + ID + "\"");
