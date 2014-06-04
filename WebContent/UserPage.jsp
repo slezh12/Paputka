@@ -1,11 +1,11 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>Paputka</title>
 		<link rel="shortcut icon" type="image/x-icon" href="style/images/favicon.png" />
 		<link rel="stylesheet" type="text/css" href="style.css" />
-		<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
 		
 		<script type="text/javascript" src="style/js/jquery-1.6.4.min.js"></script>
 		<script type="text/javascript" src="style/js/ddsmoothmenu.js"></script>
@@ -16,50 +16,26 @@
 		<!-- Begin Wrapper -->
 		<div id="wrapper">
 			<!-- Begin Sidebar -->
-			<div id="sidebar""WebContent/InvalidLogin.html">
+			<div id="sidebar">
 				<div id="logo"><img src="style/images/logo.png" alt="Paputka" /></div>
 				<!-- Begin Menu -->
 				<div id="menu" class="menu-v">
 				  <ul>
 					<li>
-						<a href="index.html" class="active">მთავარი გვერდი</a>
+						<a href="UserPage.jsp" class="active">მთავარი გვერდი</a>
 					</li>
 				  </ul>
 				</div>
 				<!-- End Menu -->
 				<!--Begin Login & Registration -->
-				<form action="LoginServlet" method="post">
-					<h3 id="welcome">Welcome Guest.<br><br><br> Invalid Login. Try Again</h3>
+				
+				<h3 id="welcome"> Welcome, <%= request.getParameter("name") %> </h3>
+				<div id="user">
+					<a href="#"><b>მიმართულების დამატება</b></a>
 					<br>
-					<input type="text" name="name" placeholder="E-Mail">
+					<a href="#">პროფილი</a>
 					<br>
-					<input type="password" name="pass" placeholder="Password">
-					<br>
-					<input type="submit" class="login" value="Login"> 
-					<a class="register" href="#registermodal" id="modaltrigger">Register</a>
-				</form>	 
-			<div id="registermodal" style="display:none;">
-					<h1 class="txt">ახალი მომხმარებლის რეგისტრაცია</h1>
-				    <h4> <b>გთხოვთ შეავსოთ ყველა ველი</b></h4>
-					<form action="RegisterServlet" id="registerform" name="registerform" method="post" >
-				   	  <div class="txtfield" >
-				   		<span id="icons" class="fa fa-user"></span> 
-						 <input type="text" name="firstname" placeholder="სახელი" class="textfield" tabindex="1"></input>
-				   	  </div>
-				   	   <div class="txtfield" >
-				   		<span id="icons" class="fa fa-users"></span> 
-					    <input type="text" name="lastname" placeholder="გვარი" class="textfield" tabindex="2"></input>
-				   	  </div>
-					  <div class="txtfield">
-					  	 <span id="icons" class="fa fa-envelope-o"></span>
-					 	 <input type="text" name="mail" placeholder="ელ-ფოსტა" class="textfield" tabindex="3">
-					  </input></div>
-					  <div class="txtfield">
-					  	 <span id="icons" class="fa fa-lock"></span>
-					 	 <input type="password" name="password1"  placeholder="პაროლი" class="textfield" tabindex="4"></input>
-					  </div>
-					  <input type="submit" name="registerbtn" id="registerbtn" class="flatbtn-blu hidemodal" value="რეგისტრაცია" tabindex="5"></input>
-					</form>
+					<a href="index.html" >გამოსვლა </a>
 				</div>
 				<div class="sidebox">
 					<ul class="share">
@@ -109,9 +85,12 @@
 		</div>
 <script type="text/javascript">
 $(function(){
+  $('#registerform').submit(function(e){
+    return false;
+  });
   $('#modaltrigger').leanModal({ top:5, overlay: 0.45, closeButton: ".hidemodal" });
 });
 </script>
 
 </body>
-</html>	
+</html>
