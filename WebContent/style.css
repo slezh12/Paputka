@@ -337,8 +337,9 @@ input[class="login"]{
   transition: all 0.25s linear;
 }
 .txtfield { 
+  height:35px;
   display: block;
-  width: 92%;
+  width: 100%;
   padding: 6px 5px;
   margin-bottom: 15px;
   font-family: 'Helvetica Neue', Helvetica, Verdana, sans-serif;
