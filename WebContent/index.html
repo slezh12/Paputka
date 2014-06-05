@@ -5,11 +5,12 @@
 		<title>Paputka</title>
 		<link rel="shortcut icon" type="image/x-icon" href="style/images/favicon.png" />
 		<link rel="stylesheet" type="text/css" href="style.css" />
-		
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"/>
 		<script type="text/javascript" src="style/js/jquery-1.6.4.min.js"></script>
 		<script type="text/javascript" src="style/js/ddsmoothmenu.js"></script>
 		<script type="text/javascript" src="style/js/jquery-1.9.1.min.js"></script>
-		<script type="text/javascript" charset="utf-8" src="style/js/jquery.leanModal.min.js"></script>
+		<script type="text/javascript" src="style/js/jquery.leanModal.min.js"></script>
+		
 	</head>
 	<body>
 		<!-- Begin Wrapper -->
@@ -27,42 +28,43 @@
 				</div>
 				<!-- End Menu -->
 				<!--Begin Login & Registration -->
+				
+				<h3 id="welcome"> Welcome Guest </h3>
 				<form action="LoginServlet" method="post">
-					<h3 id="welcome"> Welcome Guest </h3>
-					<input type="text" name="name" placeholder="E-Mail">
-					<br>
-					<input type="password" name="pass" placeholder="Password">
-					<br>
-					<input type="submit" class="login" value="Login"> 
+					<input type="text" name="name" placeholder="E-Mail"></input>
+					<br/>
+					<input type="password" name="pass" placeholder="Password"></input>
+					<br/>
+					<input type="submit" class="login" value="Login"> </input>
 					<a class="register" href="#registermodal" id="modaltrigger">Register</a>
 				</form>	 
 				<div id="registermodal" style="display:none;">
-					<h1>ახალი მომხმარებლის რეგისტრაცია</h1>
-					<form action="RegisterServlet"id="registerform" name="registerform" method="post" >
-					  <label>UserName:</label>
-					  <input type="text" name="username" id="username" class="txtfield" tabindex="1">
-					  
-					  <label>სახელი:</label>
-					  <input type="text" name="firstname" id="username" class="txtfield" tabindex="2">
-					  
-					  <label>გვარი:</label>
-					  <input type="text" name="lastname" id="username" class="txtfield" tabindex="3">
-					  
-					  <label>ელ-ფოსტა:</label>
-					  <input type="text" name="mail" id="username" class="txtfield" tabindex="4">
-					  
-					  <label>პაროლი</label>
-					  <input type="password" name="password1" id="password" class="txtfield" tabindex="5">
-					  
-					  <label>გაიმეორეთ პაროლი:</label>
-					  <input type="password" name="password2" id="password" class="txtfield" tabindex="6">
-					  <div class="center"><input type="submit" name="registerbtn" id="registerbtn" class="flatbtn-blu hidemodal" value="რეგისტრაცია" tabindex="7"></div>
+					<h1 class="txt">ახალი მომხმარებლის რეგისტრაცია</h1>
+				    <h4> <b>გთხოვთ შეავსოთ ყველა ველი</b></h4>
+					<form action="RegisterServlet" id="registerform" name="registerform" method="post" >
+				   	  <div class="txtfield" >
+				   		<span id="icons" class="fa fa-user"></span> 
+						 <input type="text" name="firstname" placeholder="სახელი" class="textfield" tabindex="1"></input>
+				   	  </div>
+				   	   <div class="txtfield" >
+				   		<span id="icons" class="fa fa-users"></span> 
+					    <input type="text" name="lastname" placeholder="გვარი" class="textfield" tabindex="2"></input>
+				   	  </div>
+					  <div class="txtfield">
+					  	 <span id="icons" class="fa fa-envelope-o"></span>
+					 	 <input type="text" name="mail" placeholder="ელ-ფოსტა" class="textfield" tabindex="3">
+					  </input></div>
+					  <div class="txtfield">
+					  	 <span id="icons" class="fa fa-lock"></span>
+					 	 <input type="password" name="password1"  placeholder="პაროლი" class="textfield" tabindex="4"></input>
+					  </div>
+					  <input type="submit" name="registerbtn" id="registerbtn" class="flatbtn-blu hidemodal" value="რეგისტრაცია" tabindex="5"></input>
 					</form>
 				</div>
 				<div class="sidebox">
 					<ul class="share">
-						<li><a class="facebook" style="margin:20px"href="#"><img src="style/images/fb.png" alt="Facebook" /></a></li>
-						<li><a class="google" href="#"><img src="style/images/g+.png"  alt="G+" /></a></li>
+						<li><a id="facebook" href="#"><img src="style/images/fb.png" alt="Facebook" /></a></li>
+						<li><a id="google" href="#"><img src="style/images/g+.png"  alt="G+" /></a></li>
 					</ul>
 				</div>
 			</div>
@@ -107,9 +109,7 @@
 		</div>
 <script type="text/javascript">
 $(function(){
-  $('#registerform').submit(function(e){
-    return false;
-  });
+
   $('#modaltrigger').leanModal({ top:5, overlay: 0.45, closeButton: ".hidemodal" });
 });
 </script>
