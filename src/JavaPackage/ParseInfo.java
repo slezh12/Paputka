@@ -8,13 +8,13 @@ import javax.servlet.ServletContext;
 
 
 public class ParseInfo {
-	private static ServletContext context;
+	private ServletContext context;
 	
 	public ParseInfo(ServletContext context) {
 		this.context = context;
 	}
 	
-	public static User getUser(String email, String password) {
+	public User getUser(String email, String password) {
 		User user = null;
 		password = Hash.calculateHashCode(password);
 		BaseConnection base = new BaseConnection(context);
