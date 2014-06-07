@@ -20,15 +20,17 @@ public class ParseInfo {
 		BaseConnection base = new BaseConnection(context);
 		try {
 			ResultSet rs = base.getInfoByMail(email);
-			if (rs.isBeforeFirst() && rs.getString("Password").equals(password)) {
+			if (rs.isBeforeFirst()) {
 				rs.next();
-				Integer id = rs.getInt("ID");
-				String first = rs.getString("FirstName");
-				String last = rs.getString("LastName");
-				String status = rs.getString("Status");
-				boolean gender = rs.getBoolean("Gender");
-				Date birthdate = rs.getDate("BirthDate");
-				user = new User(id, first, last, gender, birthdate, status, email);
+				if(rs.getString("Password").equals(password)){
+					Integer id = rs.getInt("ID");
+					String first = rs.getString("FirstName");
+					String last = rs.getString("LastName");
+					String status = rs.getString("Status");
+					boolean gender = rs.getBoolean("Gender");
+					Date birthdate = rs.getDate("BirthDate");
+					user = new User(id, first, last, gender, birthdate, status, email);
+				}
 			}
 			base.CloseConnection();
 		} catch (SQLException e) {
