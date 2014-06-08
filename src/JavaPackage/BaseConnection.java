@@ -1,6 +1,7 @@
 package JavaPackage;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -62,9 +63,9 @@ public class BaseConnection {
 	}
 
 	public void insertIntoUsers(String firstName, String lastName,
-			String eMail, String password, boolean gender) {
+			String eMail, String password, boolean gender, Date birthdate) {
 		try {
-			stmt.executeUpdate("INSERT INTO Users (FirstName , LastName, EMail , Password , Gender) VALUES("
+			stmt.executeUpdate("INSERT INTO Users (FirstName , LastName, EMail , Password , Gender, BirthDate) VALUES("
 					+ "'"
 					+ firstName
 					+ "'"
@@ -81,11 +82,10 @@ public class BaseConnection {
 					+ password
 					+ "'"
 					+ ","
-					+ gender + ")");
+					+ gender + birthdate + ")");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 }
