@@ -39,13 +39,9 @@ public class BaseConnection {
 		return rs;
 	}
 
-	public ResultSet selectByUserID(String table, int ID, boolean whichTable) {
+	// viyenebt statusebis telefoebis da msgavsi infromaciis ID it amosagebad.
+	public ResultSet selectByID(String table, int ID, String columnName) {
 		ResultSet rs = null;
-		String columnName = "";
-		if (whichTable) 
-			columnName = "UserID";
-		else 
-			columnName = "EventID";
 		try {
 			rs = stmt.executeQuery("SELECT * FROM " + table + " where "
 					+ columnName + " = \"" + ID + "\"");
@@ -64,6 +60,5 @@ public class BaseConnection {
 		}
 		return rs;
 	}
-
 
 }
