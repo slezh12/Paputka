@@ -13,6 +13,8 @@ import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.mysql.jdbc.Connection;
+
 public class BaseConnectionTest {
 	
 	static String account = MyDBInfo.MYSQL_USERNAME;
@@ -35,7 +37,7 @@ public class BaseConnectionTest {
 	 * insert into users (FirstName, LastName, Gender, BirthDate,  Password, EMail)
 values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329ea1ff5c5ecbdbbeef', N'achi_baxlosania@yahoo.com');
 	 */
-	@Test
+//	@Test
 	public void test() {
 		BaseConnection base = new BaseConnection((BasicDataSource) source);
 		try {
@@ -46,10 +48,38 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 				assertEquals(rs.getString("FirstName"), "achi");
 				assertEquals(rs.getString("LastName"), "baxlosania");
 				assertEquals(rs.getBoolean("Gender"),true);
+			}else{
+				assertEquals(1,2);
 			}
 	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Test
+	public void testInsertIntoUsers() {
+		
+		BaseConnection base = new BaseConnection((BasicDataSource) source);
+		String password1 = Hash.calculateHashCode("123456");
+		base.insertIntoUsers("Beqa", "Khaburdzania", "bkhab12@freeuni.edu.ge", password1, true);
+		
+		try {
+			ResultSet rs = base.getInfoByMail("bkhab12@freeuni.edu.ge");
+			
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				assertEquals(rs.getString("Password"), password1);
+				assertEquals(rs.getString("FirstName"), "Beqa");
+				assertEquals(rs.getString("LastName"), "Khaburdzania");
+				assertEquals(rs.getBoolean("Gender"),true);
+			}else{
+				assertEquals(1,2);
+			}
+	
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		

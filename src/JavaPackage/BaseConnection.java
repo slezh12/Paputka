@@ -61,4 +61,31 @@ public class BaseConnection {
 		return rs;
 	}
 
+	public void insertIntoUsers(String firstName, String lastName,
+			String eMail, String password, boolean gender) {
+		try {
+			stmt.executeUpdate("INSERT INTO Users (FirstName , LastName, EMail , Password , Gender) VALUES("
+					+ "'"
+					+ firstName
+					+ "'"
+					+ ","
+					+ "'"
+					+ lastName
+					+ "'"
+					+ ","
+					+ "'"
+					+ eMail
+					+ "'"
+					+ ","
+					+ "'"
+					+ password
+					+ "'"
+					+ ","
+					+ gender + ")");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 }
