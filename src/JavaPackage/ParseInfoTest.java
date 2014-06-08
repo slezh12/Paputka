@@ -14,6 +14,7 @@ values (N'achi', N'baxlosania', true, '1994-08-23' , N'statusi', N'40bd001563085
 	 */
 	@Test
 	public void testGetUser() {
+		
 		//newuser = ParseInfo.getUser("achi_baxlosania@yahoo.com", "123");
 		//assertEquals(newuser.getBirthdate(), "1994-08-23");
 		//assertEquals(newuser.getFirstName(), "achi");
