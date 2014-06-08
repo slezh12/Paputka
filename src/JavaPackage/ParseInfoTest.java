@@ -2,12 +2,32 @@ package JavaPackage;
 
 import static org.junit.Assert.*;
 
+import java.sql.Date;
+
+import javax.sql.DataSource;
+
+import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
+import org.junit.Before;
 import org.junit.Test;
 
 public class ParseInfoTest {
 
+	private DataSource source;
+	static String account = MyDBInfo.MYSQL_USERNAME;
+	static String password = MyDBInfo.MYSQL_PASSWORD;
+	static String server = MyDBInfo.MYSQL_DATABASE_SERVER;
+	static String database = MyDBInfo.MYSQL_DATABASE_NAME;
 	
-	User newuser;
+	
+	@Before
+	public void setUp(){
+		source = new BasicDataSource();
+    	((BasicDataSource) source).setDriverClassName("com.mysql.jdbc.Driver");
+    	((BasicDataSource) source).setUsername(account);
+    	((BasicDataSource) source).setPassword(password);
+    	((BasicDataSource) source).setUrl("jdbc:mysql://"+server+":3306/"+database);
+	}
+	
 	/* gaketebulia
 	 * insert into users (FirstName, LastName, Gender, BirthDate, Password, EMail)
 values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329ea1ff5c5ecbdbbeef', N'achi_baxlosania@yahoo.com');
@@ -15,11 +35,13 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 	@Test
 	public void testGetUser() {
 		
-		//newuser = ParseInfo.getUser("achi_baxlosania@yahoo.com", "123");
+		ParseInfo info = new ParseInfo((BasicDataSource) source);
+		
+		User newuser = info.getUser("achi_baxlosania@yahoo.com", "123");
 		//assertEquals(newuser.getBirthdate(), "1994-08-23");
-		//assertEquals(newuser.getFirstName(), "achi");
-		//assertEquals(newuser.getLastName(), "baxlosania");
-		//assertEquals(newuser.getGender(), "true");
-		//assertEquals(newuser.getEmail(), "achi_baxlosania@yahoo.com");
+		assertEquals(newuser.getFirstName(), "achi");
+		assertEquals(newuser.getLastName(), "baxlosania");
+		assertEquals(newuser.getGender(), true);
+		assertEquals(newuser.getEmail(), "achi_baxlosania@yahoo.com");
 	}
 }
