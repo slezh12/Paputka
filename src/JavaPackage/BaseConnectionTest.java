@@ -2,18 +2,19 @@ package JavaPackage;
 
 import static org.junit.Assert.*;
 
-import java.sql.Date;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
-import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.mysql.jdbc.Connection;
+
+
 
 public class BaseConnectionTest {
 	
@@ -37,7 +38,7 @@ public class BaseConnectionTest {
 	 * insert into users (FirstName, LastName, Gender, BirthDate,  Password, EMail)
 values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329ea1ff5c5ecbdbbeef', N'achi_baxlosania@yahoo.com');
 	 */
-//	@Test
+	//@Test
 	public void test() {
 		BaseConnection base = new BaseConnection((BasicDataSource) source);
 		try {
@@ -67,18 +68,20 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 		base.insertIntoUsers("Beqa", "Khaburdzania", "bkhab12@freeuni.edu.ge", password1, true);
 		
 		try {
-			ResultSet rs = base.getInfoByMail("bkhab12@freeuni.edu.ge");
-			
+			Connection con = source.getConnection();
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Users where EMail = 'bkhab12@freeuni.edu.ge'");
 			if (rs.isBeforeFirst()) {
 				rs.next();
 				assertEquals(rs.getString("Password"), password1);
 				assertEquals(rs.getString("FirstName"), "Beqa");
 				assertEquals(rs.getString("LastName"), "Khaburdzania");
 				assertEquals(rs.getBoolean("Gender"),true);
-			}else{
+				stmt.executeUpdate("DELETE FROM Users WHERE EMail = 'bkhab12@freeuni.edu.ge'");
+			}else
 				assertEquals(1,2);
-			}
-	
+			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
