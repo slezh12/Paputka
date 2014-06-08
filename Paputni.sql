@@ -8,9 +8,15 @@ create table Users (
 	LastName varchar(20),
 	Gender boolean,
 	BirthDate date,
-	Status varchar(200),
 	Password varchar(64),
 	EMail varchar(40) unique 
+);
+
+create table Statuses(
+	ID int auto_increment not null primary key,
+	UserID int,
+	Status varchar(200),
+	constraint foreign key (UserID) references Users(ID)
 );
 
 create table Avatars(
