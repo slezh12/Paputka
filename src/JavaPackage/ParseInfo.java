@@ -4,20 +4,23 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.activation.DataSource;
 import javax.servlet.ServletContext;
+
+import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
 
 public class ParseInfo {
-	private ServletContext context;
+	private BasicDataSource source;
 	
-	public ParseInfo(ServletContext context) {
-		this.context = context;
+	public ParseInfo(BasicDataSource source) {
+		this.source = source;
 	}
-	
+
 	public User getUser(String email, String password) {
 		User user = null;
 		password = Hash.calculateHashCode(password);
-		BaseConnection base = new BaseConnection(context);
+		BaseConnection base = new BaseConnection((BasicDataSource)source);
 		try {
 			ResultSet rs = base.getInfoByMail(email);
 			if (rs.isBeforeFirst()) {

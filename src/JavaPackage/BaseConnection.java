@@ -8,13 +8,14 @@ import java.sql.Statement;
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
+import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
+
 public class BaseConnection {
 
 	private Statement stmt;
 	private Connection con;
 
-	public BaseConnection(ServletContext context) {
-		DataSource source = (DataSource) context.getAttribute("connectionPool");
+	public BaseConnection(BasicDataSource source) {
 		try {
 			con = source.getConnection();
 			stmt = con.createStatement();
@@ -63,5 +64,6 @@ public class BaseConnection {
 		}
 		return rs;
 	}
+
 
 }
