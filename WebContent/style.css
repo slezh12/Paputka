@@ -115,6 +115,8 @@ input[class="login"]:hover{
 #facebook{
 	margin:10px;
 }
+#google{
+}
 #welcome{
   width:247PX;
   padding:5px;
@@ -308,6 +310,7 @@ input[class="login"]{
   color: #4f94cf;
   cursor: pointer;
 }
+
 .textfield{
   width: 50%;
   padding: 6px 5px;
@@ -335,6 +338,7 @@ input[class="login"]{
   -moz-transition: all 0.25s linear;
   transition: all 0.25s linear;
 }
+
 .txtfield { 
   height:35px;
   display: block;

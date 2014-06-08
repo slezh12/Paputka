@@ -10,7 +10,37 @@
 		<script type="text/javascript" src="style/js/ddsmoothmenu.js"></script>
 		<script type="text/javascript" src="style/js/jquery-1.9.1.min.js"></script>
 		<script type="text/javascript" src="style/js/jquery.leanModal.min.js"></script>
-		
+	 	<!-- This script is for Google + Login -->
+	    <script type="text/javascript">
+	      (function() {
+	       var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+	       po.src = 'https://apis.google.com/js/client:plusone.js?onload=render';
+	       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	     })();
+	      function signinCallback(authResult) {
+	    	  if (authResult['status']['signed_in']) {
+	    	    // Update the app to reflect a signed in user
+	    	    // Hide the sign-in button now that the user is authorized, for example:
+	    	    document.getElementById('google').setAttribute('style', 'display: none');
+	    	  } else {
+	    	    // Update the app to reflect a signed out user
+	    	    // Possible error values:
+	    	    //   "user_signed_out" - User is signed-out
+	    	    //   "access_denied" - User denied access to your app
+	    	    //   "immediate_failed" - Could not automatically log in the user
+	    	    console.log('Sign-in state: ' + authResult['error']);
+	    	  }
+	    	}
+	      function render() {
+		      gapi.signin.render("google", { 
+		    	  'callback': signinCallback, 
+		    	  'clientid': '1057790320383-t8pqial3gdd7l6arvojtq0qdufm62adt.apps.googleusercontent.com', 
+		    	  'cookiepolicy': 'single_host_origin', 
+		    	  'requestvisibleactions': 'http://schemas.google.com/AddActivity',
+		    	  'scope': 'https://www.googleapis.com/auth/plus.login'
+		    	});
+	    	  }
+	     </script>		
 	</head>
 	<body>
 		<!-- Begin Wrapper -->
@@ -56,15 +86,18 @@
 					  </input></div>
 					  <div class="txtfield">
 					  	 <span id="icons" class="fa fa-lock"></span>
-					 	 <input type="password" name="password1"  placeholder="პაროლი" class="textfield" tabindex="4"></input>
+					 	 <input type="password" name="password"  placeholder="პაროლი" class="textfield" tabindex="4"></input>
 					  </div>
 					  <input type="submit" name="registerbtn" id="registerbtn" class="flatbtn-blu hidemodal" value="რეგისტრაცია" tabindex="5"></input>
 					</form>
 				</div>
 				<div class="sidebox">
 					<ul class="share">
+					
 						<li><a id="facebook" href="#"><img src="style/images/fb.png" alt="Facebook" /></a></li>
-						<li><a id="google" href="#"><img src="style/images/g+.png"  alt="G+" /></a></li>
+						<span id="google">
+							<input type="image"  src="style/images/g+.png" ></input> 
+						</span>
 					</ul>
 				</div>
 			</div>
