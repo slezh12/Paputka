@@ -15,8 +15,8 @@ public class BaseConnectionTest {
 	
 	
 	/* gaketebulia
-	 * insert into users (FirstName, LastName, Gender, BirthDate, Status, Password, EMail)
-values (N'achi', N'baxlosania', true, '1994-08-23' , N'statusi', N'40bd001563085fc35165329ea1ff5c5ecbdbbeef', N'achi_baxlosania@yahoo.com');
+	 * insert into users (FirstName, LastName, Gender, BirthDate,  Password, EMail)
+values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329ea1ff5c5ecbdbbeef', N'achi_baxlosania@yahoo.com');
 	 */
 	@Test
 	public void test() {
@@ -29,7 +29,6 @@ values (N'achi', N'baxlosania', true, '1994-08-23' , N'statusi', N'40bd001563085
 				assertEquals(rs.getString("Password"), "40bd001563085fc35165329ea1ff5c5ecbdbbeef");
 				assertEquals(rs.getString("FirstName"), "achi");
 				assertEquals(rs.getString("LastName"), "baxlosania");
-				assertEquals(rs.getString("Status"), "statusi");
 				assertEquals(rs.getBoolean("Gender"),true);
 			}
 	

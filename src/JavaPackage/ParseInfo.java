@@ -29,10 +29,9 @@ public class ParseInfo {
 					Integer id = rs.getInt("ID");
 					String first = rs.getString("FirstName");
 					String last = rs.getString("LastName");
-					String status = rs.getString("Status");
 					boolean gender = rs.getBoolean("Gender");
 					Date birthdate = rs.getDate("BirthDate");
-					user = new User(id, first, last, gender, birthdate, status, email);
+					user = new User(id, first, last, gender, birthdate, email);
 				}
 			}
 			base.CloseConnection();

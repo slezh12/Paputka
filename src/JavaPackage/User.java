@@ -9,15 +9,13 @@ public class User {
 	private String LastName;
 	private boolean gender;
 	private Date birthdate;
-	private String status;
 	private String email;
 	
-	public User(int ID,String FirstName,String LastName,boolean gender,Date birthdate,String status,String email) {
+	public User(int ID,String FirstName,String LastName,boolean gender,Date birthdate,String email) {
 		this.FirstName = FirstName;
 		this.LastName = LastName;
 		this.birthdate = birthdate;
 		this.gender = gender;
-		this.status = status;
 		this.ID = ID;
 		this.email = email;
 	}
@@ -37,10 +35,7 @@ public class User {
 	public Date getBirthdate() {
 		return birthdate;
 	}
-	
-	public String getStatus() {
-		return status;
-	}
+
 	
 	public String getEmail() {
 		return email;
