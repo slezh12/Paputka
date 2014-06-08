@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
+
 import JavaPackage.BaseConnection;
 import JavaPackage.Hash;
 import JavaPackage.MyDBInfo;
@@ -57,7 +59,8 @@ public class LoginServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		String password = request.getParameter("pass");
 		ServletContext context = getServletContext();
-		ParseInfo info = new ParseInfo(context);
+		DataSource source = (DataSource) context.getAttribute("connectionPool");
+		ParseInfo info = new ParseInfo((BasicDataSource) source);
 		RequestDispatcher dispatch;
 		User user = info.getUser(name, password);
 		if (user != null) {

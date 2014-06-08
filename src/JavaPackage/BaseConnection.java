@@ -8,13 +8,14 @@ import java.sql.Statement;
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
+import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
+
 public class BaseConnection {
 
 	private Statement stmt;
 	private Connection con;
 
-	public BaseConnection(ServletContext context) {
-		DataSource source = (DataSource) context.getAttribute("connectionPool");
+	public BaseConnection(BasicDataSource source) {
 		try {
 			con = source.getConnection();
 			stmt = con.createStatement();
@@ -38,13 +39,9 @@ public class BaseConnection {
 		return rs;
 	}
 
-	public ResultSet selectByUserID(String table, int ID, boolean whichTable) {
+	// viyenebt statusebis telefoebis da msgavsi infromaciis ID it amosagebad.
+	public ResultSet selectByID(String table, int ID, String columnName) {
 		ResultSet rs = null;
-		String columnName = "";
-		if (whichTable) 
-			columnName = "UserID";
-		else 
-			columnName = "EventID";
 		try {
 			rs = stmt.executeQuery("SELECT * FROM " + table + " where "
 					+ columnName + " = \"" + ID + "\"");
