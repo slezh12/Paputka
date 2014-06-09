@@ -46,11 +46,11 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 			ResultSet rs = base.getInfoByMail("achi_baxlosania@yahoo.com");
 			if (rs.isBeforeFirst()) {
 				rs.next();
-				assertEquals(rs.getString("Password"), "40bd001563085fc35165329ea1ff5c5ecbdbbeef");
-				assertEquals(rs.getString("FirstName"), "achi");
-				assertEquals(rs.getString("LastName"), "baxlosania");
-				assertEquals(rs.getBoolean("Gender"),true);
-				assertEquals(rs.getDate("BirthDate"), Date.valueOf("1994-08-23"));
+				assertEquals("40bd001563085fc35165329ea1ff5c5ecbdbbeef",rs.getString("Password"));
+				assertEquals("achi",rs.getString("FirstName") );
+				assertEquals("baxlosania",rs.getString("LastName"));
+				assertEquals(true,rs.getBoolean("Gender"));
+				assertEquals(Date.valueOf("1994-08-23"),rs.getDate("BirthDate") );
 			}else{
 				assertEquals(1,2);
 			}
@@ -67,7 +67,7 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 		BaseConnection base = new BaseConnection((BasicDataSource) source);
 		String password1 = Hash.calculateHashCode("123456");
 		Date date = Date.valueOf("1994-02-04");
-		base.insertIntoUsers("Beqa", "Khaburdzania", "bkhab12@freeuni.edu.ge", password1, true, date);
+		base.insertIntoUsers("Beqa", "Khaburdzania", "bkhab12@freeuni.edu.ge", password1, true, "'1994-02-04'");
 		base.CloseConnection();
 		try {
 			Connection con = source.getConnection();
@@ -76,11 +76,11 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 			ResultSet rs = stmt.executeQuery("SELECT * FROM Users where EMail = 'bkhab12@freeuni.edu.ge'");
 			if (rs.isBeforeFirst()) {
 				rs.next();
-				assertEquals(rs.getString("Password"), password1);
-				assertEquals(rs.getString("FirstName"), "Beqa");
-				assertEquals(rs.getString("LastName"), "Khaburdzania");
-				assertEquals(rs.getBoolean("Gender"),true);
-				assertEquals(rs.getDate("BirthDate"), date);
+				assertEquals(password1,rs.getString("Password") );
+				assertEquals("Beqa",rs.getString("FirstName") );
+				assertEquals("Khaburdzania",rs.getString("LastName"));
+				assertEquals(true,rs.getBoolean("Gender"));
+				assertEquals(date,rs.getDate("BirthDate"));
 				stmt.executeUpdate("DELETE FROM Users WHERE EMail = 'bkhab12@freeuni.edu.ge'");
 			}else
 				assertEquals(1,2);

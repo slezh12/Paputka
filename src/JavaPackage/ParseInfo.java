@@ -4,9 +4,6 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.activation.DataSource;
-import javax.servlet.ServletContext;
-
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
 

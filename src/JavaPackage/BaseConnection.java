@@ -1,14 +1,9 @@
 package JavaPackage;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import javax.servlet.ServletContext;
-import javax.sql.DataSource;
-
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
 public class BaseConnection {
@@ -63,7 +58,7 @@ public class BaseConnection {
 	}
 
 	public void insertIntoUsers(String firstName, String lastName,
-			String eMail, String password, boolean gender, Date birthdate) {
+			String eMail, String password, boolean gender, String birthdate) {
 		try {
 			stmt.executeUpdate("INSERT INTO Users (FirstName , LastName, EMail , Password , Gender, BirthDate) VALUES("
 					+ "'"
