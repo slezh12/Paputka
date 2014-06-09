@@ -51,6 +51,46 @@
 						});
 	}
 </script>
+
+
+<script type="text/javascript"> 
+	function CheckPasswordLength(){
+		if((registerform.firstname.value).length == 0){
+			alert("შეივყანეთ სახელი");
+			return false;
+		}
+		if((registerform.lastname.value).length==0){
+			alert("შეიყვანეთ გვარი");
+			return false;
+		}
+		if((registerform.mail.value).length==0){
+			alert("შეიყვანეთ ელ-ფოსტა");
+			return false;
+		}
+		if((registerform.password.value).length==0){
+			alert("შეიყვანეთ პაროლი");
+			return false;
+		}
+		if((registerform.password.value).length < 6){
+			alert("პაროლი მინიმუმ 6 სიმბოლოს უნდა შეიცავდეს");
+			return false;
+		}
+		var radios = document.getElementsByName('gender');
+		var Chcount = 0;
+		for (var i = 0, length = radios.length; i < length; i++) {
+		    if (radios[i].checked) {
+		    	Chcount = 1;
+		    	break;
+		    }
+		}
+		if(Chcount==0){
+			alert("აირჩიეთ სქესი");
+			return false;
+		}
+		return true;
+	}
+</script>
+
 </head>
 <body>
 	<div id="fb-root"></div>
@@ -123,7 +163,7 @@
 							tabindex="6"></input>
 					</div>
 					<input type="submit" name="registerbtn" id="registerbtn"
-						class="flatbtn-blu hidemodal" value="რეგისტრაცია" tabindex="7"></input>
+						class="flatbtn-blu hidemodal" value="რეგისტრაცია" tabindex="7" onClick="return CheckPasswordLength();"></input>
 				</form>
 			</div>
 			<div class="sidebox">
