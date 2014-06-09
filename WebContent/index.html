@@ -65,7 +65,7 @@
 			fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));
 	</script>
-
+	
 	<!-- Begin Wrapper -->
 	<div id="wrapper">
 		<!-- Begin Sidebar -->
@@ -84,8 +84,8 @@
 
 			<h3 id="welcome">Welcome Guest</h3>
 			<form action="LoginServlet" method="post">
-				<input type="text" name="name" placeholder="E-Mail"></input> <br />
-				<input type="password" name="pass" placeholder="Password"></input> <br />
+				<input type="text" name="name" placeholder="ელ-ფოსტა"></input> <br />
+				<input type="password" name="pass" placeholder="პაროლი"></input> <br />
 				<input type="submit" class="login" value="Login"> </input> <a
 					class="register" href="#registermodal" id="modaltrigger">Register</a>
 			</form>
@@ -112,17 +112,22 @@
 							tabindex="3"> </input>
 					</div>
 					<div class="txtfield">
+						<img style="float:left; margin-left:330px;" src="style/images/male.png" alt="Male" />
+							<input type="radio" class="radio1" name="gender" value="Male" tabindex="4"></input>
+						<img style="float:left; " src="style/images/female.png"/>
+							<input type="radio" class="radio2" name="gender" value="Female" tabindex="5"></input>
+					</div>
+					<div class="txtfield">
 						<span id="icons" class="fa fa-lock"></span> <input type="password"
 							name="password" placeholder="პაროლი" class="textfield"
-							tabindex="4"></input>
+							tabindex="6"></input>
 					</div>
 					<input type="submit" name="registerbtn" id="registerbtn"
-						class="flatbtn-blu hidemodal" value="რეგისტრაცია" tabindex="5"></input>
+						class="flatbtn-blu hidemodal" value="რეგისტრაცია" tabindex="7"></input>
 				</form>
 			</div>
 			<div class="sidebox">
 				<ul class="share">
-
 					<div class="fb-login-button" data-max-rows="1" data-size="medium"
 						data-show-faces="false" data-auto-logout-link="false"></div>
 					<span id="google"> <input type="image"

@@ -11,6 +11,43 @@
 		<script type="text/javascript" src="style/js/ddsmoothmenu.js"></script>
 		<script type="text/javascript" src="style/js/jquery-1.9.1.min.js"></script>
 		<script type="text/javascript" charset="utf-8" src="style/js/jquery.leanModal.min.js"></script>
+		<script type="text/javascript">
+	(function() {
+		var po = document.createElement('script');
+		po.type = 'text/javascript';
+		po.async = true;
+		po.src = 'https://apis.google.com/js/client:plusone.js?onload=render';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(po, s);
+	})();
+	function signinCallback(authResult) {
+		if (authResult['status']['signed_in']) {
+			// Update the app to reflect a signed in user
+			// Hide the sign-in button now that the user is authorized, for example:
+			document.getElementById('google').setAttribute('style',
+					'display: none');
+		} else {
+			// Update the app to reflect a signed out user
+			// Possible error values:
+			//   "user_signed_out" - User is signed-out
+			//   "access_denied" - User denied access to your app
+			//   "immediate_failed" - Could not automatically log in the user
+			console.log('Sign-in state: ' + authResult['error']);
+		}
+	}
+	function render() {
+		gapi.signin
+				.render(
+						"google",
+						{
+							'callback' : signinCallback,
+							'clientid' : '1057790320383-t8pqial3gdd7l6arvojtq0qdufm62adt.apps.googleusercontent.com',
+							'cookiepolicy' : 'single_host_origin',
+							'requestvisibleactions' : 'http://schemas.google.com/AddActivity',
+							'scope' : 'https://www.googleapis.com/auth/plus.login'
+						});
+	}
+</script>
 	</head>
 	<body>
 		<!-- Begin Wrapper -->
@@ -31,87 +68,110 @@
 				<form action="LoginServlet" method="post">
 					<h3 id="welcome">Welcome Guest.<br><br><br> Invalid Login. Try Again</h3>
 					<br>
-					<input type="text" name="name" placeholder="E-Mail">
+					<input type="text" name="name" placeholder="ელ-ფოსტა">
 					<br>
-					<input type="password" name="pass" placeholder="Password">
+					<input type="password" name="pass" placeholder="პაროლი">
 					<br>
 					<input type="submit" class="login" value="Login"> 
 					<a class="register" href="#registermodal" id="modaltrigger">Register</a>
 				</form>	 
-			<div id="registermodal" style="display:none;">
-					<h1 class="txt">ახალი მომხმარებლის რეგისტრაცია</h1>
-				    <h4> <b>გთხოვთ შეავსოთ ყველა ველი</b></h4>
-					<form action="RegisterServlet" id="registerform" name="registerform" method="post" >
-				   	  <div class="txtfield" >
-				   		<span id="icons" class="fa fa-user"></span> 
-						 <input type="text" name="firstname" placeholder="სახელი" class="textfield" tabindex="1"></input>
-				   	  </div>
-				   	   <div class="txtfield" >
-				   		<span id="icons" class="fa fa-users"></span> 
-					    <input type="text" name="lastname" placeholder="გვარი" class="textfield" tabindex="2"></input>
-				   	  </div>
-					  <div class="txtfield">
-					  	 <span id="icons" class="fa fa-envelope-o"></span>
-					 	 <input type="text" name="mail" placeholder="ელ-ფოსტა" class="textfield" tabindex="3">
-					  </input></div>
-					  <div class="txtfield">
-					  	 <span id="icons" class="fa fa-lock"></span>
-					 	 <input type="password" name="password1"  placeholder="პაროლი" class="textfield" tabindex="4"></input>
-					  </div>
-					  <input type="submit" name="registerbtn" id="registerbtn" class="flatbtn-blu hidemodal" value="რეგისტრაცია" tabindex="5"></input>
-					</form>
-				</div>
-				<div class="sidebox">
-					<ul class="share">
-						<li><a id="facebook" href="#"><img src="style/images/fb.png" alt="Facebook" /></a></li>
-						<li><a id="google" href="#"><img src="style/images/g+.png"  alt="G+" /></a></li>
-					</ul>
-				</div>
+			<div id="registermodal" style="display: none;">
+				<h1 class="txt">ახალი მომხმარებლის რეგისტრაცია</h1>
+				<h4>
+					<b>გთხოვთ შეავსოთ ყველა ველი</b>
+				</h4>
+				<form action="RegisterServlet" id="registerform" name="registerform"
+					method="post">
+					<div class="txtfield">
+						<span id="icons" class="fa fa-user"></span> <input type="text"
+							name="firstname" placeholder="სახელი" class="textfield"
+							tabindex="1"></input>
+					</div>
+					<div class="txtfield">
+						<span id="icons" class="fa fa-users"></span> <input type="text"
+							name="lastname" placeholder="გვარი" class="textfield"
+							tabindex="2"></input>
+					</div>
+					<div class="txtfield">
+						<span id="icons" class="fa fa-envelope-o"></span> <input
+							type="text" name="mail" placeholder="ელ-ფოსტა" class="textfield"
+							tabindex="3"> </input>
+					</div>
+					<div class="txtfield">
+						<img style="float:left; margin-left:330px;" src="style/images/male.png" alt="Male" />
+							<input type="radio" class="radio1" name="gender" value="Male" tabindex="4"></input>
+						<img style="float:left; " src="style/images/female.png"/>
+							<input type="radio" class="radio2" name="gender" value="Female" tabindex="5"></input>
+					</div>
+					<div class="txtfield">
+						<span id="icons" class="fa fa-lock"></span> <input type="password"
+							name="password" placeholder="პაროლი" class="textfield"
+							tabindex="6"></input>
+					</div>
+					<input type="submit" name="registerbtn" id="registerbtn"
+						class="flatbtn-blu hidemodal" value="რეგისტრაცია" tabindex="7"></input>
+				</form>
 			</div>
-			<!-- End Sidebar -->
-			
-			<!-- Begin Content -->
-			<div id="content">
-				<div class="line"></div>
-				<html>
-					<head>
-						<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
-						<script>
-						function initialize()
-						{
-						var mapProp = {
-						  center:new google.maps.LatLng(42.347485,43.7),
-						  zoom:7,
-						  mapTypeId:google.maps.MapTypeId.ROADMAP
-						  };
-						var map=new google.maps.Map(document.getElementById("googleMap")
-						  ,mapProp);
-						}
-
-						google.maps.event.addDomListener(window, 'load', initialize);
-						</script>
-					</head>
-					<body>
-						<div id="googleMap" style="width:800px;height:400px;"></div>
-					</body>
-				</html>
-				<div class="line"></div>
-				<div id="footer" >
-					<h3>ჩვენ შესახებ</h3>
-					<p>პაპუტკა.ჯი საიტი აკეთებს რაღაცეებს და შექმნილია იმისთვის რომ ბლა .</p> 
-					<p>
-						  <span class="lite1">ტელ:</span> +555 636 646 62
-						  <span class="lite1">მეილი:</span> name@domain.com
-					</p>
-				</div>
-				<!-- End Content -->
+			<div class="sidebox">
+				<ul class="share">
+					<div class="fb-login-button" data-max-rows="1" data-size="medium"
+						data-show-faces="false" data-auto-logout-link="false"></div>
+					<span id="google"> <input type="image"
+						src="style/images/g+.png"></input>
+					</span>
+				</ul>
 			</div>
 		</div>
-<script type="text/javascript">
-$(function(){
-  $('#modaltrigger').leanModal({ top:5, overlay: 0.45, closeButton: ".hidemodal" });
-});
+		<!-- End Sidebar -->
+
+		<!-- Begin Content -->
+		<div id="content">
+			<div class="line"></div>
+			<html>
+<head>
+<script
+	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
+<script>
+	function initialize() {
+		var mapProp = {
+			center : new google.maps.LatLng(42.347485, 43.7),
+			zoom : 7,
+			mapTypeId : google.maps.MapTypeId.ROADMAP
+		};
+		var map = new google.maps.Map(document.getElementById("googleMap"),
+				mapProp);
+	}
+
+	google.maps.event.addDomListener(window, 'load', initialize);
 </script>
+</head>
+<body>
+	<div id="googleMap" style="width: 800px; height: 400px;"></div>
+</body>
+			</html>
+			<div class="line"></div>
+			<div id="footer">
+				<h3>ჩვენ შესახებ</h3>
+				<p>პაპუტკა.ჯი საიტი აკეთებს რაღაცეებს და შექმნილია იმისთვის რომ
+					ბლა .</p>
+				<p>
+					<span class="lite1">ტელ:</span> +555 636 646 62 <span class="lite1">მეილი:</span>
+					name@domain.com
+				</p>
+			</div>
+			<!-- End Content -->
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function() {
+
+			$('#modaltrigger').leanModal({
+				top : 5,
+				overlay : 0.45,
+				closeButton : ".hidemodal"
+			});
+		});
+	</script>
 
 </body>
-</html>	
+</html>
