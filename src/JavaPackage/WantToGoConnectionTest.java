@@ -1,15 +1,15 @@
 package JavaPackage;
 
+import static org.junit.Assert.*;
+
 import javax.sql.DataSource;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 import org.junit.Before;
+import org.junit.Test;
 
+public class WantToGoConnectionTest {
 
-
-
-
-public class BaseConnectionTest {
 	
 	static String account = MyDBInfo.MYSQL_USERNAME;
 	static String password = MyDBInfo.MYSQL_PASSWORD;
@@ -29,4 +29,11 @@ public class BaseConnectionTest {
 	
 	
 	
+	
+	@Test
+	public void test() {
+		WantToGoConnection want = new WantToGoConnection((BasicDataSource) source);
+		want.insertIntoRequestss(1, "casvla mindaa", 1.4, 4.5, 1.3, 4.2, true);
+	}
+
 }
