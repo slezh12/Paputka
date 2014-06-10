@@ -83,28 +83,27 @@ public class EventConnection extends BaseConnection {
 	}
 
 	public void insertIntoComments(int eventID, int userID, String comment,
-			String datetime) {
+			String date) {
 		try {
 			super.stmt
-					.executeUpdate("INSERT INTO Comments (eventID,userID,comment,dateTime) VALUES("
+					.executeUpdate("INSERT INTO Comments (eventID,userID,comment,date) VALUES("
 							+ eventID
 							+ ","
 							+ userID
 							+ ","
 							+ "'"
 							+ comment
-							+ "'" + "," + "'" + datetime + "'" + ")");
+							+ "'" + "," + "'" + date + "'" + ")");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void updateEvents(int eventID, boolean validation) {
+	public void updateEvent(int eventID, boolean validation) {
 		try {
-			super.stmt.executeUpdate("UPDATE Events Set validation = "
+			super.stmt.executeUpdate("UPDATE Events SET Validation = "
 					+ validation + "WHERE ID = " + eventID);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
