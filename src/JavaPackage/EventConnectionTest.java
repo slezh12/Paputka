@@ -11,7 +11,10 @@ import java.sql.Statement;
 import javax.sql.DataSource;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class EventConnectionTest {
@@ -22,7 +25,8 @@ public class EventConnectionTest {
 	static String database = MyDBInfo.MYSQL_DATABASE_NAME;
 
 	private DataSource source;
-
+	private EventConnection base;
+	
 	@Before
 	public void SetUp() {
 		source = new BasicDataSource();
@@ -31,6 +35,9 @@ public class EventConnectionTest {
 		((BasicDataSource) source).setPassword(password);
 		((BasicDataSource) source).setUrl("jdbc:mysql://" + server + ":3306/"
 				+ database);
+		base = new EventConnection((BasicDataSource) source);
+		base.insertIntoEvents(1, 5, 10, 1.1, 2.1, 3.1, 4.1, "tbilisi",
+				"batumi", false, true);
 	}
 
 	private boolean areDoublesEqual(double a, double b) {
@@ -42,10 +49,6 @@ public class EventConnectionTest {
 
 	@Test
 	public void testInsertIntoEvents() {
-		EventConnection base = new EventConnection((BasicDataSource) source);
-		base.insertIntoEvents(1, 5, 10, 1.1, 2.1, 3.1, 4.1, "tbilisi",
-				"batumi", false, true);
-		base.CloseConnection();
 		try {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
@@ -69,7 +72,7 @@ public class EventConnectionTest {
 				assertEquals("tbilisi", rs.getString("fromPlace"));
 				assertEquals("batumi", rs.getString("toPlace"));
 				assertEquals(false, rs.getBoolean("type"));
-				//assertEquals(true, rs.getBoolean("validation"));
+				// assertEquals(true, rs.getBoolean("validation"));
 			} else
 				assertEquals(1, 2);
 			con.close();
@@ -80,11 +83,9 @@ public class EventConnectionTest {
 
 	@Test
 	public void testInsertIntoDates() {
-		EventConnection base = new EventConnection((BasicDataSource) source);
-		base.insertIntoEvents(1, 5, 10, 1.1, 2.1, 3.1, 4.1, "tbilisi",
-				"batumi", false, true);
+		// base.insertIntoEvents(1, 5, 10, 1.1, 2.1, 3.1, 4.1, "tbilisi",
+		// "batumi", false, true);
 		base.insertIntoDates(1, "1000-01-01 00:00:00");
-		base.CloseConnection();
 		try {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
@@ -95,6 +96,7 @@ public class EventConnectionTest {
 				rs.next();
 				assertEquals(1, rs.getInt("eventID"));
 				assertEquals("1000-01-01 00:00:00.0", rs.getString("date"));
+				stmt.executeUpdate("truncate dates");
 			} else
 				assertEquals(1, 2);
 			con.close();
@@ -105,11 +107,7 @@ public class EventConnectionTest {
 
 	@Test
 	public void testInsertIntoEveryday() {
-		EventConnection base = new EventConnection((BasicDataSource) source);
-		base.insertIntoEvents(1, 5, 10, 1.1, 2.1, 3.1, 4.1, "tbilisi",
-				"batumi", false, true);
 		base.insertIntoEveryday(1, "2012-10-03 00:00:00", 5);
-		base.CloseConnection();
 		try {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
@@ -120,9 +118,11 @@ public class EventConnectionTest {
 				rs.next();
 				assertEquals(1, rs.getInt("eventID"));
 				assertEquals(5, rs.getInt("day"));
-				//System.out.print(rs.getString("StartTime"));
+				// System.out.print(rs.getString("StartTime"));
 				// TIMEMA RA UNDA SHEINAXOS??????????????
-			//	assertEquals("2012-10-03 00:00:00", rs.getString("StartTime"));
+				// assertEquals("2012-10-03 00:00:00",
+				// rs.getString("StartTime"));
+				stmt.executeUpdate("truncate Everyday");
 			} else
 				assertEquals(1, 2);
 			con.close();
@@ -130,12 +130,10 @@ public class EventConnectionTest {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
-	public void testInsertIntoParticipants(){
-		EventConnection base = new EventConnection((BasicDataSource) source);
+	public void testInsertIntoParticipants() {
 		base.insertIntoParticipants(1, 1);
-		base.CloseConnection();
 		try {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
@@ -146,6 +144,7 @@ public class EventConnectionTest {
 				rs.next();
 				assertEquals(1, rs.getInt("eventID"));
 				assertEquals(1, rs.getInt("userID"));
+				stmt.executeUpdate("truncate participants");
 			} else
 				assertEquals(1, 2);
 			con.close();
@@ -153,13 +152,10 @@ public class EventConnectionTest {
 			e.printStackTrace();
 		}
 	}
-	
 
 	@Test
 	public void testInsertIntoComments() {
-		EventConnection base = new EventConnection((BasicDataSource) source);
 		base.insertIntoComments(1, 1, "sandro lezhava", "1000-01-01 00:00:00");
-		base.CloseConnection();
 		try {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
@@ -172,6 +168,7 @@ public class EventConnectionTest {
 				assertEquals(1, rs.getInt("userID"));
 				assertEquals("sandro lezhava", rs.getString("comment"));
 				assertEquals("1000-01-01 00:00:00.0", rs.getString("date"));
+				stmt.executeUpdate("truncate comments");
 			} else
 				assertEquals(1, 2);
 			con.close();
@@ -179,12 +176,10 @@ public class EventConnectionTest {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
-	public void testUpdateEvent(){
-		EventConnection base = new EventConnection((BasicDataSource) source);
+	public void testUpdateEvent() {
 		base.updateEvent(1, false);
-		base.CloseConnection();
 		try {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
@@ -202,4 +197,22 @@ public class EventConnectionTest {
 		}
 	}
 
+	
+	@After
+	public void after() {
+		Connection con;
+		try {
+			con = source.getConnection();
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			//stmt.executeUpdate("truncate events");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		base.CloseConnection();
+	}
+	
+	
 }
+
