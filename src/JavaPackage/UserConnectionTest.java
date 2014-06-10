@@ -270,5 +270,49 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 		
 	}
 	
+	@Test
+	public void test3(){
+		try{
+			UserConnection user = new UserConnection((BasicDataSource) source);
+			user.insertIntoUsers("Tedo", "Chubinidze", "tedochubinidze@yahoo.com", "123", true, "'1994-02-04'");
+			Connection con = source.getConnection();
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			int ID = 0;
+			ResultSet rs = stmt.executeQuery("SELECT ID FROM Users Where EMail = 'tedochubinidze@yahoo.com'");
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				ID = rs.getInt("ID");
+			}
+			user.insertIntoUsers("leo", "uduria", "udiria@yahoo.com", "123", true, "'1992-02-04'");
+			int ID2 = 0;
+			rs = stmt.executeQuery("SELECT ID FROM Users Where EMail = 'udiria@yahoo.com'");
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				ID2 = rs.getInt("ID");
+			}
+			user.insertIntoRatings(ID, ID2, 5);
+			user.CloseConnection();
+			rs = stmt.executeQuery("SELECT * FROM Ratings Where FirstID = " + ID);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				assertEquals(rs.getInt("FirstID"), ID);
+				assertEquals(rs.getInt("secondID"), ID2);
+				assertEquals(rs.getInt("Rating"), 5);
+				stmt.executeUpdate("DELETE FROM RATINGS WHERE FirstID = "+ ID);
+				stmt.executeUpdate("DELETE FROM Users WHERE ID =" + ID);
+				stmt.executeUpdate("DELETE FROM Users WHERE ID ="+ ID2);
+			} else {
+				assertEquals(1,2);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	
 
 }

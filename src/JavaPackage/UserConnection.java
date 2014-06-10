@@ -44,8 +44,9 @@ public class UserConnection extends BaseConnection {
 	}
 
 	public ResultSet selectRatings(int secondID) throws SQLException {
-		ResultSet rs =  stmt.executeQuery("SELECT * FROM Ratings where SecondID = "
-				+ secondID );
+		ResultSet rs = stmt
+				.executeQuery("SELECT * FROM Ratings where SecondID = "
+						+ secondID);
 		return rs;
 	}
 
@@ -54,58 +55,59 @@ public class UserConnection extends BaseConnection {
 		try {
 			stmt.executeUpdate("INSERT INTO Requests (UserID , EventID, Text , Acception ,  Date) VALUES("
 					+ userID
-					+ ","	
+					+ ","
 					+ eventID
 					+ ","
 					+ "'"
 					+ text
 					+ "'"
 					+ ","
-					+ acception
-					+ ","
-					+ date  + ")");
+					+ acception + "," + date + ")");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public void updateRequestss(int requestID, int acception) {
 		try {
-			stmt.executeUpdate("UPDATE  Requests Set  Acception = " + acception + " WHERE ID = " + requestID);
+			stmt.executeUpdate("UPDATE  Requests Set  Acception = " + acception
+					+ " WHERE ID = " + requestID);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void update(String table, String column, String value, int UserID) {
 		try {
-			stmt.executeUpdate("UPDATE " + table + " Set " + column + " = " + "'" +value+"'" +
-			 " WHERE UserID = " + UserID);
+			stmt.executeUpdate("UPDATE " + table + " Set " + column + " = "
+					+ "'" + value + "'" + " WHERE UserID = " + UserID);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	public void insert(String table, String column, String value, int UserID) {
 		// code here
 		try {
-			stmt.executeUpdate("INSERT INTO " + table + "( "+ column + ","+ "UserID) VALUES("
-					+ "'"
-					+ value
-					+ "'"
-					+ ","
-					+ UserID
+			stmt.executeUpdate("INSERT INTO " + table + "( " + column + ","
+					+ "UserID) VALUES(" + "'" + value + "'" + "," + UserID
 					+ ")");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void insertIntoRatings(int firstID, int secondID, int rating) {
-		// code here
-		
+		try {
+			stmt.executeUpdate("INSERT INTO RATINGS (FirstID, SecondID, Rating) VALUES( "
+					+ firstID + ", " + secondID + ", " + rating + " )");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }
