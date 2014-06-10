@@ -101,8 +101,8 @@ public class EventConnection extends BaseConnection {
 
 	public void updateEvent(int eventID, boolean validation) {
 		try {
-			super.stmt.executeUpdate("UPDATE Events SET Validation = "
-					+ validation + "WHERE ID = " + eventID);
+			super.stmt.executeUpdate("UPDATE Events Set Validation = "
+					+ validation + " WHERE ID = " + eventID);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

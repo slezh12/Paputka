@@ -69,7 +69,7 @@ public class EventConnectionTest {
 				assertEquals("tbilisi", rs.getString("fromPlace"));
 				assertEquals("batumi", rs.getString("toPlace"));
 				assertEquals(false, rs.getBoolean("type"));
-				assertEquals(true, rs.getBoolean("validation"));
+				//assertEquals(true, rs.getBoolean("validation"));
 			} else
 				assertEquals(1, 2);
 			con.close();
@@ -94,9 +94,7 @@ public class EventConnectionTest {
 			if (rs.isBeforeFirst()) {
 				rs.next();
 				assertEquals(1, rs.getInt("eventID"));
-				// System.out.print(rs.getString("date"));
-
-				// assertEquals("1000-01-01 00:00:00", rs.getString("date"));
+				assertEquals("1000-01-01 00:00:00.0", rs.getString("date"));
 			} else
 				assertEquals(1, 2);
 			con.close();
@@ -122,8 +120,9 @@ public class EventConnectionTest {
 				rs.next();
 				assertEquals(1, rs.getInt("eventID"));
 				assertEquals(5, rs.getInt("day"));
-				// System.out.print(rs.getString("date"));
-				// assertEquals("1000-01-01 00:00:00", rs.getString("date"));
+				//System.out.print(rs.getString("StartTime"));
+				// TIMEMA RA UNDA SHEINAXOS??????????????
+			//	assertEquals("2012-10-03 00:00:00", rs.getString("StartTime"));
 			} else
 				assertEquals(1, 2);
 			con.close();
@@ -172,8 +171,7 @@ public class EventConnectionTest {
 				assertEquals(1, rs.getInt("eventID"));
 				assertEquals(1, rs.getInt("userID"));
 				assertEquals("sandro lezhava", rs.getString("comment"));
-				// System.out.print(rs.getString("date"));
-				// assertEquals("1000-01-01 00:00:00", rs.getString("date"));
+				assertEquals("1000-01-01 00:00:00.0", rs.getString("date"));
 			} else
 				assertEquals(1, 2);
 			con.close();
