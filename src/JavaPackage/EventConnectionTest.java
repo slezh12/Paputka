@@ -83,8 +83,6 @@ public class EventConnectionTest {
 
 	@Test
 	public void testInsertIntoDates() {
-		// base.insertIntoEvents(1, 5, 10, 1.1, 2.1, 3.1, 4.1, "tbilisi",
-		// "batumi", false, true);
 		base.insertIntoDates(1, "1000-01-01 00:00:00");
 		try {
 			Connection con = source.getConnection();
@@ -119,7 +117,7 @@ public class EventConnectionTest {
 				assertEquals(1, rs.getInt("eventID"));
 				assertEquals(5, rs.getInt("day"));
 				// System.out.print(rs.getString("StartTime"));
-				// TIMEMA RA UNDA SHEINAXOS??????????????
+				// TIME-MA RA UNDA SHEINAXOS??????????????
 				// assertEquals("2012-10-03 00:00:00",
 				// rs.getString("StartTime"));
 				stmt.executeUpdate("truncate Everyday");
@@ -205,7 +203,7 @@ public class EventConnectionTest {
 			con = source.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + database);
-			//stmt.executeUpdate("truncate events");
+			//stmt.executeUpdate("DELETE FROM Events ORDER BY ID DESC LIMIT 1");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
