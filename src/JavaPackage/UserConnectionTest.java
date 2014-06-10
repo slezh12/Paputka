@@ -36,7 +36,7 @@ public class UserConnectionTest {
 	 * insert into users (FirstName, LastName, Gender, BirthDate,  Password, EMail)
 values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329ea1ff5c5ecbdbbeef', N'achi_baxlosania@yahoo.com');
 	 */
-	@Test
+//	@Test
 	public void test() {
 		UserConnection base = new UserConnection((BasicDataSource) source);
 		try {
@@ -59,7 +59,8 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 		
 	}
 	
-	@Test
+	
+//	@Test
 	public void testInsertIntoUsers() {	
 		UserConnection base = new UserConnection((BasicDataSource) source);
 		String password1 = Hash.calculateHashCode("123456");
@@ -70,7 +71,7 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + database);
-			ResultSet rs = stmt.executeQuery("SELECT * FROM Users where EMail = 'bkhab12@freeuni.edu.ge'");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Users WHERE EMail = 'bkhab12@freeuni.edu.ge'");
 			if (rs.isBeforeFirst()) {
 				rs.next();
 				assertEquals(password1,rs.getString("Password") );
@@ -87,5 +88,187 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 		}
 		
 	}
+	
+	// chems bazashi gavakete ragac cvlilebebi rac damchirda testistvis 
+	@Test
+	public void testInsertIntoRequest() {	
+		UserConnection base = new UserConnection((BasicDataSource) source);
+		Date date = Date.valueOf("2000-03-04");
+		String textForTest = "ragac texti";
+		String textForTest1 = "shemowmeba";
+		int userID = 1;
+		base.insertIntoRequestss(userID, 1, "shemowmeba", 0, " '2000-03-04'");
+		base.CloseConnection();
+		try {
+			Connection con = source.getConnection();
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Requests WHERE UserID = " + userID);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				assertFalse(textForTest.equals(rs.getString("Text")));
+				assertEquals(textForTest1,rs.getString("Text"));
+				
+				assertEquals(1,rs.getInt("UserID") );
+				assertFalse(isEqual(2,rs.getInt("UserID")));
+				
+				assertEquals(1,rs.getInt("EventID"));
+				assertFalse(isEqual(2,rs.getInt("EventID")));
+				
+				assertEquals(0,rs.getInt("Acception"));
+				assertFalse(isEqual(2,rs.getInt("Acception")));
+				
+				assertEquals(date,rs.getDate("Date"));
+				stmt.executeUpdate("DELETE FROM Requests WHERE UserID  = " + userID);
+			}else
+				assertEquals(1,2);
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	// checks if two ints equla to each other
+	private boolean isEqual(int first , int second){
+		return (first == second);
+	}
+	
+	// am metodis dasatestadac damchirda bazis cvlileba
+	@Test
+	public void testSelectRatings() {	
+		int secondID = 1;
+		try {
+			Connection con = source.getConnection();
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Ratings WHERE SecondID = " + secondID);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				
+				assertEquals(1,rs.getInt("FirstID"));
+				assertFalse(isEqual(2,rs.getInt("FirstID")));
+				
+				assertEquals(1,rs.getInt("SecondID"));
+				assertFalse(isEqual(2,rs.getInt("SecondID")));
+				
+				assertEquals(5,rs.getInt("Rating"));
+				assertFalse(isEqual(2,rs.getInt("Rating")));
+				
+			}else
+				assertEquals(1,2);
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	// es ar imushavebs anu shecdomaze gava tu baza carielia 
+	@Test
+	public void testUpdateRequest() {	
+		UserConnection base = new UserConnection((BasicDataSource) source);
+		int requestID = 1;
+		base.updateRequestss(requestID, 1);
+		base.CloseConnection();
+		try {
+			Connection con = source.getConnection();
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Requests WHERE ID = " + requestID);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				
+				assertEquals(1,rs.getInt("UserID") );
+				assertFalse(isEqual(2,rs.getInt("UserID")));
+				
+				assertEquals(1,rs.getInt("EventID"));
+				assertFalse(isEqual(2,rs.getInt("EventID")));
+				
+				assertEquals(1,rs.getInt("Acception"));
+				assertFalse(isEqual(0,rs.getInt("Acception")));
+				
+				
+			}else
+				assertEquals(1,2);
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	// es ar imushavebs anu shecdomaze gava tu baza carielia 
+	@Test
+	public void testUpdate() {	
+		UserConnection base = new UserConnection((BasicDataSource) source);
+		int AvatarID = 1;
+		String avatarTextTrue = "Ragac sxva surati";
+		String avatarTextFalse = "Ragac surati";
+		base.update("Avatars","Image", "Ragac sxva surati",AvatarID);
+		base.CloseConnection();
+		try {
+			Connection con = source.getConnection();
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Avatars WHERE ID = " + AvatarID);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				
+				assertEquals(1,rs.getInt("UserID") );
+				assertFalse(isEqual(2,rs.getInt("UserID")));
+				
+				assertFalse(avatarTextFalse.equals(rs.getString("Image")));
+				assertEquals(avatarTextTrue,rs.getString("Image"));
+				
+					
+			}else
+				assertEquals(1,2);
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Test
+	public void testInsert() {	
+		UserConnection base = new UserConnection((BasicDataSource) source);
+		String imageTrue = "she yvelaze lamazo";
+		String imageFalse = "shen vize ras ambob she vapshe yvelaze  lamazo";
+		
+		int userID = 1;
+		base.insert("Avatars", "Image", "she yvelaze lamazo", userID);
+		
+		
+		base.CloseConnection();
+		try {
+			Connection con = source.getConnection();
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Avatars WHERE UserID = " + userID);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				assertFalse(imageFalse.equals(rs.getString("Image")));
+				assertEquals(imageTrue,rs.getString("Image"));
+				
+				assertEquals(1,rs.getInt("UserID") );
+				assertFalse(isEqual(2,rs.getInt("UserID")));
+				
+				
+				
+				
+				stmt.executeUpdate("DELETE FROM Avatars WHERE UserID  = " + 1);
+			}else
+				assertEquals(1,2);
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 
 }
