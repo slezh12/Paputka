@@ -54,8 +54,8 @@ public class BaseConnection {
 	
 	// order by date desc limit 1 <- es selectia
 	public ResultSet selectEvent(int userID, String table) throws SQLException {
-		ResultSet rs = null;
-		// code here
+		ResultSet rs = stmt.executeQuery("SELECT * FROM " + table + " Where UserID  = " + userID);
+		
 		return rs;
 	}
 
