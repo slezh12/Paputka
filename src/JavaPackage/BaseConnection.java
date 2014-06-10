@@ -4,11 +4,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
 public class BaseConnection {
 
-	private Statement stmt;
+	protected Statement stmt;
 	private Connection con;
 
 	public BaseConnection(BasicDataSource source) {
@@ -27,12 +28,6 @@ public class BaseConnection {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public ResultSet getInfoByMail(String name) throws SQLException {
-		ResultSet rs = stmt.executeQuery("SELECT * FROM Users where EMail = \""
-				+ name + "\"");
-		return rs;
 	}
 
 	// viyenebt statusebis telefoebis da msgavsi infromaciis ID it amosagebad.
@@ -56,31 +51,13 @@ public class BaseConnection {
 		}
 		return rs;
 	}
-
-	public void insertIntoUsers(String firstName, String lastName,
-			String eMail, String password, boolean gender, String birthdate) {
-		try {
-			stmt.executeUpdate("INSERT INTO Users (FirstName , LastName, EMail , Password , Gender, BirthDate) VALUES("
-					+ "'"
-					+ firstName
-					+ "'"
-					+ ","
-					+ "'"
-					+ lastName
-					+ "'"
-					+ ","
-					+ "'"
-					+ eMail
-					+ "'"
-					+ ","
-					+ "'"
-					+ password
-					+ "'"
-					+ ","
-					+ gender + "," + birthdate + ")");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	
+	// order by date desc limit 1 <- es selectia
+	public ResultSet selectEvent(int userID, String table) throws SQLException {
+		ResultSet rs = null;
+		// code here
+		return rs;
 	}
+
 
 }

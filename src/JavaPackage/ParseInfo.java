@@ -17,7 +17,7 @@ public class ParseInfo {
 	public User getUser(String email, String password) {
 		User user = null;
 		password = Hash.calculateHashCode(password);
-		BaseConnection base = new BaseConnection((BasicDataSource)source);
+		UserConnection base = new UserConnection((BasicDataSource)source);
 		try {
 			ResultSet rs = base.getInfoByMail(email);
 			if (rs.isBeforeFirst()) {

@@ -14,11 +14,8 @@ import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 import org.junit.Before;
 import org.junit.Test;
 
+public class UserConnectionTest {
 
-
-
-public class BaseConnectionTest {
-	
 	static String account = MyDBInfo.MYSQL_USERNAME;
 	static String password = MyDBInfo.MYSQL_PASSWORD;
 	static String server = MyDBInfo.MYSQL_DATABASE_SERVER;
@@ -41,7 +38,7 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 	 */
 	@Test
 	public void test() {
-		BaseConnection base = new BaseConnection((BasicDataSource) source);
+		UserConnection base = new UserConnection((BasicDataSource) source);
 		try {
 			ResultSet rs = base.getInfoByMail("achi_baxlosania@yahoo.com");
 			if (rs.isBeforeFirst()) {
@@ -64,7 +61,7 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 	
 	@Test
 	public void testInsertIntoUsers() {	
-		BaseConnection base = new BaseConnection((BasicDataSource) source);
+		UserConnection base = new UserConnection((BasicDataSource) source);
 		String password1 = Hash.calculateHashCode("123456");
 		Date date = Date.valueOf("1994-02-04");
 		base.insertIntoUsers("Beqa", "Khaburdzania", "bkhab12@freeuni.edu.ge", password1, true, "'1994-02-04'");
@@ -90,5 +87,5 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 		}
 		
 	}
-	
+
 }
