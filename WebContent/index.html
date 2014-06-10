@@ -12,6 +12,9 @@
 <script type="text/javascript" src="style/js/jquery-1.6.4.min.js"></script>
 <script type="text/javascript" src="style/js/ddsmoothmenu.js"></script>
 <script type="text/javascript" src="style/js/jquery-1.9.1.min.js"></script>
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <script type="text/javascript" src="style/js/jquery.leanModal.min.js"></script>
 <!-- This script is for Google + Login -->
 <script type="text/javascript">
@@ -52,27 +55,27 @@
 	}
 </script>
 
-
+ <script>
+$(function() {
+$( "#datepicker" ).datepicker();
+});
+</script>
 <script type="text/javascript"> 
 	function CheckPasswordLength(){
-		if((registerform.firstname.value).length == 0){
-			alert("შეივყანეთ სახელი");
+		if((registerform.firstname.value).length == 0 || (registerform.firstname.value).length >20){
+			alert("სახელი უნდა იყოს 1-დან 20 სიმბოლომდე ზომის");
 			return false;
 		}
 		if((registerform.lastname.value).length==0){
-			alert("შეიყვანეთ გვარი");
+			alert("გვარი უნდა იყოს 1-დან 20 სიმბოლომდე ზომის");
 			return false;
 		}
 		if((registerform.mail.value).length==0){
-			alert("შეიყვანეთ ელ-ფოსტა");
-			return false;
-		}
-		if((registerform.password.value).length==0){
-			alert("შეიყვანეთ პაროლი");
+			alert("ელ-ფოსტა უნდა იყოს 1-დან 40 სიმბოლომდე ზომის");
 			return false;
 		}
 		if((registerform.password.value).length < 6){
-			alert("პაროლი მინიმუმ 6 სიმბოლოს უნდა შეიცავდეს");
+			alert("პაროლი უნდა იყოს 6 სიმბოლომდე ზომის");
 			return false;
 		}
 		var radios = document.getElementsByName('gender');
@@ -150,6 +153,10 @@
 						<span id="icons" class="fa fa-envelope-o"></span> <input
 							type="text" name="mail" placeholder="ელ-ფოსტა" class="textfield"
 							tabindex="3"> </input>
+					</div>
+					<div class="txtfield">
+						დაბადების თარიღი:
+						<input type="text" id="datepicker">
 					</div>
 					<div class="txtfield">
 						<img style="float:left; margin-left:330px;" src="style/images/male.png" alt="Male" />

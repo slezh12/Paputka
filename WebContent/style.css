@@ -125,6 +125,12 @@ input[class="radio2"]{
   font-size:1em;
   margin:10px;
 }
+input[id="datepicker"]{
+	margin:6px;
+	font-family: 'Helvetica Neue', Helvetica, Verdana, sans-serif;
+	color: #7988a3;
+	font-size: 1em;
+}
 .radio1{	
 	float:left;
 }
