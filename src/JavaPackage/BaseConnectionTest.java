@@ -74,6 +74,8 @@ public class BaseConnectionTest {
 			assertEquals(rs.getBoolean("Validation"), false);
 			stmt.executeUpdate("DELETE FROM Events WHERE UserID =" + ID);
 			stmt.executeUpdate("DELETE FROM Users Where ID = " + ID);
+		} else {
+			assertEquals(1,2);
 		}
 		} catch (SQLException e) {
 			e.printStackTrace();
