@@ -9,9 +9,10 @@
 <link
 	href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
 	rel="stylesheet" />
-<script type="text/javascript" src="style/js/jquery-1.6.4.min.js"></script>
-<script type="text/javascript" src="style/js/ddsmoothmenu.js"></script>
 <script type="text/javascript" src="style/js/jquery-1.9.1.min.js"></script>
+
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <script type="text/javascript" src="style/js/jquery.leanModal.min.js"></script>
 <!-- This script is for Google + Login -->
 <script type="text/javascript">
@@ -52,27 +53,27 @@
 	}
 </script>
 
-
+ <script>
+$(function() {
+$( "#datepicker" ).datepicker();
+});
+</script>
 <script type="text/javascript"> 
-	function CheckPasswordLength(){
-		if((registerform.firstname.value).length == 0){
-			alert("შეივყანეთ სახელი");
+	function CheckAlerts(){
+		if((registerform.firstname.value).length == 0 || (registerform.firstname.value).length >20){
+			alert("სახელი უნდა იყოს 1-დან 20 სიმბოლომდე ზომის");
 			return false;
 		}
-		if((registerform.lastname.value).length==0){
-			alert("შეიყვანეთ გვარი");
+		if((registerform.lastname.value).length==0 || (registerform.lastname.value).length >20){
+			alert("გვარი უნდა იყოს 1-დან 20 სიმბოლომდე ზომის");
 			return false;
 		}
-		if((registerform.mail.value).length==0){
-			alert("შეიყვანეთ ელ-ფოსტა");
+		if((registerform.mail.value).length==0 || (registerform.mail.value).length >40 ){
+			alert("ელ-ფოსტა უნდა იყოს 1-დან 40 სიმბოლომდე ზომის");
 			return false;
 		}
-		if((registerform.password.value).length==0){
-			alert("შეიყვანეთ პაროლი");
-			return false;
-		}
-		if((registerform.password.value).length < 6){
-			alert("პაროლი მინიმუმ 6 სიმბოლოს უნდა შეიცავდეს");
+		if((registerform.datetime.value).length==0){
+			alert("შეიყვანეთ დაბადების დღის თარიღი");
 			return false;
 		}
 		var radios = document.getElementsByName('gender');
@@ -85,6 +86,10 @@
 		}
 		if(Chcount==0){
 			alert("აირჩიეთ სქესი");
+			return false;
+		}
+		if((registerform.password.value).length < 6 || (registerform.password.value).length >20){
+			alert("პაროლი უნდა იყოს 6 სიმბოლომდე ზომის");
 			return false;
 		}
 		return true;
@@ -101,7 +106,7 @@
 				return;
 			js = d.createElement(s);
 			js.id = id;
-			js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=642169405871067&version=v2.0";
+			js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=454173334719658&version=v2.0";
 			fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));
 	</script>
@@ -122,7 +127,6 @@
 			<!-- End Menu -->
 			<!--Begin Login & Registration -->
 
-			
 			<h3 id="welcome">Welcome Guest.<br><br><br> Invalid Login. Try Again</h3>
 			<form action="LoginServlet" method="post">
 				<input type="text" name="name" placeholder="ელ-ფოსტა"></input> <br />
@@ -153,18 +157,23 @@
 							tabindex="3"> </input>
 					</div>
 					<div class="txtfield">
+						<span id="icons" class="fa fa-calendar"></span> <input
+							type="text" id="datepicker" name="datetime" placeholder="დაბადების თარიღი" class="textfield"
+							tabindex="4"> </input>
+					</div>	
+					<div class="txtfield">
 						<img style="float:left; margin-left:330px;" src="style/images/male.png" alt="Male" />
-							<input type="radio" class="radio1" name="gender" value="Male" tabindex="4"></input>
+							<input type="radio" class="radio1" name="gender" value="Male" tabindex="5"></input>
 						<img style="float:left; " src="style/images/female.png"/>
-							<input type="radio" class="radio2" name="gender" value="Female" tabindex="5"></input>
+							<input type="radio" class="radio2" name="gender" value="Female" tabindex="6"></input>
 					</div>
 					<div class="txtfield">
 						<span id="icons" class="fa fa-lock"></span> <input type="password"
 							name="password" placeholder="პაროლი" class="textfield"
-							tabindex="6"></input>
+							tabindex="7"></input>
 					</div>
 					<input type="submit" name="registerbtn" id="registerbtn"
-						class="flatbtn-blu hidemodal" value="რეგისტრაცია" tabindex="7" onClick="return CheckPasswordLength();"></input>
+						class="flatbtn-blu hidemodal" value="რეგისტრაცია" tabindex="8" onClick="return CheckAlerts();"></input>
 				</form>
 			</div>
 			<div class="sidebox">
@@ -223,7 +232,7 @@
 			$('#modaltrigger').leanModal({
 				top : 5,
 				overlay : 0.45,
-				closeButton : ".hidemodal"
+				closeButton : ".modal_close"
 			});
 		});
 	</script>

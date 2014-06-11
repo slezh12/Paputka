@@ -37,15 +37,8 @@
 					<br>
 					<a href="index.html" >გამოსვლა </a>
 				</div>
-				<div class="sidebox">
-					<ul class="share">
-						<li><a id="facebook" href="#"><img src="style/images/fb.png" alt="Facebook" /></a></li>
-						<li><a id="google" href="#"><img src="style/images/g+.png"  alt="G+" /></a></li>
-					</ul>
-				</div>
 			</div>
 			<!-- End Sidebar -->
-			
 			<!-- Begin Content -->
 			<div id="content">
 				<div class="line"></div>
