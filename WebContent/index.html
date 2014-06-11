@@ -66,16 +66,16 @@ $( "#datepicker" ).datepicker();
 			alert("სახელი უნდა იყოს 1-დან 20 სიმბოლომდე ზომის");
 			return false;
 		}
-		if((registerform.lastname.value).length==0){
+		if((registerform.lastname.value).length==0 || (registerform.lastname.value).length >20){
 			alert("გვარი უნდა იყოს 1-დან 20 სიმბოლომდე ზომის");
 			return false;
 		}
-		if((registerform.mail.value).length==0){
+		if((registerform.mail.value).length==0 || (registerform.mail.value).length >40 ){
 			alert("ელ-ფოსტა უნდა იყოს 1-დან 40 სიმბოლომდე ზომის");
 			return false;
 		}
-		if((registerform.password.value).length < 6){
-			alert("პაროლი უნდა იყოს 6 სიმბოლომდე ზომის");
+		if((registerform.datetime.value).length==0){
+			alert("შეიყვანეთ დაბადების დღის თარიღი");
 			return false;
 		}
 		var radios = document.getElementsByName('gender');
@@ -88,6 +88,10 @@ $( "#datepicker" ).datepicker();
 		}
 		if(Chcount==0){
 			alert("აირჩიეთ სქესი");
+			return false;
+		}
+		if((registerform.password.value).length < 6 || (registerform.password.value).length >20){
+			alert("პაროლი უნდა იყოს 6 სიმბოლომდე ზომის");
 			return false;
 		}
 		return true;
@@ -156,7 +160,7 @@ $( "#datepicker" ).datepicker();
 					</div>
 					<div class="txtfield">
 						დაბადების თარიღი:
-						<input type="text" id="datepicker">
+						<input type="text" name="datetime" id="datepicker">
 					</div>
 					<div class="txtfield">
 						<img style="float:left; margin-left:330px;" src="style/images/male.png" alt="Male" />
