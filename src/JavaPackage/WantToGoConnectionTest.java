@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 
 import javax.sql.DataSource;
 
@@ -37,7 +38,7 @@ public class WantToGoConnectionTest {
 		return (first==second);
 	}
 	
-	@Test
+	//@Test
 	public void test() {
 		try{
 			
@@ -85,7 +86,7 @@ public class WantToGoConnectionTest {
 		
 	}
 	
-	//@Test
+	@Test
 	public void test2() {
 		try{
 			UserConnection user = new UserConnection((BasicDataSource) source);
@@ -107,14 +108,14 @@ public class WantToGoConnectionTest {
 				rs.next();
 				WantID = rs.getInt("ID");
 			}
-			want.insertIntoWantToGoDates(WantID, "'1970-01-01 00:00:01'", "'1971-01-01 00:00:01'");
+			want.insertIntoWantToGoDates(WantID, "1970-01-01 00:00:01", "1979-01-01 00:00:01");
 			want.CloseConnection();
 			user.CloseConnection();
 			rs = stmt.executeQuery("SELECT * FROM WantToGoDates where wantToGoID = " + WantID);
 			if (rs.isBeforeFirst()) {
 				rs.next();
-				assertEquals(rs.getTimestamp("StartDate"), "1970-01-01 00:00:01.0");
-				assertEquals(rs.getTimestamp("EndDate"), "1971-01-01 00:00:01");
+				assertEquals(rs.getTimestamp("StartDate"), Timestamp.valueOf("1970-01-01 00:00:01"));
+				assertEquals(rs.getTimestamp("EndDate"), Timestamp.valueOf("1979-01-01 00:00:01"));
 				stmt.executeUpdate("DELETE FROM WantToGoDates WHERE wantToGoID = " + WantID);
 				stmt.executeUpdate("DELETE FROM WantToGo WHERE UserID =" + ID);
 				stmt.executeUpdate("DELETE FROM Users Where ID = " + ID);
@@ -129,7 +130,7 @@ public class WantToGoConnectionTest {
 		
 	}
 	
-	//@Test
+	@Test
 		public void test3() {
 			try{		
 				UserConnection user = new UserConnection((BasicDataSource) source);
@@ -151,15 +152,15 @@ public class WantToGoConnectionTest {
 					rs.next();
 					WantID = rs.getInt("ID");
 				}
-				want.insertIntoWantToGoEveryday(WantID, "'1970-01-01 00:00:01'", "'1971-01-01 00:00:01'", 3);
+				want.insertIntoWantToGoEveryday(WantID, "1979-01-01 00:00:01", "1971-01-01 00:00:01", 3);
 				want.CloseConnection();
 				user.CloseConnection();
 				rs = stmt.executeQuery("SELECT * FROM WantToGoEveryday where wantToGoID = " + WantID);
 				if (rs.isBeforeFirst()) {
 					rs.next();
 					assertEquals(rs.getInt("Day"), 3);
-					assertEquals(rs.getTimestamp("StartDate"), "1970-01-01 00:00:01.0");
-					assertEquals(rs.getTimestamp("EndDate"), "1971-01-01 00:00:01");
+					assertEquals(rs.getTimestamp("StartDate"), Timestamp.valueOf("1979-01-01 00:00:01"));
+					assertEquals(rs.getTimestamp("EndDate"), Timestamp.valueOf("1971-01-01 00:00:01"));
 					stmt.executeUpdate("DELETE FROM WantToGoEveryday WHERE wantToGoID = " + WantID);
 					stmt.executeUpdate("DELETE FROM WantToGo WHERE UserID =" + ID);
 					stmt.executeUpdate("DELETE FROM Users Where ID = " + ID);
