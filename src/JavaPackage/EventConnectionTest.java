@@ -26,7 +26,7 @@ public class EventConnectionTest {
 
 	private DataSource source;
 	private EventConnection base;
-	
+
 	@Before
 	public void SetUp() {
 		source = new BasicDataSource();
@@ -36,8 +36,6 @@ public class EventConnectionTest {
 		((BasicDataSource) source).setUrl("jdbc:mysql://" + server + ":3306/"
 				+ database);
 		base = new EventConnection((BasicDataSource) source);
-		base.insertIntoEvents(1, 5, 10, 1.1, 2.1, 3.1, 4.1, "tbilisi",
-				"batumi", false, true);
 	}
 
 	private boolean areDoublesEqual(double a, double b) {
@@ -49,12 +47,14 @@ public class EventConnectionTest {
 
 	@Test
 	public void testInsertIntoEvents() {
+		base.insertIntoEvents(1, 5, 10, 1.1, 2.1, 3.1, 4.1, "tbilisi",
+				"batumi", false, true);
 		try {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + database);
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM Events WHERE ID = 1");
+					.executeQuery("SELECT * FROM Events order by ID desc limit 1");
 			if (rs.isBeforeFirst()) {
 				rs.next();
 				assertEquals(1, rs.getInt("userID"));
@@ -72,7 +72,7 @@ public class EventConnectionTest {
 				assertEquals("tbilisi", rs.getString("fromPlace"));
 				assertEquals("batumi", rs.getString("toPlace"));
 				assertEquals(false, rs.getBoolean("type"));
-				// assertEquals(true, rs.getBoolean("validation"));
+				stmt.executeUpdate("DELETE FROM Events ORDER BY ID DESC LIMIT 1");
 			} else
 				assertEquals(1, 2);
 			con.close();
@@ -83,18 +83,25 @@ public class EventConnectionTest {
 
 	@Test
 	public void testInsertIntoDates() {
-		base.insertIntoDates(1, "1000-01-01 00:00:00");
+		base.insertIntoEvents(1, 5, 10, 1.1, 2.1, 3.1, 4.1, "tbilisi",
+				"batumi", false, true);
 		try {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + database);
+			ResultSet rs1 = stmt
+					.executeQuery("SELECT * FROM Events order by ID desc limit 1");
+			rs1.next();
+			int ID = rs1.getInt("ID");
+			base.insertIntoDates(ID, "1000-01-01 00:00:00");
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM Dates where ID = 1");
+					.executeQuery("SELECT * FROM Dates order by ID desc limit 1");
 			if (rs.isBeforeFirst()) {
 				rs.next();
-				assertEquals(1, rs.getInt("eventID"));
+				assertEquals(ID, rs.getInt("eventID"));
 				assertEquals("1000-01-01 00:00:00.0", rs.getString("date"));
-				stmt.executeUpdate("truncate dates");
+				stmt.executeUpdate("DELETE FROM Dates ORDER BY ID DESC LIMIT 1");
+				stmt.executeUpdate("DELETE FROM Events ORDER BY ID DESC LIMIT 1");
 			} else
 				assertEquals(1, 2);
 			con.close();
@@ -105,22 +112,26 @@ public class EventConnectionTest {
 
 	@Test
 	public void testInsertIntoEveryday() {
-		base.insertIntoEveryday(1, "2012-10-03 00:00:00", 5);
+		base.insertIntoEvents(1, 5, 10, 1.1, 2.1, 3.1, 4.1, "tbilisi",
+				"batumi", false, true);
 		try {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + database);
+			ResultSet rs1 = stmt
+					.executeQuery("SELECT * FROM Events order by ID desc limit 1");
+			rs1.next();
+			int ID = rs1.getInt("ID");
+			base.insertIntoEveryday(ID, "00:00:00", 5);
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM Everyday where ID = 1");
+					.executeQuery("SELECT * FROM Everyday order by ID desc limit 1");
 			if (rs.isBeforeFirst()) {
 				rs.next();
-				assertEquals(1, rs.getInt("eventID"));
+				assertEquals(ID, rs.getInt("eventID"));
 				assertEquals(5, rs.getInt("day"));
-				// System.out.print(rs.getString("StartTime"));
-				// TIME-MA RA UNDA SHEINAXOS??????????????
-				// assertEquals("2012-10-03 00:00:00",
-				// rs.getString("StartTime"));
-				stmt.executeUpdate("truncate Everyday");
+				assertEquals("00:00:00", rs.getString("StartTime"));
+				stmt.executeUpdate("DELETE FROM Everyday ORDER BY ID DESC LIMIT 1");
+				stmt.executeUpdate("DELETE FROM Events ORDER BY ID DESC LIMIT 1");
 			} else
 				assertEquals(1, 2);
 			con.close();
@@ -131,18 +142,25 @@ public class EventConnectionTest {
 
 	@Test
 	public void testInsertIntoParticipants() {
-		base.insertIntoParticipants(1, 1);
+		base.insertIntoEvents(1, 5, 10, 1.1, 2.1, 3.1, 4.1, "tbilisi",
+				"batumi", false, true);
 		try {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + database);
+			ResultSet rs1 = stmt
+					.executeQuery("SELECT * FROM Events order by ID desc limit 1");
+			rs1.next();
+			int ID = rs1.getInt("ID");
+			base.insertIntoParticipants(ID, 1);
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM Participants where ID = 1");
+					.executeQuery("SELECT * FROM participants order by ID desc limit 1");
 			if (rs.isBeforeFirst()) {
 				rs.next();
-				assertEquals(1, rs.getInt("eventID"));
+				assertEquals(ID, rs.getInt("eventID"));
 				assertEquals(1, rs.getInt("userID"));
-				stmt.executeUpdate("truncate participants");
+				stmt.executeUpdate("DELETE FROM Participants ORDER BY ID DESC LIMIT 1");
+				stmt.executeUpdate("DELETE FROM Events ORDER BY ID DESC LIMIT 1");
 			} else
 				assertEquals(1, 2);
 			con.close();
@@ -151,22 +169,37 @@ public class EventConnectionTest {
 		}
 	}
 
+	// am testis chatarebis win sachiroa user-ebshi am inseris damateba
+	// mysqldan.
+	// insert into users (FirstName, LastName, Gender, BirthDate, Password,
+	// EMail)
+	// values (N'achi', N'baxlosania', true, '1994-08-23' ,
+	// N'40bd001563085fc35165329ea1ff5c5ecbdbbeef',
+	// N'achi_baxlosania@yahoo.com');
 	@Test
 	public void testInsertIntoComments() {
-		base.insertIntoComments(1, 1, "sandro lezhava", "1000-01-01 00:00:00");
+		base.insertIntoEvents(1, 5, 10, 1.1, 2.1, 3.1, 4.1, "tbilisi",
+				"batumi", false, true);
 		try {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + database);
+			ResultSet rs1 = stmt
+					.executeQuery("SELECT * FROM Events order by ID desc limit 1");
+			rs1.next();
+			int ID = rs1.getInt("ID");
+			base.insertIntoComments(ID, 1, "sandro lezhava",
+					"1000-01-01 00:00:00");
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM Comments where ID = 1");
+					.executeQuery("SELECT * FROM Comments order by ID desc limit 1");
 			if (rs.isBeforeFirst()) {
 				rs.next();
-				assertEquals(1, rs.getInt("eventID"));
+				assertEquals(ID, rs.getInt("eventID"));
 				assertEquals(1, rs.getInt("userID"));
 				assertEquals("sandro lezhava", rs.getString("comment"));
 				assertEquals("1000-01-01 00:00:00.0", rs.getString("date"));
-				stmt.executeUpdate("truncate comments");
+				stmt.executeUpdate("DELETE FROM Comments ORDER BY ID DESC LIMIT 1");
+				stmt.executeUpdate("DELETE FROM Events ORDER BY ID DESC LIMIT 1");
 			} else
 				assertEquals(1, 2);
 			con.close();
@@ -177,16 +210,23 @@ public class EventConnectionTest {
 
 	@Test
 	public void testUpdateEvent() {
-		base.updateEvent(1, false);
+		base.insertIntoEvents(1, 5, 10, 1.1, 2.1, 3.1, 4.1, "tbilisi",
+				"batumi", false, true);
 		try {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + database);
-			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM Events where ID = 1");
+			ResultSet rs1 = stmt
+					.executeQuery("SELECT * FROM Events order by ID desc limit 1");
+			rs1.next();
+			int ID = rs1.getInt("ID");
+			base.updateEvent(ID, false);
+			ResultSet rs = stmt.executeQuery("SELECT * FROM Events where ID ="
+					+ ID);
 			if (rs.isBeforeFirst()) {
 				rs.next();
 				assertEquals(false, rs.getBoolean("validation"));
+				stmt.executeUpdate("DELETE FROM Events ORDER BY ID DESC LIMIT 1");
 			} else
 				assertEquals(1, 2);
 			con.close();
@@ -195,22 +235,9 @@ public class EventConnectionTest {
 		}
 	}
 
-	
 	@After
 	public void after() {
-		Connection con;
-		try {
-			con = source.getConnection();
-			Statement stmt = con.createStatement();
-			stmt.executeQuery("USE " + database);
-			//stmt.executeUpdate("DELETE FROM Events ORDER BY ID DESC LIMIT 1");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		base.CloseConnection();
 	}
-	
-	
-}
 
+}
