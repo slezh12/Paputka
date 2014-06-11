@@ -89,7 +89,6 @@ public class UserConnection extends BaseConnection {
 	}
 
 	public void insert(String table, String column, String value, int UserID) {
-		// code here
 		try {
 			stmt.executeUpdate("INSERT INTO " + table + "( " + column + ","
 					+ "UserID) VALUES(" + "'" + value + "'" + "," + UserID

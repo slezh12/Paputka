@@ -36,7 +36,7 @@ public class UserConnectionTest {
 	 * insert into users (FirstName, LastName, Gender, BirthDate,  Password, EMail)
 values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329ea1ff5c5ecbdbbeef', N'achi_baxlosania@yahoo.com');
 	 */
-//	@Test
+	@Test
 	public void test() {
 		UserConnection base = new UserConnection((BasicDataSource) source);
 		try {
@@ -60,7 +60,7 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 	}
 	
 	
-//	@Test
+	@Test
 	public void testInsertIntoUsers() {	
 		UserConnection base = new UserConnection((BasicDataSource) source);
 		String password1 = Hash.calculateHashCode("123456");

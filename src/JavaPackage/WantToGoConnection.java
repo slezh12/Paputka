@@ -1,8 +1,6 @@
 package JavaPackage;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
@@ -10,7 +8,6 @@ public class WantToGoConnection extends BaseConnection {
 
 	public WantToGoConnection(BasicDataSource source) {
 		super(source);
-
 	}
 
 	public void insertIntoRequestss(int userID, String title,

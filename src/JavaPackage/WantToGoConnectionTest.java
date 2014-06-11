@@ -52,7 +52,6 @@ public class WantToGoConnectionTest {
 				rs.next();
 				ID = rs.getInt("ID");
 			}
-			System.out.print(ID);
 			WantToGoConnection want = new WantToGoConnection((BasicDataSource) source);
 			want.insertIntoRequestss(ID, "casvla mindaa", 1.4, 4.5, 1.3, 4.2, true);
 			want.CloseConnection();
@@ -89,7 +88,6 @@ public class WantToGoConnectionTest {
 	//@Test
 	public void test2() {
 		try{
-			
 			UserConnection user = new UserConnection((BasicDataSource) source);
 			user.insertIntoUsers("Tedo", "Chubinidze", "tedochubinidze@yahoo.com", "123", true, "'1994-02-04'");
 			Connection con = source.getConnection();
@@ -133,8 +131,7 @@ public class WantToGoConnectionTest {
 	
 	//@Test
 		public void test3() {
-			try{
-				
+			try{		
 				UserConnection user = new UserConnection((BasicDataSource) source);
 				user.insertIntoUsers("Tedo", "Chubinidze", "tedochubinidze@yahoo.com", "123", true, "'1994-02-04'");
 				Connection con = source.getConnection();
