@@ -27,6 +27,13 @@ public class EventConnectionTest {
 	private DataSource source;
 	private EventConnection base;
 
+	// testis chatarebamde sachiroa eventebis cxrilshi chaematos 5 minimum
+	// shemdegi
+	// record,romlis inserti shemdegnairad gamoiyureba:
+	// insert into Events
+	// (userID,places,fee,FromLongitude,FromLatitude,ToLongitude,ToLatitude,fromPlace,toPlace,type,validation)
+	// values(1, 5, 10, 1.1, 2.1, 3.1, 4.1, "tbilisi","batumi", false, true);
+
 	@Before
 	public void SetUp() {
 		source = new BasicDataSource();
@@ -83,8 +90,6 @@ public class EventConnectionTest {
 
 	@Test
 	public void testInsertIntoDates() {
-		base.insertIntoEvents(1, 5, 10, 1.1, 2.1, 3.1, 4.1, "tbilisi",
-				"batumi", false, true);
 		try {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
@@ -112,8 +117,6 @@ public class EventConnectionTest {
 
 	@Test
 	public void testInsertIntoEveryday() {
-		base.insertIntoEvents(1, 5, 10, 1.1, 2.1, 3.1, 4.1, "tbilisi",
-				"batumi", false, true);
 		try {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
@@ -142,8 +145,6 @@ public class EventConnectionTest {
 
 	@Test
 	public void testInsertIntoParticipants() {
-		base.insertIntoEvents(1, 5, 10, 1.1, 2.1, 3.1, 4.1, "tbilisi",
-				"batumi", false, true);
 		try {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
@@ -169,7 +170,7 @@ public class EventConnectionTest {
 		}
 	}
 
-	// am testis chatarebis win sachiroa user-ebshi am inseris damateba
+	// am testis chatarebis win sachiroa user-ebshi am insertis damateba
 	// mysqldan.
 	// insert into users (FirstName, LastName, Gender, BirthDate, Password,
 	// EMail)
@@ -178,8 +179,6 @@ public class EventConnectionTest {
 	// N'achi_baxlosania@yahoo.com');
 	@Test
 	public void testInsertIntoComments() {
-		base.insertIntoEvents(1, 5, 10, 1.1, 2.1, 3.1, 4.1, "tbilisi",
-				"batumi", false, true);
 		try {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
@@ -210,8 +209,6 @@ public class EventConnectionTest {
 
 	@Test
 	public void testUpdateEvent() {
-		base.insertIntoEvents(1, 5, 10, 1.1, 2.1, 3.1, 4.1, "tbilisi",
-				"batumi", false, true);
 		try {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
