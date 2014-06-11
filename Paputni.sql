@@ -133,5 +133,3 @@ create table Requests(
 
 insert into users (FirstName, LastName, Gender, BirthDate,  Password, EMail)
 values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329ea1ff5c5ecbdbbeef', N'achi_baxlosania@yahoo.com');
-
-select ID, EventID, UserID from Requests join Events on EventID = Events.ID where Events.UserID = 1 ;

@@ -106,7 +106,13 @@ public class UserConnection extends BaseConnection {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
 
+	public ResultSet getUsersRequests(int UserID) throws SQLException {
+		ResultSet rs = stmt
+				.executeQuery("select ID, EventID, UserID, Text, Acception, Date from Requests join Events on EventID = Events.ID where Events.UserID = "
+						+ UserID);
+		return rs;
 	}
 
 }
