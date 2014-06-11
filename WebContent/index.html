@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -12,7 +12,14 @@
 <script type="text/javascript" src="style/js/jquery-1.9.1.min.js"></script>
  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+
 <script type="text/javascript" src="style/js/jquery.leanModal.min.js"></script>
+
+ <link rel="stylesheet" type="text/css" href="style/js/DateTimePicker.css" />
+<script type="text/javascript" src="style/js/DateTimePicker.js"></script>
+
+
 <!-- This script is for Google + Login -->
 <script type="text/javascript">
 	(function() {
@@ -52,11 +59,12 @@
 	}
 </script>
 
- <script>
-$(function() {
-$( "#datepicker" ).datepicker();
-});
+<script>
+		 $(document).ready(function() {
+				$("#datepicker").DateTimePicker();
+		 });
 </script>
+    
 <script type="text/javascript"> 
 	function CheckAlerts(){
 		if((registerform.firstname.value).length == 0 || (registerform.firstname.value).length >20){
@@ -157,9 +165,10 @@ $( "#datepicker" ).datepicker();
 					</div>
 					<div class="txtfield">
 						<span id="icons" class="fa fa-calendar"></span> <input
-							type="text" id="datepicker" name="datetime" placeholder="დაბადების თარიღი" class="textfield"
+							type="text" data-field='date' name="datetime" placeholder="დაბადების თარიღი" class="textfield"
 							tabindex="4"> </input>
 					</div>	
+					<div id="datepicker"></div>	
 					<div class="txtfield">
 						<img style="float:left; margin-left:330px;" src="style/images/male.png" alt="Male" />
 							<input type="radio" class="radio1" name="gender" value="Male" tabindex="5"></input>
