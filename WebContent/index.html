@@ -61,7 +61,7 @@ $( "#datepicker" ).datepicker();
 });
 </script>
 <script type="text/javascript"> 
-	function CheckPasswordLength(){
+	function CheckAlerts(){
 		if((registerform.firstname.value).length == 0 || (registerform.firstname.value).length >20){
 			alert("სახელი უნდა იყოს 1-დან 20 სიმბოლომდე ზომის");
 			return false;
@@ -159,22 +159,23 @@ $( "#datepicker" ).datepicker();
 							tabindex="3"> </input>
 					</div>
 					<div class="txtfield">
-						დაბადების თარიღი:
-						<input type="text" name="datetime" id="datepicker">
-					</div>
+						<span id="icons" class="fa fa-calendar"></span> <input
+							type="text" id="datepicker" name="datetime" placeholder="დაბადების თარიღი" class="textfield"
+							tabindex="4"> </input>
+					</div>	
 					<div class="txtfield">
 						<img style="float:left; margin-left:330px;" src="style/images/male.png" alt="Male" />
-							<input type="radio" class="radio1" name="gender" value="Male" tabindex="4"></input>
+							<input type="radio" class="radio1" name="gender" value="Male" tabindex="5"></input>
 						<img style="float:left; " src="style/images/female.png"/>
-							<input type="radio" class="radio2" name="gender" value="Female" tabindex="5"></input>
+							<input type="radio" class="radio2" name="gender" value="Female" tabindex="6"></input>
 					</div>
 					<div class="txtfield">
 						<span id="icons" class="fa fa-lock"></span> <input type="password"
 							name="password" placeholder="პაროლი" class="textfield"
-							tabindex="6"></input>
+							tabindex="7"></input>
 					</div>
 					<input type="submit" name="registerbtn" id="registerbtn"
-						class="flatbtn-blu hidemodal" value="რეგისტრაცია" tabindex="7" onClick="return CheckPasswordLength();"></input>
+						class="flatbtn-blu hidemodal" value="რეგისტრაცია" tabindex="8" onClick="return CheckAlerts();"></input>
 				</form>
 			</div>
 			<div class="sidebox">
