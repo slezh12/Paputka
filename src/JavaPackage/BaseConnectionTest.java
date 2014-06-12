@@ -31,6 +31,10 @@ public class BaseConnectionTest {
 		((BasicDataSource) source).setPassword(password);
 		((BasicDataSource) source).setUrl("jdbc:mysql://" + server + ":3306/"
 				+ database);
+		UserConnection user = new UserConnection((BasicDataSource) source);
+		user.insertIntoUsers("Tedo", "Chubinidze",
+				"tedochubinidze@yahoo.com", "123", true, "'1994-02-04'");
+		user.CloseConnection();
 	}
 
 	public boolean isTrue(double first, double second) {
@@ -40,10 +44,6 @@ public class BaseConnectionTest {
 	@Test
 	public void selectByIDTest() {
 		try {
-			UserConnection user = new UserConnection((BasicDataSource) source);
-			user.insertIntoUsers("Tedo", "Chubinidze",
-					"tedochubinidze@yahoo.com", "123", true, "'1994-02-04'");
-			user.CloseConnection();
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + database);
@@ -54,12 +54,11 @@ public class BaseConnectionTest {
 				rs.next();
 				ID = rs.getInt("ID");
 			}
-			con.close();
 			BaseConnection base = new BaseConnection((BasicDataSource) source);
 			rs = base.selectByID("Users", ID, "ID");
 			if (rs.isBeforeFirst()) {
 				rs.next();
-				assertEquals(rs.getInt("ID"), ID);
+				assertEquals(ID,rs.getInt("ID"));
 				assertEquals("123", rs.getString("Password"));
 				assertEquals("Tedo", rs.getString("FirstName"));
 				assertEquals("Chubinidze", rs.getString("LastName"));
@@ -71,6 +70,44 @@ public class BaseConnectionTest {
 			} else {
 				assertEquals(1, 2);
 			}
+			con.close();
+			base.CloseConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void selectAllTest() {
+		try {
+			Connection con = source.getConnection();
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			int ID = 0;
+			ResultSet rs = stmt
+					.executeQuery("SELECT * from Users");
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				ID = rs.getInt("ID");
+			}
+			BaseConnection base = new BaseConnection((BasicDataSource) source);
+			rs = base.selectAll("Users");
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				assertEquals(ID,rs.getInt("ID"));
+				assertEquals("123", rs.getString("Password"));
+				assertEquals("Tedo", rs.getString("FirstName"));
+				assertEquals("Chubinidze", rs.getString("LastName"));
+				assertEquals(true, rs.getBoolean("Gender"));
+				assertEquals(Date.valueOf("1994-02-04"),
+						rs.getDate("BirthDate"));
+				assertEquals("tedochubinidze@yahoo.com", rs.getString("Email"));
+				assertEquals(false, rs.next());
+				stmt.executeUpdate("DELETE FROM Users Where ID = " + ID);
+			} else {
+				assertEquals(1, 2);
+			}
+			con.close();
 			base.CloseConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -80,9 +117,6 @@ public class BaseConnectionTest {
 	@Test
 	public void test() {
 		try {
-			UserConnection user = new UserConnection((BasicDataSource) source);
-			user.insertIntoUsers("Tedo", "Chubinidze",
-					"tedochubinidze@yahoo.com", "123", true, "'1994-02-04'");
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + database);
