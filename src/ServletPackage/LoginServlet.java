@@ -1,12 +1,6 @@
 package ServletPackage;
 
 import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -20,9 +14,6 @@ import javax.sql.DataSource;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
-import JavaPackage.BaseConnection;
-import JavaPackage.Hash;
-import JavaPackage.MyDBInfo;
 import JavaPackage.ParseInfo;
 import JavaPackage.User;
 
