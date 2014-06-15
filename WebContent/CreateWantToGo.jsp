@@ -31,7 +31,7 @@
 
 <script type="text/javascript">
 	function CheckAlerts() {
-		if(check != 2){
+		if (check != 2) {
 			alert("მონიშნეთ ორი წერტილი რუკაზე");
 			return false;
 		}
@@ -327,9 +327,7 @@
 			</html>
 			<div class="line"></div>
 			<div id="footer">
-				<h3>ჩვენ შესახებ</h3>
-				<p>პაპუტკა.ჯი საიტი აკეთებს რაღაცეებს და შექმნილია იმისთვის რომ
-					ბლა .</p>
+				<h2>აირჩიეთ მარშრუტის საწყისი და საბოლოო პუნქტები</h2>
 				<p>
 					<span class="lite1">ტელ:</span> +555 636 646 62 <span class="lite1">მეილი:</span>
 					name@domain.com
