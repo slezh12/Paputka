@@ -29,41 +29,113 @@
 
 <script type="text/javascript">
 	function CheckAlerts() {
-		if ((registerform.firstname.value).length == 0
+		if (check != 2) {
+			alert("მონიშნეთ ორი წერტილი რუკაზე");
+			return false;
+		}
+		if ((registerform.from.value).length == 0
 				|| (registerform.from.value).length > 30) {
-			alert("სახელი უნდა იყოს 1-დან 30 სიმბოლომდე ზომის");
+			alert("გასვლის ადგილი უნდა იყოს 1-დან 30 სიმბოლომდე ზომის");
 			return false;
 		}
-		if ((registerform.lastname.value).length == 0
+		if ((registerform.to.value).length == 0
 				|| (registerform.to.value).length > 30) {
-			alert("გვარი უნდა იყოს 1-დან 30 სიმბოლომდე ზომის");
+			alert("დანიშნულების ადგილი უნდა იყოს 1-დან 30 სიმბოლომდე ზომის");
 			return false;
 		}
-		if ((registerform.mail.value).length == 0
-				|| (registerform.mail.value).length > 40) {
-			alert("ელ-ფოსტა უნდა იყოს 1-დან 40 სიმბოლომდე ზომის");
+		if((registerform.fee.value).length==0){
+			alert("შეიყვანეთ გადასახადი");
 			return false;
 		}
-		if ((registerform.datetime.value).length == 0) {
-			alert("შეიყვანეთ დაბადების დღის თარიღი");
+		if((registerform.places.value).length==0){
+			alert("შეიყვანეთ ადგილების რაოდენობა");
 			return false;
 		}
-		var radios = document.getElementsByName('gender');
+		var radios = document.getElementsByName('type');
 		var Chcount = 0;
+		var once = false;
+		var everyDay = false;
 		for (var i = 0, length = radios.length; i < length; i++) {
 			if (radios[i].checked) {
+				if (i == 0) {
+					everyDay = true;
+				} else if (i == 1) {
+					once = true;
+				}
 				Chcount = 1;
 				break;
 			}
 		}
 		if (Chcount == 0) {
-			alert("აირჩიეთ სქესი");
+			alert("აირჩიეთ ყოველდღიური ან ერთჯერადი");
 			return false;
 		}
-		if ((registerform.password.value).length < 6
-				|| (registerform.password.value).length > 20) {
-			alert("პაროლი უნდა იყოს 6 სიმბოლომდე ზომის");
-			return false;
+		if (once) {
+			if (((registerform.date.value).length == 0)
+					|| ((registerform.time.value).length == 0)) {
+				alert("ერთი ველი მაინც ერთჯერადისთვის ცარიელია");
+				return false;
+			}
+		}
+		var array = [];
+		var index = 0;
+		if (everyDay) {
+			var inputElements = document.getElementsByTagName('input');
+			for (var i = 0; inputElements[i]; i++) {
+				if ((inputElements[i].name == "0" && inputElements[i].checked)
+						|| (inputElements[i].name == "1" && inputElements[i].checked)
+						|| (inputElements[i].name == "2" && inputElements[i].checked)
+						|| (inputElements[i].name == "3" && inputElements[i].checked)
+						|| (inputElements[i].name == "4" && inputElements[i].checked)
+						|| (inputElements[i].name == "5" && inputElements[i].checked)
+						|| (inputElements[i].name == "6" && inputElements[i].checked)) {
+
+					array[index] = inputElements[i].name;
+					index++;
+				}
+			}
+			if (index == 0) {
+				alert("არც ერთი დღე არ არის მონიშნული");
+				return false;
+			}
+			for (var i = 0; i < index; i++) {
+				if (array[i] == "0") {
+					if ((registerform.time0.value).length == 0) {
+						alert("ორშაბათი დღე მონიშნულია,მაგრამ საწყისი დრო არ არის მითითებული");
+						return false;
+					}
+				} else if (array[i] == "1") {
+					if ((registerform.time1.value).length == 0) {
+						alert("სამშაბათი დღე მონიშნულია,მაგრამ საწყისი დრო არ არის მითითებული");
+						return false;
+					}
+				} else if (array[i] == "2") {
+					if ((registerform.time2.value).length == 0) {
+						alert("ოთხშაბათი დღე მონიშნულია,მაგრამ საწყისი დრო არ არის მითითებული");
+						return false;
+					}
+				} else if (array[i] == "3") {
+					if ((registerform.time3.value).length == 0) {
+						alert("ხუთშაბათი დღე მონიშნულია,მაგრამ საწყისი დრო არ არის მითითებული");
+						return false;
+					}
+				} else if (array[i] == "4") {
+					if ((registerform.time4.value).length == 0) {
+						alert("პარასკევი დღე მონიშნულია,მაგრამ საწყისი დრო არ არის მითითებული");
+						return false;
+					}
+				} else if (array[i] == "5") {
+					if ((registerform.time5.value).length == 0) {
+						alert("შაბათი დღე მონიშნულია,მაგრამ საწყისი დრო არ არის მითითებული");
+						return false;
+					}
+				} else if (array[i] == "6") {
+					if ((registerform.time6.value).length == 0) {
+						alert("კვირა დღე მონიშნულია,მაგრამ საწყისი დრო არ არის მითითებული");
+						return false;
+					}
+				}
+			}
 		}
 		return true;
 	}
@@ -104,12 +176,12 @@
 							class="textfield" tabindex="2"></input>
 					</div>
 					<div class="txtfield">
-						<input type="number" name="fee" min="0" step="any" placeholder="გადასახადი (ლარებში)"
-							class="textfield" tabindex="3"></input>
+						<input type="number" min="0" step="0.01" name="fee"
+							placeholder="გადასახადი (ლარებში)" class="textfield" tabindex="3"></input>
 					</div>
 					<div class="txtfield">
-						<input type="number" min ="0" name="places" placeholder="ადგილების რაოდენობა"
-							class="textfield" tabindex="3"></input>
+						<input type="number" min="1" name="places"
+							placeholder="ადგილების რაოდენობა" class="textfield" tabindex="3"></input>
 					</div>
 					<p>
 						ყოველდღიური <input type="radio" class="radio1" name="type"
@@ -178,8 +250,7 @@
 			zoom : 7,
 			mapTypeId : google.maps.MapTypeId.ROADMAP
 		};
-		map = new google.maps.Map(document.getElementById("googleMap"),
-				mapProp);
+		map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 		google.maps.event.addListener(map, 'click', function(event) {
 			placeMarker(event.latLng);
 		});
@@ -195,9 +266,9 @@
 			fromLongitude = location.lng();
 			fromLatitude = location.lat();
 			var infowindow = new google.maps.InfoWindow({
-			    content: 'საწყისი პუნქტი'
+				content : 'საწყისი პუნქტი'
 			});
-			infowindow.open(map,marker);
+			infowindow.open(map, marker);
 		} else if (check == 2) {
 			var marker = new google.maps.Marker({
 				position : location,
@@ -206,22 +277,26 @@
 			toLongitude = location.lng();
 			toLatitude = location.lat();
 			var infowindow = new google.maps.InfoWindow({
-			    content: 'საბოლოო პუნქტი'
+				content : 'საბოლოო პუნქტი'
 			});
-			infowindow.open(map,marker);
-		} 
+			infowindow.open(map, marker);
+		}
 	}
 
 	google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 </head>
 <body>
-<% 
-	request.setAttribute("fromLongitude", "<script>document.writeln(fromLongitude)</script>");
-	request.setAttribute("fromLatitude", "<script>document.writeln(fromLatitude)</script>");
-	request.setAttribute("toLongitude", "<script>document.writeln(toLongitude)</script>");
-	request.setAttribute("toLatitude", "<script>document.writeln(toLatitude)</script>");
-%>
+	<%
+		request.setAttribute("fromLongitude",
+				"<script>document.writeln(fromLongitude)</script>");
+		request.setAttribute("fromLatitude",
+				"<script>document.writeln(fromLatitude)</script>");
+		request.setAttribute("toLongitude",
+				"<script>document.writeln(toLongitude)</script>");
+		request.setAttribute("toLatitude",
+				"<script>document.writeln(toLatitude)</script>");
+	%>
 	<div id="googleMap" style="width: 800px; height: 400px;"></div>
 </body>
 			</html>
