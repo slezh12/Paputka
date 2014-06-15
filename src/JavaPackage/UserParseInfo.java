@@ -6,12 +6,10 @@ import java.sql.SQLException;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
+public class UserParseInfo extends ParseInfo {
 
-public class ParseInfo {
-	private BasicDataSource source;
-	
-	public ParseInfo(BasicDataSource source) {
-		this.source = source;
+	public UserParseInfo(BasicDataSource source) {
+		super(source);
 	}
 
 	public User getUser(String email, String password) {

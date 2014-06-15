@@ -14,8 +14,8 @@ import javax.sql.DataSource;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
-import JavaPackage.ParseInfo;
 import JavaPackage.User;
+import JavaPackage.UserParseInfo;
 
 /**
  * Servlet implementation class LoginServlet
@@ -51,7 +51,7 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("pass");
 		ServletContext context = getServletContext();
 		DataSource source = (DataSource) context.getAttribute("connectionPool");
-		ParseInfo info = new ParseInfo((BasicDataSource) source);
+		UserParseInfo info = new UserParseInfo((BasicDataSource) source);
 		RequestDispatcher dispatch;
 		User user = info.getUser(name, password);
 		if (user != null) {
