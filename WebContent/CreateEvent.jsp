@@ -30,13 +30,13 @@
 <script type="text/javascript">
 	function CheckAlerts() {
 		if ((registerform.firstname.value).length == 0
-				|| (registerform.firstname.value).length > 20) {
-			alert("სახელი უნდა იყოს 1-დან 20 სიმბოლომდე ზომის");
+				|| (registerform.from.value).length > 30) {
+			alert("სახელი უნდა იყოს 1-დან 30 სიმბოლომდე ზომის");
 			return false;
 		}
 		if ((registerform.lastname.value).length == 0
-				|| (registerform.lastname.value).length > 20) {
-			alert("გვარი უნდა იყოს 1-დან 20 სიმბოლომდე ზომის");
+				|| (registerform.to.value).length > 30) {
+			alert("გვარი უნდა იყოს 1-დან 30 სიმბოლომდე ზომის");
 			return false;
 		}
 		if ((registerform.mail.value).length == 0
@@ -104,11 +104,11 @@
 							class="textfield" tabindex="2"></input>
 					</div>
 					<div class="txtfield">
-						<input type="text" name="fee" placeholder="გადასახადი"
+						<input type="number" name="fee" min="0" step="any" placeholder="გადასახადი (ლარებში)"
 							class="textfield" tabindex="3"></input>
 					</div>
 					<div class="txtfield">
-						<input type="text" name="places" placeholder="ადგილების რაოდენობა"
+						<input type="number" min ="0" name="places" placeholder="ადგილების რაოდენობა"
 							class="textfield" tabindex="3"></input>
 					</div>
 					<p>
