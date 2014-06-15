@@ -75,34 +75,58 @@
 						|| (inputElements[i].name == "4" && inputElements[i].checked)
 						|| (inputElements[i].name == "5" && inputElements[i].checked)
 						|| (inputElements[i].name == "6" && inputElements[i].checked)) {
-					
+
 					array[index] = inputElements[i].name;
 					index++;
 				}
 			}
-			if(index == 0){
+			if (index == 0) {
 				alert("არც ერთი დღე არ არის მონიშნული");
 				return false;
 			}
 			for (var i = 0; i < index; i++) {
-				var temp1 = 'start' + array[i];
-				var temp2 = 'end' + array[i];
-				var inputElements = document.getElementsByTagName(temp1);
-				var inputElements1 = document.getElementsByTagName(temp2);
-				var sum = 0;
-				for (var j = 0; inputElements[j]; j++) {
-					if(inputElements[j].value == "") {
-						sum++;
+				if (array[i] == "0") {
+					if ((registerform.start0.value).length == 0
+							|| (registerform.end0.value).length == 0) {
+						alert("ორშაბათი დღე მონიშნულია,მაგრამ საწყისი ან საბოლოო დრო არ არის მითითებული");
+						return false;
 					}
-				}
-				for (var k = 0; inputElements1[k]; k++) {
-					if(inputElements1[k].value == "") {
-						sum++;
+				} else if (array[i] == "1") {
+					if ((registerform.start1.value).length == 0
+							|| (registerform.end1.value).length == 0) {
+						alert("სამშაბათი დღე მონიშნულია,მაგრამ საწყისი ან საბოლოო დრო არ არის მითითებული");
+						return false;
 					}
-				}
-				if(sum == 2){
-					alert("მონიშნულ დღეზე ერთი ველი მაინც ცარიელია");
-					return false;
+				} else if (array[i] == "2") {
+					if ((registerform.start2.value).length == 0
+							|| (registerform.end2.value).length == 0) {
+						alert("ოთხშაბათი დღე მონიშნულია,მაგრამ საწყისი ან საბოლოო დრო არ არის მითითებული");
+						return false;
+					}
+				} else if (array[i] == "3") {
+					if ((registerform.start3.value).length == 0
+							|| (registerform.end3.value).length == 0) {
+						alert("ხუთშაბათი დღე მონიშნულია,მაგრამ საწყისი ან საბოლოო დრო არ არის მითითებული");
+						return false;
+					}
+				} else if (array[i] == "4") {
+					if ((registerform.start4.value).length == 0
+							|| (registerform.end4.value).length == 0) {
+						alert("პარასკევი დღე მონიშნულია,მაგრამ საწყისი ან საბოლოო დრო არ არის მითითებული");
+						return false;
+					}
+				} else if (array[i] == "5") {
+					if ((registerform.start5.value).length == 0
+							|| (registerform.end5.value).length == 0) {
+						alert("შაბათი დღე მონიშნულია,მაგრამ საწყისი ან საბოლოო დრო არ არის მითითებული");
+						return false;
+					}
+				} else if (array[i] == "6") {
+					if ((registerform.start6.value).length == 0
+							|| (registerform.end6.value).length == 0) {
+						alert("კვირა დღე მონიშნულია,მაგრამ საწყისი ან საბოლოო დრო არ არის მითითებული");
+						return false;
+					}
 				}
 			}
 		}
@@ -144,75 +168,75 @@
 						ყოველდღიური: <input type="checkbox" name="everyday" tabindex="5"></input>
 					</p>
 					<p>
-						ორშაბათი: <input type="checkbox" name="0" tabindex="5"></input>
-						საწყისი დრო:<input type="text" data-field='time' name="start0"
-							placeholder="დრო" tabindex="4" class="SmallInput"></input>
-						საბოლოო დრო: <input type="text" data-field='time' name="end0"
-							placeholder="დრო" tabindex="4" class="SmallInput"></input>
+						ორშაბათი: <input type="checkbox" name="0" tabindex="5"></input> <input
+							type="text" data-field='time' name="start0"
+							placeholder="საწყისი დრო" tabindex="4"></input> <input
+							type="text" data-field='time' name="end0"
+							placeholder="საბოლოო დრო" tabindex="4"></input>
 					</p>
 					<div id="datepicker"></div>
 					<p>
-						სამშაბათი: <input type="checkbox" name="1" tabindex="5"></input>
-						საწყისი დრო:<input type="text" data-field='time' name="start1"
-							placeholder="დრო" tabindex="4" class="SmallInput"></input>
-						საბოლოო დრო: <input type="text" data-field='time' name="end1"
-							placeholder="დრო" tabindex="4" class="SmallInput"></input>
+						სამშაბათი: <input type="checkbox" name="1" tabindex="5"></input> <input
+							type="text" data-field='time' name="start1"
+							placeholder="საწყისი დრო" tabindex="4"></input> <input
+							type="text" data-field='time' name="end1"
+							placeholder="საბოლოო დრო" tabindex="4"></input>
 					</p>
 					<div id="datepicker"></div>
 					<p>
-						ოთხშაბათი: <input type="checkbox" name="2" tabindex="5"></input>
-						საწყისი დრო:<input type="text" data-field='time' name="start2"
-							placeholder="დრო" tabindex="4" class="SmallInput"></input>
-						საბოლოო დრო: <input type="text" data-field='time' name="end2"
-							placeholder="დრო" tabindex="4" class="SmallInput"></input>
+						ოთხშაბათი: <input type="checkbox" name="2" tabindex="5"></input> <input
+							type="text" data-field='time' name="start2"
+							placeholder="საწყისი დრო" tabindex="4"></input> <input
+							type="text" data-field='time' name="end2"
+							placeholder="საბოლოო დრო" tabindex="4"></input>
 					</p>
 					<div id="datepicker"></div>
 					<p>
-						ხუთშაბათი: <input type="checkbox" name="3" tabindex="5"></input>
-						საწყისი დრო:<input type="text" data-field='time' name="start3"
-							placeholder="დრო" tabindex="4" class="SmallInput"></input>
-						საბოლოო დრო: <input type="text" data-field='time' name="end3"
-							placeholder="დრო" tabindex="4" class="SmallInput"></input>
+						ხუთშაბათი: <input type="checkbox" name="3" tabindex="5"></input> <input
+							type="text" data-field='time' name="start3"
+							placeholder="საწყისი დრო" tabindex="4"></input> <input
+							type="text" data-field='time' name="end3"
+							placeholder="საბოლოო დრო" tabindex="4"></input>
 					</p>
 					<div id="datepicker"></div>
 					<p>
-						პარასკევი: <input type="checkbox" name="4" tabindex="5"></input>
-						საწყისი დრო:<input type="text" data-field='time' name="start4"
-							placeholder="დრო" tabindex="4" class="SmallInput"></input>
-						საბოლოო დრო: <input type="text" data-field='time' name="end4"
-							placeholder="დრო" tabindex="4" class="SmallInput"></input>
+						პარასკევი: <input type="checkbox" name="4" tabindex="5"></input> <input
+							type="text" data-field='time' name="start4"
+							placeholder="საწყისი დრო" tabindex="4"></input> <input
+							type="text" data-field='time' name="end4"
+							placeholder="საბოლოო დრო" tabindex="4"></input>
 					</p>
 					<div id="datepicker"></div>
 					<p>
-						შაბათი: <input type="checkbox" name="5" tabindex="5"></input>
-						საწყისი დრო:<input type="text" data-field='time' name="start5"
-							placeholder="დრო" tabindex="4" class="SmallInput"></input>
-						საბოლოო დრო: <input type="text" data-field='time' name="end5"
-							placeholder="დრო" tabindex="4" class="SmallInput"></input>
+						შაბათი: <input type="checkbox" name="5" tabindex="5"></input> <input
+							type="text" data-field='time' name="start5"
+							placeholder="საწყისი დრო" tabindex="4"></input> <input
+							type="text" data-field='time' name="end5"
+							placeholder="საბოლოო დრო" tabindex="4"></input>
 					</p>
 					<div id="datepicker"></div>
 					<p>
-						კვირა: <input type="checkbox" name="6" tabindex="5"></input>
-						საწყისი დრო:<input type="text" data-field='time' name="start6"
-							placeholder="დრო" tabindex="4" class="SmallInput"></input>
-						საბოლოო დრო: <input type="text" data-field='time' name="end6"
-							placeholder="დრო" tabindex="4" class="SmallInput"></input>
+						კვირა: <input type="checkbox" name="6" tabindex="5"></input> <input
+							type="text" data-field='time' name="start6"
+							placeholder="საწყისი დრო" tabindex="4"></input> <input
+							type="text" data-field='time' name="end6"
+							placeholder="საბოლოო დრო" tabindex="4"></input>
 					</p>
 					<div id="datepicker"></div>
 					<p>
 						ერთჯერადი <input type="checkbox" name="once" tabindex="5"></input>
 					</p>
 					<p>
-						საწყისი თარიღი<input type="text" data-field='date'
-							name="datetimeStart" placeholder="თარიღი" tabindex="4"></input>
-						საბოლოო თარიღი<input type="text" data-field='date'
-							name="datetimeFinish" placeholder="თარიღი" tabindex="4"></input>
+						<input type="text" data-field='date' name="datetimeStart"
+							placeholder="საწყისი თარიღი" tabindex="4"></input> <input
+							type="text" data-field='date' name="datetimeFinish"
+							placeholder="საბოლოო თარიღი" tabindex="4"></input>
 					</p>
 					<p>
-						საწყისი დრო:<input type="text" data-field='time' name="startTime"
-							placeholder="დრო" tabindex="4" class="SmallInput"></input>
-						საბოლოო დრო: <input type="text" data-field='time' name="endTime"
-							placeholder="დრო" tabindex="4" class="SmallInput"></input>
+						<input type="text" data-field='time' name="startTime"
+							placeholder="საწყისი დრო" tabindex="4"></input> <input
+							type="text" data-field='time' name="endTime"
+							placeholder="საბოლოო დრო" tabindex="4"></input>
 					</p>
 					<div id="datepicker"></div>
 					<input type="submit" name="registerbtn" id="registerbtn"
