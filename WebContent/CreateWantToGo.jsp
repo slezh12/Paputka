@@ -31,27 +31,32 @@
 
 <script type="text/javascript">
 	function CheckAlerts() {
+		if(check != 2){
+			alert("მონიშნეთ ორი წერტილი რუკაზე");
+			return false;
+		}
 		if ((registerform.title.value).length == 0
 				|| (registerform.title.value).length > 100) {
 			alert("სახელი უნდა იყოს 1-დან 100 სიმბოლომდე ზომის");
 			return false;
 		}
-		var checkedValue = 0;
-		var everyDay = false;
+		var radios = document.getElementsByName('type');
+		var Chcount = 0;
 		var once = false;
-		var inputElements = document.getElementsByTagName('input');
-		for (var i = 0; inputElements[i]; i++) {
-			if (inputElements[i].name == "everyday" && inputElements[i].checked) {
-				everyDay = true;
-				checkedValue++;
-			} else if (inputElements[i].name == "once"
-					&& inputElements[i].checked) {
-				once = true;
-				checkedValue++;
+		var everyDay = false;
+		for (var i = 0, length = radios.length; i < length; i++) {
+			if (radios[i].checked) {
+				if (i == 0) {
+					everyDay = true;
+				} else if (i == 1) {
+					once = true;
+				}
+				Chcount = 1;
+				break;
 			}
 		}
-		if (checkedValue == 2 || checkedValue == 0) {
-			alert("მონიშნული უნდა იყოს ან მარტო ყოველდღიური ან მარტო ერთჯერადი");
+		if (Chcount == 0) {
+			alert("აირჩიეთ ყოველდღიური ან ერთჯერადი");
 			return false;
 		}
 		if (once) {
@@ -59,7 +64,7 @@
 					|| ((registerform.datetimeFinish.value).length == 0)
 					|| ((registerform.startTime.value).length == 0)
 					|| ((registerform.endTime.value).length == 0)) {
-				alert("ერთ ველი მაინც ერთჯერადისთვის ცარიელია");
+				alert("ერთი ველი მაინც ერთჯერადისთვის ცარიელია");
 				return false;
 			}
 		}
@@ -165,7 +170,8 @@
 						<input type="text" name="title" placeholder="სახელი " tabindex="1"></input>
 					</p>
 					<p>
-						ყოველდღიური: <input type="checkbox" name="everyday" tabindex="5"></input>
+						ყოველდღიური <input type="radio" class="radio1" name="type"
+							value="everyday" tabindex="5"></input>
 					</p>
 					<p>
 						ორშაბათი: <input type="checkbox" name="0" tabindex="5"></input> <input
@@ -224,7 +230,8 @@
 					</p>
 					<div id="datepicker"></div>
 					<p>
-						ერთჯერადი <input type="checkbox" name="once" tabindex="5"></input>
+						ერთჯერადი <input type="radio" class="radio2" name="type"
+							value="oneway" tabindex="6"></input>
 					</p>
 					<p>
 						<input type="text" data-field='date' name="datetimeStart"
@@ -255,20 +262,66 @@
 <script
 	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
 <script>
+	var map;
+	var check;
+	var fromLongitude;
+	var fromLatitude;
+	var toLongitude;
+	var toLatitude;
 	function initialize() {
+		check = 0;
 		var mapProp = {
 			center : new google.maps.LatLng(42.347485, 43.7),
 			zoom : 7,
 			mapTypeId : google.maps.MapTypeId.ROADMAP
 		};
-		var map = new google.maps.Map(document.getElementById("googleMap"),
-				mapProp);
+		map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+		google.maps.event.addListener(map, 'click', function(event) {
+			placeMarker(event.latLng);
+		});
+	}
+
+	function placeMarker(location) {
+		check++;
+		if (check == 1) {
+			var marker = new google.maps.Marker({
+				position : location,
+				map : map,
+			});
+			fromLongitude = location.lng();
+			fromLatitude = location.lat();
+			var infowindow = new google.maps.InfoWindow({
+				content : 'საწყისი პუნქტი'
+			});
+			infowindow.open(map, marker);
+		} else if (check == 2) {
+			var marker = new google.maps.Marker({
+				position : location,
+				map : map,
+			});
+			toLongitude = location.lng();
+			toLatitude = location.lat();
+			var infowindow = new google.maps.InfoWindow({
+				content : 'საბოლოო პუნქტი'
+			});
+			infowindow.open(map, marker);
+		}
 	}
 
 	google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 </head>
 <body>
+	<%
+		request.setAttribute("fromLongitude",
+				"<script>document.writeln(fromLongitude)</script>");
+		request.setAttribute("fromLatitude",
+				"<script>document.writeln(fromLatitude)</script>");
+		request.setAttribute("toLongitude",
+				"<script>document.writeln(toLongitude)</script>");
+		request.setAttribute("toLatitude",
+				"<script>document.writeln(toLatitude)</script>");
+	%>
 	<div id="googleMap" style="width: 800px; height: 400px;"></div>
 </body>
 			</html>
