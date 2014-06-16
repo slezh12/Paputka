@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<%@page import="JavaPackage.Route"%>
+<%@page import="JavaPackage.Event"%>
+<%@page import="JavaPackage.EventParseInfo"%>
+<%@page import="java.awt.Event"%>
+<%@page import="JavaPackage.Request"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="org.apache.tomcat.dbcp.dbcp.BasicDataSource"%>
+<%@page import="JavaPackage.UserParseInfo"%>
+<%@page import="JavaPackage.User"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -52,8 +61,24 @@
 		<!-- End Sidebar -->
 		<!-- Begin Content -->
 		<div id="content">
-			<H2>ჩემი მოთხოვნები</H2>
+			<h2>ჩემი მოთხოვნები</h2>
 			<div class="line"></div>
+			<%
+				BasicDataSource source = (BasicDataSource) application.getAttribute("connectionPool");
+				User current = (User) session.getAttribute("user");
+				int userID = current.getID();
+				UserParseInfo userParse = new UserParseInfo(source);
+				ArrayList<Request> list = userParse.getMyRequests(userID);
+				for(int i = 0; i < list.size(); i++){
+					Request temp = list.get(i);
+					int eventID = temp.getEventID();
+					EventParseInfo eventParse = new EventParseInfo(source);
+					Event tempEvent = eventParse.getEventByID(eventID);
+					Route route = tempEvent.getRoute();
+					String from = route.getFromPlace();
+					String to = route.getToPlace();
+				}
+			%>
 			<form action="ChangePrivateInfoServlet" id="registerform"
 				name="registerform" method="post" enctype="multipart/form-data">
 				<textarea style="resize: none;" class="textfield" rows="3"
