@@ -59,6 +59,8 @@
 				<!-- End Menu -->
 			</div>
 			<!-- End Sidebar -->
+			<div class="line"></div>
+			
 			<div id="column">
 				<ul id="latestnews">
 					<li><img src="images/demo/80x80.gif" alt="" />
@@ -92,14 +94,7 @@
 			<div id="content">
 				<div class="line"></div>
 				<div class="line"></div>
-				<div id="footer" >
-					<h3>ჩვენ შესახებ</h3>
-					<p>პაპუტკა.ჯი საიტი აკეთებს რაღაცეებს და შექმნილია იმისთვის რომ ბლა .</p> 
-					<p>
-						  <span class="lite1">ტელ:</span> +555 636 646 62
-						  <span class="lite1">მეილი:</span> name@domain.com
-					</p>
-				</div>
+				
 				<!-- End Content -->
 			</div>
 		</div>
