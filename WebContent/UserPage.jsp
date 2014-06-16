@@ -56,6 +56,35 @@
 				<!-- End Menu -->
 			</div>
 			<!-- End Sidebar -->
+			<div id="column">
+				<ul id="latestnews">
+					<li><img src="images/demo/80x80.gif" alt="" />
+						<p>
+							<strong><a href="#">didi posti kokos pageze</a></strong>
+							kokoooo
+						</p></li>
+					<li><img src="images/demo/80x80.gif" alt="" />
+						<p>
+							<strong><a href="#">POSTIIIIIIIIIIIIIIIII</a></strong>
+							didi posti
+						</p></li>
+					<li><img src="images/demo/80x80.gif" alt="" />
+						<p>
+							<strong><a href="#">posti</a></strong>
+							ok
+						</p></li>
+					<li><img src="images/demo/80x80.gif" alt="" />
+						<p>
+							<strong><a href="#">bikentia</a></strong>
+							chaartkit dzmakacobis xelebi
+						</p></li>
+					<li class="last"><img src="images/demo/80x80.gif" alt="" />
+						<p>
+							<strong><a href="#">gamcie dzma</a></strong>
+							ok
+						</p></li>
+				</ul>
+			</div>
 			<!-- Begin Content -->
 			<div id="content">
 				<div class="line"></div>
