@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="JavaPackage.ParseInfo"%>
 <%@page import="JavaPackage.Route"%>
 <%@page import="JavaPackage.Event"%>
 <%@page import="JavaPackage.EventParseInfo"%>
@@ -78,33 +79,56 @@
 					String from = route.getFromPlace();
 					String to = route.getToPlace();
 					int accept = temp.getAcception();
+					ParseInfo parse = new ParseInfo(source);
+					String tel = parse.getPrivateInfo(tempEvent.getUserID(),
+							"PhoneNumber", "Tel");
+					UserParseInfo use = new UserParseInfo(source);
+					User eventOwner = use.getUserByID(tempEvent.getUserID());
+					String mail = eventOwner.getEmail();
 			%>
 			<div id="column">
 				<ul id="latestnews">
-					<strong><a href="#"><h2><%=from%>-----><%=to%></h2></a></strong>
+					<strong><a href="Event.jsp?id=<%=eventID%>"><h2><%=from%>-----><%=to%></h2></a></strong>
 					<h4>
 						<%=temp.getText()%>
 					</h4>
 					<p>
-					<img src="style/images/onebit_34.png">
-					<img src="style/images/onebit_35.png">
-					<img src="style/images/onebit_36.png">
+						<%
+							if (accept == 0) {
+						%>
+						<img style="opacity: 0.4; float: left;"
+							src="style/images/onebit_34.png"> <img
+							style="float: left; opacity: 0.4;"
+							src="style/images/onebit_35.png"> <img style="opacity: 1;"
+							src="style/images/onebit_36.png">
+						<%
+							} else if (accept == 1) {
+						%>
+						<img style="opacity: 1; float: left;"
+							src="style/images/onebit_34.png"> <img
+							style="float: left; opacity: 0.4;"
+							src="style/images/onebit_35.png"> <img
+							style="opacity: 0.4;" src="style/images/onebit_36.png">
+					<h3>
+						ტელეფონი:<%=tel%>მეილი:<%=mail%></h3>
 					<%
-					if(accept == 0){
-						
-					} else if(accept == 1){
-						
-					} else if(accept == 2){
-						
-					}
+						} else if (accept == 2) {
+					%>
+					<img style="opacity: 0.4; float: left;"
+						src="style/images/onebit_34.png">
+					<img style="float: left; opacity: 1;"
+						src="style/images/onebit_35.png">
+					<img style="opacity: 0.4;" src="style/images/onebit_36.png">
+					<%
+						}
 					%>
 					</p>
 				</ul>
 			</div>
+			<div class="line"></div>
 			<%
 				}
 			%>
-			<div class="line"></div>
 			<!-- End Content -->
 		</div>
 	</div>
