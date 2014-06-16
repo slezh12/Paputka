@@ -19,10 +19,10 @@
 			<div id="sidebar">
 				<div id="logo"><img src="style/images/logo.png" alt="Paputka" /></div>
 				<!-- Begin Menu -->
-				
-				<h3 style="color:white">გამარჯობა, <%= request.getParameter("name") %></h3>
-				<div id="menu" class="menu-v">
+				<h3 id="welcomeUser">Welcome, <%= request.getParameter("name") %></h3> 
+				<div id="Usermenu" class="menu-v" style="marign-top: 20px;">
 				  <ul>
+				  	<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
 				  	<li>
 						<a href="#">პროფილი</a>
 					</li>
@@ -42,7 +42,7 @@
 						<a href="OthersRequests.jsp">სხვისი მოთხოვნები</a>
 					</li>
 					<li>
-						<a href="#">შეაფასე მომხმარებელი</a>
+						<a href="Rating.jsp">შეაფასე მომხმარებელი</a>
 					</li>
 					<li>
 						<a href="#">ჩემივონთთუგოუ</a>
