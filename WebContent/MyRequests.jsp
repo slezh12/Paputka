@@ -26,21 +26,6 @@
 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="style/js/jquery.leanModal.min.js"></script>
-
-
-<script>
-	function CheckAlerts() {
-		if ((registerform.about.value).length > 200) {
-			alert("ჩემს შესახებ ველი  არ უნდა აღემატებოდეს 200 სიმბოლოს");
-			return false;
-		}
-		if ((registerform.tel.value).length > 25) {
-			alert("ტელეფონის ველი  არ უნდა აღემატებოდეს 25 სიმბოლოს");
-			return false;
-		}
-		return true;
-	}
-</script>
 </head>
 <body>
 	<!-- Begin Wrapper -->
@@ -88,7 +73,7 @@
 			%>
 			<div id="column">
 				<ul id="latestnews">
-					<strong><a href="Event.jsp?id=<%=eventID%>"><h2><%=from%>-----><%=to%></h2></a></strong>
+					<strong><a href="Event.jsp?id=<%=eventID%>"><h2><%=from+" "%>-----><%=" "+to%></h2></a></strong>
 					<h4>
 						<%=temp.getText()%>
 					</h4>
@@ -109,16 +94,15 @@
 							style="float: left; opacity: 0.4;"
 							src="style/images/onebit_35.png"> <img
 							style="opacity: 0.4;" src="style/images/onebit_36.png">
-					<h3>
-						ტელეფონი:<%=tel%>მეილი:<%=mail%></h3>
-					<%
-						} else if (accept == 2) {
-					%>
-					<img style="opacity: 0.4; float: left;"
-						src="style/images/onebit_34.png">
-					<img style="float: left; opacity: 1;"
-						src="style/images/onebit_35.png">
-					<img style="opacity: 0.4;" src="style/images/onebit_36.png">
+							<h3>ტელეფონი:<%=" "+tel%>მეილი:<%=mail%></h3>
+						<%
+							} else if (accept == 2) {
+						%>
+						<img style="opacity: 0.4; float: left;"
+							src="style/images/onebit_34.png">
+						<img style="float: left; opacity: 1;"
+							src="style/images/onebit_35.png">
+						<img style="opacity: 0.4;" src="style/images/onebit_36.png">
 					<%
 						}
 					%>
