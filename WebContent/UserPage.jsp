@@ -1,4 +1,4 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -19,51 +19,46 @@
 			<div id="sidebar">
 				<div id="logo"><img src="style/images/logo.png" alt="Paputka" /></div>
 				<!-- Begin Menu -->
+				
+				<h3 style="color:white">გამარჯობა, <%= request.getParameter("name") %></h3>
 				<div id="menu" class="menu-v">
 				  <ul>
-					<li>
-						<a href="UserPage.jsp" class="active">მთავარი გვერდი</a>
+				  	<li>
+						<a href="#">პროფილი</a>
 					</li>
+					<li>
+						<a href="ChangePrivateInfo.jsp">პროფილის შეცვლა</a>
+					</li>
+					<li>
+						<a href="CreateEvent.jsp">წავიყვან</a>
+					</li>
+					<li>
+						<a href="CreateWantToGo.jsp">წასვლა მინდა</a>
+					</li>
+					<li>
+						<a href="MyRequests.jsp">ჩემი მოთხოვნები</a>
+					</li>
+					<li>
+						<a href="OthersRequests.jsp">სხვისი მოთხოვნები</a>
+					</li>
+					<li>
+						<a href="#">შეაფასე მომხმარებელი</a>
+					</li>
+					<li>
+						<a href="#">ჩემივონთთუგოუ</a>
+					</li>
+					<li>
+						<a href="index.html" >გამოსვლა </a>
+					</li>
+
 				  </ul>
 				</div>
 				<!-- End Menu -->
-				<!--Begin Login & Registration -->
-				
-				<h3 id="welcome"> Welcome, <%= request.getParameter("name") %> </h3>
-				<div id="user">
-					<a href="#"><b>მიმართულების დამატება</b></a>
-					<br>
-					<a href="#">პროფილი</a>
-					<br>
-					<a href="index.html" >გამოსვლა </a>
-				</div>
 			</div>
 			<!-- End Sidebar -->
 			<!-- Begin Content -->
 			<div id="content">
 				<div class="line"></div>
-				<html>
-					<head>
-						<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
-						<script>
-						function initialize()
-						{
-						var mapProp = {
-						  center:new google.maps.LatLng(42.347485,43.7),
-						  zoom:7,
-						  mapTypeId:google.maps.MapTypeId.ROADMAP
-						  };
-						var map=new google.maps.Map(document.getElementById("googleMap")
-						  ,mapProp);
-						}
-
-						google.maps.event.addDomListener(window, 'load', initialize);
-						</script>
-					</head>
-					<body>
-						<div id="googleMap" style="width:800px;height:400px;"></div>
-					</body>
-				</html>
 				<div class="line"></div>
 				<div id="footer" >
 					<h3>ჩვენ შესახებ</h3>
