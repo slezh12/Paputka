@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@page import="JavaPackage.User"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<title>Paputka</title>
@@ -19,7 +20,12 @@
 			<div id="sidebar">
 				<div id="logo"><img src="style/images/logo.png" alt="Paputka" /></div>
 				<!-- Begin Menu -->
-				<h3 id="welcomeUser">Welcome, <%= request.getParameter("name") %></h3> 
+				<% 
+				User user = (User) session.getAttribute("user");
+				String name = user.getFirstName();
+				String lastname = user.getLastName();
+				%>
+				<h3 id="welcomeUser">Welcome, <%= name+" "+lastname %> </h3> 
 				<div id="Usermenu" class="menu-v" style="marign-top: 20px;">
 				  <ul>
 				  	<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
@@ -40,9 +46,6 @@
 					</li>
 					<li>
 						<a href="OthersRequests.jsp">სხვისი მოთხოვნები</a>
-					</li>
-					<li>
-						<a href="Rating.jsp">შეაფასე მომხმარებელი</a>
 					</li>
 					<li>
 						<a href="#">ჩემივონთთუგოუ</a>
