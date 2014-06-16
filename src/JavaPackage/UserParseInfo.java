@@ -38,7 +38,7 @@ public class UserParseInfo extends ParseInfo {
 		return user;
 	}
 	
-	public User getEventByID(int ID) {
+	public User getUserByID(int ID) {
 		User user = null;
 		BaseConnection base = new BaseConnection((BasicDataSource) source);
 		try {
@@ -105,4 +105,5 @@ public class UserParseInfo extends ParseInfo {
 		}
 		return requests;
 	}
+	
 }
