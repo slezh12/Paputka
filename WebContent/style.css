@@ -24,6 +24,50 @@ br {
 /*-----------------------------------------------------------------------------------*/
 /*	GENERAL
 /*-----------------------------------------------------------------------------------*/
+/*------------------*/
+
+#column #latestnews{
+  display:block;
+  width:100%;
+  margin:0;
+  padding:0;
+  list-style:none;
+  }
+
+#column #latestnews li{
+  display:block;
+  width:100%;
+  min-height:99px;
+  margin:0 0 25px 0;
+  padding:0 0 15px 0;
+  border-bottom:1px dotted #C7C5C8;
+  overflow:hidden;
+  }
+
+#column #latestnews li.last{
+  padding-bottom:0;
+  margin-bottom:0;
+  border-bottom:none;
+  }
+
+#column #latestnews p{
+  display:inline;
+  }
+
+#column #latestnews p strong{
+  display:block;
+  margin-bottom:5px;
+  }
+
+#column #latestnews img{
+  float:left;
+  margin:0 10px 0 0;
+  padding:4px;
+  border:1px solid #BFE009;
+  clear:left;
+  }
+
+/*-----------------------------------------------------------------------------------*/
 html,body {
 	height: 100%;
 }
