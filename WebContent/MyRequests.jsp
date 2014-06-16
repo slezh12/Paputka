@@ -86,6 +86,9 @@
 						<%=temp.getText()%>
 					</h4>
 					<p>
+					<img src="style/images/onebit_34.png">
+					<img src="style/images/onebit_35.png">
+					<img src="style/images/onebit_36.png">
 					<%
 					if(accept == 0){
 						
