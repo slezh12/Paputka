@@ -99,9 +99,7 @@
 						<img style="opacity: 1; float: left;"
 							src="style/images/onebit_34.png"> <img
 							style="float: left; opacity: 0.4;"
-							src="style/images/onebit_35.png"> <img
-							style="opacity: 0.4;" src="style/images/onebit_36.png">
-					
+							src="style/images/onebit_35.png"> 
 						<%
 							} else if (accept == 2) {
 						%>
@@ -109,7 +107,6 @@
 							src="style/images/onebit_34.png">
 						<img style="float: left; opacity: 1;"
 							src="style/images/onebit_35.png">
-						<img style="opacity: 0.4;" src="style/images/onebit_36.png">
 						<%
 							}
 						%>
