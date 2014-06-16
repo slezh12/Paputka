@@ -108,6 +108,7 @@ public class UserConnection extends BaseConnection {
 		}
 	}
 
+	// shentan ro modis requesti
 	public ResultSet getUsersRequests(int UserID) throws SQLException {
 		ResultSet rs = stmt
 				.executeQuery("select ID, EventID, UserID, Text, Acception, Date from Requests join Events on EventID = Events.ID where Events.UserID = "

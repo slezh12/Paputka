@@ -2,7 +2,6 @@ package JavaPackage;
 
 public class Event {
 	private int ID;
-	private int eventID;
 	private double fee;
 	private int userID;
 	private int places;
@@ -10,9 +9,8 @@ public class Event {
 	private boolean validation;
 	private boolean type;
 	
-	public Event(int ID,int eventID,double fee,int userID,int places,boolean validation,boolean type,Route route) {
+	public Event(int ID,double fee,int userID,int places,boolean validation,boolean type,Route route) {
 		this.ID = ID;
-		this.eventID = eventID;
 		this.fee = fee;
 		this.userID = userID;
 		this.places = places;
@@ -23,10 +21,6 @@ public class Event {
 	
 	public int getID() {
 		return ID;
-	}
-	
-	public int getEventID() {
-		return eventID;
 	}
 	
 	public double getPrice() {
