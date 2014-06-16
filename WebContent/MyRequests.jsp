@@ -2,7 +2,6 @@
 <%@page import="JavaPackage.Route"%>
 <%@page import="JavaPackage.Event"%>
 <%@page import="JavaPackage.EventParseInfo"%>
-<%@page import="java.awt.Event"%>
 <%@page import="JavaPackage.Request"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="org.apache.tomcat.dbcp.dbcp.BasicDataSource"%>
@@ -64,12 +63,13 @@
 			<h2>ჩემი მოთხოვნები</h2>
 			<div class="line"></div>
 			<%
-				BasicDataSource source = (BasicDataSource) application.getAttribute("connectionPool");
+				BasicDataSource source = (BasicDataSource) application
+						.getAttribute("connectionPool");
 				User current = (User) session.getAttribute("user");
 				int userID = current.getID();
 				UserParseInfo userParse = new UserParseInfo(source);
 				ArrayList<Request> list = userParse.getMyRequests(userID);
-				for(int i = 0; i < list.size(); i++){
+				for (int i = 0; i < list.size(); i++) {
 					Request temp = list.get(i);
 					int eventID = temp.getEventID();
 					EventParseInfo eventParse = new EventParseInfo(source);
@@ -77,20 +77,30 @@
 					Route route = tempEvent.getRoute();
 					String from = route.getFromPlace();
 					String to = route.getToPlace();
+					int accept = temp.getAcception();
+			%>
+			<div id="column">
+				<ul id="latestnews">
+					<strong><a href="#"><h2><%=from%>-----><%=to%></h2></a></strong>
+					<h4>
+						<%=temp.getText()%>
+					</h4>
+					<p>
+					<%
+					if(accept == 0){
+						
+					} else if(accept == 1){
+						
+					} else if(accept == 2){
+						
+					}
+					%>
+					</p>
+				</ul>
+			</div>
+			<%
 				}
 			%>
-			<form action="ChangePrivateInfoServlet" id="registerform"
-				name="registerform" method="post" enctype="multipart/form-data">
-				<textarea style="resize: none;" class="textfield" rows="3"
-					placeholder="ჩემს შესახებ" name="about" tabindex="1"></textarea>
-				<input type="text" name="tel" placeholder="ტელ" class="textfield"
-					tabindex="2"></input>
-				<p>
-					<input type="submit" name="create" id="registerbtn"
-						class="flatbtn-blu hidemodal" value="შეცვლა" tabindex="3"
-						onClick="return CheckAlerts();"></input>
-				</p>
-			</form>
 			<div class="line"></div>
 			<!-- End Content -->
 		</div>
