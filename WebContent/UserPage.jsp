@@ -19,10 +19,10 @@
 			<div id="sidebar">
 				<div id="logo"><img src="style/images/logo.png" alt="Paputka" /></div>
 				<!-- Begin Menu -->
-				<h3 id="welcomeUser">Welcome, <%= request.getParameter("name") %></h3> 
-				<div id="Usermenu" class="menu-v" style="marign-top: 20px;">
+				
+				<h3 style="color:white">გამარჯობა, <%= request.getParameter("name") %></h3>
+				<div id="menu" class="menu-v">
 				  <ul>
-				  	<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
 				  	<li>
 						<a href="#">პროფილი</a>
 					</li>
