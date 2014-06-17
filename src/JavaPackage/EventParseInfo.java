@@ -60,4 +60,18 @@ public class EventParseInfo extends ParseInfo {
 		return result;
 	}
 	
+	public int getLastID(int userID) {
+		int ret = 0;
+		BaseConnection base = new BaseConnection((BasicDataSource) source);
+		try {
+			ResultSet rs = base.selectEvent(userID,"Events");
+			if (rs.next()) 
+				ret = rs.getInt("ID");
+			base.CloseConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
 }
