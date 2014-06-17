@@ -74,12 +74,11 @@ public class RegisterServlet extends HttpServlet {
 					gender, date);
 			User currentUser = info.getUser(mail, password);
 			session.setAttribute("user", currentUser);
-			System.out.print("pirveli");
+			connect.CloseConnection();
 			dispatch = request.getRequestDispatcher("UserPage.jsp");
 		} else {
-			System.out.print("meore");
 			dispatch = request.getRequestDispatcher("InvalidRegistration.html");
-		}	
+		}
 		dispatch.forward(request, response);
 	}
 
