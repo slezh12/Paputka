@@ -1,5 +1,6 @@
 package JavaPackage;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
@@ -107,6 +108,15 @@ public class EventConnection extends BaseConnection {
 			e.printStackTrace();
 		}
 	}
-	
+	public ResultSet CommentsByID(int eventID){
+		ResultSet rs = null;
+		try {
+			rs = stmt.executeQuery("SELECT * FROM Comments WHERE EventID = "+ eventID + " order by ID desc");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return rs;
+	}
 	
 }
