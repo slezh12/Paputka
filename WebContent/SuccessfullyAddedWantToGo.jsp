@@ -154,8 +154,7 @@
 			<div id="menu" class="menu-v">
 				<ul>
 					<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
-					<li><a href="#registermodal" id="modaltrigger">შეავსეთ
-							დეტალური ინფრომაცია</a></li>
+					<li><a href="#registermodal" id="modaltrigger">შეავსეთ დეტალური ინფრომაცია</a></li>
 				</ul>
 			</div>
 			<!-- End Menu -->
@@ -318,6 +317,8 @@
 </script>
 </head>
 <body>
+	<h3>წარმატებით დაემატა საძებნი მიმართულება. დაამატეთ ახალი ძებნის პარამეტრები ან დაბრუნდით მთავარ გვერდზე.</h3>
+	<div class="line"></div>
 	<div id="googleMap" style="width: 800px; height: 400px;"></div>
 </body>
 			</html>

@@ -34,4 +34,18 @@ public class WantToGoParseInfo extends ParseInfo{
 		}
 		return wanttogos;
 	}
+	
+	public int getLastID(int userID) {
+		int ret = 0;
+		BaseConnection base = new BaseConnection((BasicDataSource) source);
+		try {
+			ResultSet rs = base.selectEvent(userID,"WantToGo");
+			if (rs.next()) 
+				ret = rs.getInt("ID");
+			base.CloseConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
 }

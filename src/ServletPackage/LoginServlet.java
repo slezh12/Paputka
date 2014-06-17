@@ -62,6 +62,5 @@ public class LoginServlet extends HttpServlet {
 			dispatch = request.getRequestDispatcher("InvalidLogin.html");
 		}
 		dispatch.forward(request, response);
-
 	}
 }

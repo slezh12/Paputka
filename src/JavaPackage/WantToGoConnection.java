@@ -34,7 +34,7 @@ public class WantToGoConnection extends BaseConnection {
 		}
 	}
 
-	public void insertIntoWantToGoEveryday(int wantToGoID, String sartTime,
+	public void insertIntoWantToGoEveryday(int wantToGoID, String startTime,
 			String endTime, int day) {
 		try {
 			stmt.executeUpdate("INSERT INTO WantToGoEveryday(wantToGoID, Day, StartDate, EndDate) VALUES ("
@@ -43,7 +43,7 @@ public class WantToGoConnection extends BaseConnection {
 					+ day
 					+ ","
 					+ "'"
-					+ sartTime
+					+ startTime
 					+ "'"
 					+ ", " + "'" + endTime + "'" + ")");
 		} catch (SQLException e) {
@@ -52,14 +52,14 @@ public class WantToGoConnection extends BaseConnection {
 		}
 	}
 
-	public void insertIntoWantToGoDates(int wantToGoID, String sartTime,
+	public void insertIntoWantToGoDates(int wantToGoID, String startTime,
 			String endTime) {
 		try {
 			stmt.executeUpdate("INSERT INTO WantToGoDates (wantToGoID, StartDate, EndDate) VALUES ("
 					+ wantToGoID
 					+ ", "
 					+ "'"
-					+ sartTime
+					+ startTime
 					+ "'"
 					+ ","
 					+ "'"

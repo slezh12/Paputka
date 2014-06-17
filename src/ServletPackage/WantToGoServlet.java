@@ -2,6 +2,7 @@ package ServletPackage;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,9 +14,10 @@ import javax.sql.DataSource;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
+import JavaPackage.TimeChange;
 import JavaPackage.User;
-import JavaPackage.UserParseInfo;
 import JavaPackage.WantToGoConnection;
+import JavaPackage.WantToGoParseInfo;
 
 /**
  * Servlet implementation class WantToGoServlet
@@ -62,14 +64,29 @@ public class WantToGoServlet extends HttpServlet {
 		DataSource source = (DataSource) context.getAttribute("connectionPool");
 		WantToGoConnection connection = new WantToGoConnection((BasicDataSource) source);
 		connection.insertIntoWantToGo(user.getID(), title, fLong, fLat, tLong, tLat, type);
+		WantToGoParseInfo info = new WantToGoParseInfo((BasicDataSource) source);
+		int wantToGoID = info.getLastID(user.getID());
+		RequestDispatcher dispatch;
 		if (type) {
-			
+			String startDate = request.getParameter("datetimeStart");
+			startDate = TimeChange.getCorrectDate(startDate);
+			String endDate = request.getParameter("datetimeFinish");
+			endDate = TimeChange.getCorrectDate(endDate);
+			String startTime = request.getParameter("startTime") + ":00";
+			String endTime = request.getParameter("endTime") + ":00";
+			connection.insertIntoWantToGoDates(wantToGoID, startDate+" "+startTime, endDate+" "+endTime);
 		} else {
 			for (int i = 0; i < 6; i++) {
-				
+				String isMarked = request.getParameter("0");
+				if (isMarked.equals("0")) {
+					String startTime = request.getParameter("start"+i) + ":00";
+					String endTime = request.getParameter("end"+i) + ":00";
+					connection.insertIntoWantToGoEveryday(wantToGoID, startTime, endTime, i);
+				}
 			}
 		}
 		connection.CloseConnection();
+		dispatch = request.getRequestDispatcher("SuccessfullyAddedWantToGo.jsp");
+		dispatch.forward(request, response);
 	}
-
 }

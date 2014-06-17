@@ -188,25 +188,25 @@
 							value="everyday" tabindex="5"></input>
 					</p>
 					<p>
-						ორშაბათი: <input type="checkbox" name="0" tabindex="5"></input> <input
+						ორშაბათი: <input type="checkbox" name="0" value="0" tabindex="5"></input> <input
 							type="text" data-field='time' name="time0" placeholder="დრო"
-							tabindex="4"></input> სამშაბათი: <input type="checkbox" name="1"
+							tabindex="4"></input> სამშაბათი: <input type="checkbox" name="1" value="1"
 							tabindex="5"></input> <input type="text" data-field='time'
 							name="time1" placeholder="დრო" tabindex="4"></input> ოთხშაბათი: <input
-							type="checkbox" name="2" tabindex="5"></input> <input type="text"
+							type="checkbox" name="2" value="2" tabindex="5"></input> <input type="text"
 							data-field='time' name="time2" placeholder="დრო" tabindex="4"></input>
 					</p>
 					<p>
-						ხუთშაბათი: <input type="checkbox" name="3" tabindex="5"></input> <input
+						ხუთშაბათი: <input type="checkbox" name="3" value="3"tabindex="5"></input> <input
 							type="text" data-field='time' name="time3" placeholder="დრო"
-							tabindex="4"></input> პარასკევი: <input type="checkbox" name="4"
+							tabindex="4"></input> პარასკევი: <input type="checkbox" name="4" value="4"
 							tabindex="5"></input> <input type="text" data-field='time'
 							name="time4" placeholder="დრო" tabindex="4"></input> შაბათი: <input
-							type="checkbox" name="5" tabindex="5"></input> <input type="text"
+							type="checkbox" name="5" value="5" tabindex="5"></input> <input type="text"
 							data-field='time' name="time5" placeholder="დრო" tabindex="4"></input>
 					</p>
 					<p>
-						კვირა: <input type="checkbox" name="6" tabindex="5"></input> <input
+						კვირა: <input type="checkbox" name="6" value="6" tabindex="5"></input> <input
 							type="text" data-field='time' name="time6" placeholder="დრო"
 							tabindex="4"></input>
 					</p>
