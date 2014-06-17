@@ -14,8 +14,10 @@ import javax.sql.DataSource;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
+import JavaPackage.Hash;
 import JavaPackage.TimeChange;
 import JavaPackage.User;
+import JavaPackage.UserConnection;
 import JavaPackage.UserParseInfo;
 
 /**
@@ -24,45 +26,60 @@ import JavaPackage.UserParseInfo;
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public RegisterServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public RegisterServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		String firstname = request.getParameter("firstname");
 		String lastname = request.getParameter("lastname");
 		String mail = request.getParameter("mail");
 		String date1 = request.getParameter("datetime");
 		String date = TimeChange.getCorrectDate(date1);
 		String radio = request.getParameter("gender");
+		boolean gender = false;
+		if (radio.equals("Male")) {
+			gender = true;
+		}
 		String password = request.getParameter("password");
 		ServletContext context = getServletContext();
 		DataSource source = (DataSource) context.getAttribute("connectionPool");
 		UserParseInfo info = new UserParseInfo((BasicDataSource) source);
 		RequestDispatcher dispatch;
-		User user = info.getUser(mail, password);
-		if (user != null) {
+		if (!info.isUserAlreadyInBase(mail)) {
 			HttpSession session = request.getSession(true);
-			session.setAttribute("user", user);
+			UserConnection connect = new UserConnection(
+					(BasicDataSource) source);
+			String hashPass = Hash.calculateHashCode(password);
+			connect.insertIntoUsers(firstname, lastname, mail, hashPass,
+					gender, date);
+			User currentUser = info.getUser(mail, password);
+			session.setAttribute("user", currentUser);
+			System.out.print("pirveli");
 			dispatch = request.getRequestDispatcher("UserPage.jsp");
 		} else {
-			dispatch = request.getRequestDispatcher("InvalidLogin.html");
-		}
+			System.out.print("meore");
+			dispatch = request.getRequestDispatcher("InvalidRegistration.html");
+		}	
 		dispatch.forward(request, response);
 	}
 

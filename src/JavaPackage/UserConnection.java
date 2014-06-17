@@ -31,7 +31,7 @@ public class UserConnection extends BaseConnection {
 					+ password
 					+ "'"
 					+ ","
-					+ gender + "," + birthdate + ")");
+					+ gender + "," + "'" + birthdate + "'" + ")");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

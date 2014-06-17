@@ -14,6 +14,22 @@ public class UserParseInfo extends ParseInfo {
 		super(source);
 	}
 
+	
+	public boolean isUserAlreadyInBase(String email){
+		UserConnection base = new UserConnection((BasicDataSource) source);
+		try {
+			ResultSet rs = base.getInfoByMail(email);
+			if (rs.isBeforeFirst()) {
+				return true;
+			}
+			base.CloseConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	public User getUser(String email, String password) {
 		User user = null;
 		password = Hash.calculateHashCode(password);
