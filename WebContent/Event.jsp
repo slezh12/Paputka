@@ -98,8 +98,8 @@
 </body>
 			</html>
 			<div class="line"></div>
-			<h3>გადასახადი : <%= e.getPrice() + "  " + r.getFromLatitude()%></h3>
-			<h3>ადგილები : <%= e.getPlaces() + "  " + r.getToLatitude()%></h3>
+			<h3>გადასახადი : <%= e.getPrice() %></h3>
+			<h3>ადგილები : <%= e.getPlaces() %></h3>
 			<h3>მძღოლი : <%= u.getFirstName()+ " " + u.getLastName() %></h3>
 			<h3><%= r.getFromPlace() + " - " + r.getToPlace() %></h3>
 			<div class="line"></div>
