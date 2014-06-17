@@ -14,8 +14,7 @@ public class UserParseInfo extends ParseInfo {
 		super(source);
 	}
 
-	
-	public boolean isUserAlreadyInBase(String email){
+	public boolean isUserAlreadyInBase(String email) {
 		UserConnection base = new UserConnection((BasicDataSource) source);
 		try {
 			ResultSet rs = base.getInfoByMail(email);
@@ -29,7 +28,7 @@ public class UserParseInfo extends ParseInfo {
 		}
 		return false;
 	}
-	
+
 	public User getUser(String email, String password) {
 		User user = null;
 		password = Hash.calculateHashCode(password);
@@ -53,7 +52,7 @@ public class UserParseInfo extends ParseInfo {
 		}
 		return user;
 	}
-	
+
 	public User getUserByID(int ID) {
 		User user = null;
 		BaseConnection base = new BaseConnection((BasicDataSource) source);
@@ -66,7 +65,7 @@ public class UserParseInfo extends ParseInfo {
 			boolean gender = rs.getBoolean("Gender");
 			Date birthdate = rs.getDate("BirthDate");
 			String email = rs.getString("EMail");
-			user = new User(id, first, last, gender, birthdate, email);	
+			user = new User(id, first, last, gender, birthdate, email);
 			base.CloseConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -103,7 +102,7 @@ public class UserParseInfo extends ParseInfo {
 		ArrayList<Request> requests = new ArrayList<Request>();
 		BaseConnection base = new BaseConnection((BasicDataSource) source);
 		try {
-			ResultSet rs = base.selectByID("Requests", userID,"UserID");
+			ResultSet rs = base.selectByID("Requests", userID, "UserID");
 			while (rs.next()) {
 				int ID = rs.getInt("ID");
 				String text = rs.getString("Text");
@@ -121,5 +120,29 @@ public class UserParseInfo extends ParseInfo {
 		}
 		return requests;
 	}
-	
+
+	public void insertIntoStatuses(String about, int id) {
+		UserConnection connect = new UserConnection((BasicDataSource) source);
+		connect.insert("Statuses", "status", about, id);
+		connect.CloseConnection();
+	}
+
+	public void insertIntoTel(String tel, int id) {
+		UserConnection connect = new UserConnection((BasicDataSource) source);
+		connect.insert("Tel", "PhoneNumber", tel, id);
+		connect.CloseConnection();
+	}
+
+	public void updateStatuses(String about, int id) {
+		UserConnection connect = new UserConnection((BasicDataSource) source);
+		connect.update("Statuses", "status", about, id);
+		connect.CloseConnection();
+	}
+
+	public void updateTel(String tel, int id) {
+		UserConnection connect = new UserConnection((BasicDataSource) source);
+		connect.update("Tel", "PhoneNumber", tel, id);
+		connect.CloseConnection();
+	}
+
 }
