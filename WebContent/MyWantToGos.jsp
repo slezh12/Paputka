@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@page import="JavaPackage.WantToGo"%>
+<%@page import="JavaPackage.WantToGoParseInfo"%>
 <%@page import="JavaPackage.ParseInfo"%>
 <%@page import="JavaPackage.Route"%>
 <%@page import="JavaPackage.Event"%>
@@ -53,17 +55,31 @@
 						.getAttribute("connectionPool");
 				User current = (User) session.getAttribute("user");
 				int userID = current.getID();
-				//MyWantToGoParseInfo wantToGo = new MyWantToGoParseInfo(source);
-				//MyWantToGo wantToGoObject = wantToGo.
-				for (int i = 0; i < 10; i++) {
-					
+				WantToGoParseInfo wantToGo = new WantToGoParseInfo(source);
+				ArrayList<WantToGo> list = wantToGo.getWantToGos(userID);
+				for (int i = 0; i < list.size(); i++) {
+					WantToGo temp = list.get(i);
+					int wantToGoID = temp.getID();
+					String title = temp.getTitle();
+					boolean type = temp.getType();
 			%>
 			<div id="column">
 				<ul id="latestnews">
-					<strong><a href="Event.jsp?id=<%=%>"><h2></h2></a></strong>
-					<h4>
-						
-					</h4>
+					<strong><a href="WantToGo.jsp?id=<%=wantToGoID%>"><h2><%=title%></h2></a></strong>
+					<p>
+						<%
+							if (type) {
+						%>
+					
+					<h2>ერთჯერადი</h2>
+					<%
+						} else {
+					%>
+					<h2>განმეორებადი</h2>
+					<%
+						}
+					%>
+					</p>
 				</ul>
 			</div>
 			<div class="line"></div>

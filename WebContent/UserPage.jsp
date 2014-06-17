@@ -48,7 +48,7 @@
 						<a href="OthersRequests.jsp">სხვისი მოთხოვნები</a>
 					</li>
 					<li>
-						<a href="#">ჩემივონთთუგოუ</a>
+						<a href="MyWantToGos.jsp">ჩემივონთთუგოუ</a>
 					</li>
 					<li>
 						<a href="index.html" >გამოსვლა </a>
