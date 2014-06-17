@@ -224,6 +224,10 @@
 					<input type="submit" name="registerbtn" id="registerbtn"
 						class="flatbtn-blu hidemodal" value="შექმნა" tabindex="8"
 						onClick="return CheckAlerts();"></input>
+					<input type="hidden" id="hiddenField1" name="fromLongitude"/>
+					<input type="hidden" id="hiddenField2" name="fromLatitude"/>
+					<input type="hidden" id="hiddenField3" name="toLongitude"/>
+					<input type="hidden" id="hiddenField4" name="toLatitude"/>
 				</form>
 			</div>
 		</div>
@@ -264,7 +268,9 @@
 				map : map,
 			});
 			fromLongitude = location.lng();
+			document.getElementById("hiddenField1").value=fromLongitude;
 			fromLatitude = location.lat();
+			document.getElementById("hiddenField2").value=fromLatitude;
 			var infowindow = new google.maps.InfoWindow({
 				content : 'საწყისი პუნქტი'
 			});
@@ -275,7 +281,9 @@
 				map : map,
 			});
 			toLongitude = location.lng();
+			document.getElementById("hiddenField3").value=toLongitude;
 			toLatitude = location.lat();
+			document.getElementById("hiddenField4").value=toLatitude;
 			var infowindow = new google.maps.InfoWindow({
 				content : 'საბოლოო პუნქტი'
 			});
@@ -287,16 +295,6 @@
 </script>
 </head>
 <body>
-	<%
-		request.setAttribute("fromLongitude",
-				"<script>document.writeln(fromLongitude)</script>");
-		request.setAttribute("fromLatitude",
-				"<script>document.writeln(fromLatitude)</script>");
-		request.setAttribute("toLongitude",
-				"<script>document.writeln(toLongitude)</script>");
-		request.setAttribute("toLatitude",
-				"<script>document.writeln(toLatitude)</script>");
-	%>
 	<div id="googleMap" style="width: 800px; height: 400px;"></div>
 </body>
 			</html>

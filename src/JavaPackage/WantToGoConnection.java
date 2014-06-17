@@ -10,7 +10,7 @@ public class WantToGoConnection extends BaseConnection {
 		super(source);
 	}
 
-	public void insertIntoRequestss(int userID, String title,
+	public void insertIntoWantToGo(int userID, String title,
 			double FromLongitude, double FromLatitude, double ToLongitude,
 			double ToLatitude, boolean type) {
 		try {

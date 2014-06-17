@@ -54,7 +54,7 @@ public class WantToGoConnectionTest {
 				ID = rs.getInt("ID");
 			}
 			WantToGoConnection want = new WantToGoConnection((BasicDataSource) source);
-			want.insertIntoRequestss(ID, "casvla mindaa", 1.4, 4.5, 1.3, 4.2, true);
+			want.insertIntoWantToGo(ID, "casvla mindaa", 1.4, 4.5, 1.3, 4.2, true);
 			want.CloseConnection();
 			user.CloseConnection();
 			rs = stmt.executeQuery("SELECT * FROM WantToGo where userID = " + ID);
@@ -101,7 +101,7 @@ public class WantToGoConnectionTest {
 				ID = rs.getInt("ID");
 			}
 			WantToGoConnection want = new WantToGoConnection((BasicDataSource) source);
-			want.insertIntoRequestss(ID, "casvla mindaa", 1.4, 4.5, 1.3, 4.2, true);
+			want.insertIntoWantToGo(ID, "casvla mindaa", 1.4, 4.5, 1.3, 4.2, true);
 			int WantID = 0;
 			rs = stmt.executeQuery("SELECT ID FROM WantToGo Where UserID = " + ID);
 			if (rs.isBeforeFirst()) {
@@ -145,7 +145,7 @@ public class WantToGoConnectionTest {
 					ID = rs.getInt("ID");
 				}
 				WantToGoConnection want = new WantToGoConnection((BasicDataSource) source);
-				want.insertIntoRequestss(ID, "casvla mindaa", 1.4, 4.5, 1.3, 4.2, true);
+				want.insertIntoWantToGo(ID, "casvla mindaa", 1.4, 4.5, 1.3, 4.2, true);
 				int WantID = 0;
 				rs = stmt.executeQuery("SELECT ID FROM WantToGo Where UserID = " + ID);
 				if (rs.isBeforeFirst()) {
