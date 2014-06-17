@@ -27,7 +27,6 @@
   function loginFinishedCallback(authResult) {
     if (authResult) {
       if (authResult['error'] == undefined){
-        toggleElement('signin-button'); // Hide the sign-in button after successfully signing in the user.
 	     gapi.client.load('plus', 'v1', function() {
             var request = gapi.client.plus.people.get({
                 'userId': 'me'
@@ -48,27 +47,81 @@
             });
         });
       } else {
+      	window.location.href = 'InvalidLogin.html';
         console.log('An error occurred');
       }
     } else {
+      window.location.href = 'InvalidLogin.html';
       console.log('Empty authResult');  // Something went wrong
-    }
-  }
-  /**
-   * Utility function to show or hide elements by their IDs.
-   */
-  function toggleElement(id) {
-    var el = document.getElementById(id);
-    if (el.getAttribute('class') == 'hide') {
-      el.setAttribute('class', 'show');
-    } else {
-      el.setAttribute('class', 'hide');
     }
   }
   </script>
 
+<!-- This script is for Facebook Login -->
+<script>
+  // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    if (response.status === 'connected') {
+     	ParseInfoGoToServlet();
+     // window.location.href = 'FacebookServlet';
+    } else if (response.status === 'not_authorized') {
+    } else {
+    }
+  }
 
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
 
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '454173334719658',
+    cookie     : true,  // enable cookies to allow the server to access 
+                        // the session
+    xfbml      : true,  // parse social plugins on this page
+    version    : 'v2.0' // use version 2.0
+  });
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  // Here we run a very simple test of the Graph API after login is
+  // successful.  See statusChangeCallback() for when this call is made.
+  function ParseInfoGoToServlet() {
+    FB.api('/me', function(response) {
+     	document.getElementById('firstname').value = response.first_name;
+    	document.getElementById('lastname').value = response.last_name;
+    	if(response.gender =='male'){
+    	   document.getElementById('Male').checked = true;
+    	}
+    	if(response.gender =='female'){
+    		document.getElementById('Female').checked = true;
+    	}
+    	document.getElementById('mail').value = response.email;
+    	document.getElementById('datetime').value = response.birthday;
+    	document.getElementById('password').value = 'Facebook';
+    });
+  }
+</script>
+<!-- For picking date from Calendar -->
 <script>
 		 $(document).ready(function() {
 				$("#datepicker").DateTimePicker();
@@ -113,21 +166,9 @@
 	}
 </script>
 
+
 </head>
-<body>
-	<div id="fb-root"></div>
-	<script>
-		(function(d, s, id) {
-			var js, fjs = d.getElementsByTagName(s)[0];
-			if (d.getElementById(id))
-				return;
-			js = d.createElement(s);
-			js.id = id;
-			js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=454173334719658&version=v2.0";
-			fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
-	</script>
-	
+<body>	
 	<!-- Begin Wrapper -->
 	<div id="wrapper">
 		<!-- Begin Sidebar -->
@@ -197,8 +238,10 @@
 			</div>
 			<div class="sidebox">
 				<ul class="share">
-					<div style="float:left;"class="fb-login-button" data-max-rows="1" data-size="large"
-						data-show-faces="false" data-auto-logout-link="false"></div>
+						<div style="float:left;">
+							<fb:login-button scope="public_profile,email,user_birthday" onlogin="checkLoginState();" size="large">
+							</fb:login-button>
+						</div>
 						<br><br>
 					 <div style="float:left; margin-left:5px;"id="signin-button" class="show">
 					     <div class="g-signin"
