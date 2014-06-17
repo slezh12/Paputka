@@ -28,126 +28,6 @@
 	href="style/js/DateTimePicker.css" />
 <script type="text/javascript" src="style/js/DateTimePicker.js"></script>
 
-<script>
-	$(document).ready(function() {
-		$("#datepicker").DateTimePicker();
-	});
-</script>
-
-<script type="text/javascript">
-	function CheckAlerts() {
-		if (check != 2) {
-			alert("მონიშნეთ ორი წერტილი რუკაზე");
-			return false;
-		}
-		if ((registerform.from.value).length == 0
-				|| (registerform.from.value).length > 30) {
-			alert("გასვლის ადგილი უნდა იყოს 1-დან 30 სიმბოლომდე ზომის");
-			return false;
-		}
-		if ((registerform.to.value).length == 0
-				|| (registerform.to.value).length > 30) {
-			alert("დანიშნულების ადგილი უნდა იყოს 1-დან 30 სიმბოლომდე ზომის");
-			return false;
-		}
-		if((registerform.fee.value).length==0){
-			alert("შეიყვანეთ გადასახადი");
-			return false;
-		}
-		if((registerform.places.value).length==0){
-			alert("შეიყვანეთ ადგილების რაოდენობა");
-			return false;
-		}
-		var radios = document.getElementsByName('type');
-		var Chcount = 0;
-		var once = false;
-		var everyDay = false;
-		for (var i = 0, length = radios.length; i < length; i++) {
-			if (radios[i].checked) {
-				if (i == 0) {
-					everyDay = true;
-				} else if (i == 1) {
-					once = true;
-				}
-				Chcount = 1;
-				break;
-			}
-		}
-		if (Chcount == 0) {
-			alert("აირჩიეთ ყოველდღიური ან ერთჯერადი");
-			return false;
-		}
-		if (once) {
-			if (((registerform.date.value).length == 0)
-					|| ((registerform.time.value).length == 0)) {
-				alert("ერთი ველი მაინც ერთჯერადისთვის ცარიელია");
-				return false;
-			}
-		}
-		var array = [];
-		var index = 0;
-		if (everyDay) {
-			var inputElements = document.getElementsByTagName('input');
-			for (var i = 0; inputElements[i]; i++) {
-				if ((inputElements[i].name == "0" && inputElements[i].checked)
-						|| (inputElements[i].name == "1" && inputElements[i].checked)
-						|| (inputElements[i].name == "2" && inputElements[i].checked)
-						|| (inputElements[i].name == "3" && inputElements[i].checked)
-						|| (inputElements[i].name == "4" && inputElements[i].checked)
-						|| (inputElements[i].name == "5" && inputElements[i].checked)
-						|| (inputElements[i].name == "6" && inputElements[i].checked)) {
-
-					array[index] = inputElements[i].name;
-					index++;
-				}
-			}
-			if (index == 0) {
-				alert("არც ერთი დღე არ არის მონიშნული");
-				return false;
-			}
-			for (var i = 0; i < index; i++) {
-				if (array[i] == "0") {
-					if ((registerform.time0.value).length == 0) {
-						alert("ორშაბათი დღე მონიშნულია,მაგრამ საწყისი დრო არ არის მითითებული");
-						return false;
-					}
-				} else if (array[i] == "1") {
-					if ((registerform.time1.value).length == 0) {
-						alert("სამშაბათი დღე მონიშნულია,მაგრამ საწყისი დრო არ არის მითითებული");
-						return false;
-					}
-				} else if (array[i] == "2") {
-					if ((registerform.time2.value).length == 0) {
-						alert("ოთხშაბათი დღე მონიშნულია,მაგრამ საწყისი დრო არ არის მითითებული");
-						return false;
-					}
-				} else if (array[i] == "3") {
-					if ((registerform.time3.value).length == 0) {
-						alert("ხუთშაბათი დღე მონიშნულია,მაგრამ საწყისი დრო არ არის მითითებული");
-						return false;
-					}
-				} else if (array[i] == "4") {
-					if ((registerform.time4.value).length == 0) {
-						alert("პარასკევი დღე მონიშნულია,მაგრამ საწყისი დრო არ არის მითითებული");
-						return false;
-					}
-				} else if (array[i] == "5") {
-					if ((registerform.time5.value).length == 0) {
-						alert("შაბათი დღე მონიშნულია,მაგრამ საწყისი დრო არ არის მითითებული");
-						return false;
-					}
-				} else if (array[i] == "6") {
-					if ((registerform.time6.value).length == 0) {
-						alert("კვირა დღე მონიშნულია,მაგრამ საწყისი დრო არ არის მითითებული");
-						return false;
-					}
-				}
-			}
-		}
-		return true;
-	}
-</script>
-
 </head>
 <body>
 	<!-- Begin Wrapper -->
@@ -177,7 +57,19 @@
 <head>
 <script
 	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
-<script>
+
+<body>
+	<%
+		String id = request.getParameter("id");
+		int EventID = Integer.parseInt(id);
+		BasicDataSource source = (BasicDataSource) application.getAttribute("connectionPool");
+		EventParseInfo eventParse = new EventParseInfo(source);
+		UserParseInfo userParse = new UserParseInfo(source);
+		Event e = eventParse.getEventByID(EventID);
+		User u = userParse.getUserByID(e.getUserID());
+		Route r = e.getRoute();
+	%>
+	<script>
 	function initialize() {
 		var mapProp = {
 			center : new google.maps.LatLng(42.347485, 43.7),
@@ -186,27 +78,29 @@
 		};
 		var map = new google.maps.Map(document.getElementById("googleMap"),
 				mapProp);
+		var myLatlng = new google.maps.LatLng(<%=r.getFromLongitude() %>,<%=r.getFromLatitude() %>);
+		var myLatlng2 = new google.maps.LatLng(<%=r.getToLongitude() %>,<%=r.getToLatitude() %>);
+		var marker = new google.maps.Marker({
+			position : myLatlng,
+			map : map,
+		});
+		var marker2 = new google.maps.Marker({
+			position : myLatlng2,
+			map : map,
+		});
+
 	}
 
+
 	google.maps.event.addDomListener(window, 'load', initialize);
-</script>
-<body>
-	<%
-		String id = request.getParameter("id");
-		BasicDataSource source = (BasicDataSource) application.getAttribute("connectionPool");
-		EventParseInfo eventParse = new EventParseInfo(source);
-		UserParseInfo userParse = new UserParseInfo(source);
-		Event e = eventParse.getEventByID(id);
-		User u = userParse.getUserByID(e.getUserID());
-		Route r = e.getRoute();
-	%>
+	</script>
 	<div id="googleMap" style="width: 800px; height: 400px;"></div>
 </body>
 			</html>
 			<div class="line"></div>
-			<h3>გადასახადი : <%= e.getPrice() %></h3>
-			<h3>ადგილები : <%= e.getPlaces() %></h3>
-			<h3>მძღოლი : ლაშა <%= u.getFirstName()+ " " + u.getLastName() %></h3>
+			<h3>გადასახადი : <%= e.getPrice() + "  " + r.getFromLatitude()%></h3>
+			<h3>ადგილები : <%= e.getPlaces() + "  " + r.getToLatitude()%></h3>
+			<h3>მძღოლი : <%= u.getFirstName()+ " " + u.getLastName() %></h3>
 			<h3><%= r.getFromPlace() + " - " + r.getToPlace() %></h3>
 			<div class="line"></div>
 			<h2>komentarebi</h2>
