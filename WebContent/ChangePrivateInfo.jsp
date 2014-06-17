@@ -53,7 +53,7 @@
 		<div id="content">
 				<H2>პროფილის შეცვლა</H2>				
 				<div class="line"></div>
-					<form action="ChangePrivateInfoServlet" id="registerform" name="registerform"
+					<form action="ChangeProfileServlet" id="registerform" name="registerform"
 						method="post" enctype="multipart/form-data">
 						<textarea style="resize:none;" class="textfield" rows="3" placeholder="ჩემს შესახებ" name="about" tabindex="1"></textarea>
 						<input type="text" name="tel" placeholder="ტელ" class="textfield" tabindex="2"></input>
