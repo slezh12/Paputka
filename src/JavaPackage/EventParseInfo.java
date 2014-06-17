@@ -1,7 +1,9 @@
 package JavaPackage;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
@@ -37,4 +39,25 @@ public class EventParseInfo extends ParseInfo {
 		}
 		return event;
 	}
+	
+	public ArrayList<Comment> getComments(int EventID){
+		EventConnection ev = new EventConnection(source);
+		ResultSet rs = ev.CommentsByID(EventID);
+		ArrayList<Comment> result = new ArrayList<Comment>();
+		 try {
+			while (rs.next()) {
+				 int UserID = rs.getInt("UserID");
+				 String text = rs.getString("Comment");
+				 Date date = rs.getDate("Date");
+				 Comment com = new Comment(UserID, text, date);
+				 result.add(com);
+			 }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 ev.CloseConnection();
+		return result;
+	}
+	
 }
