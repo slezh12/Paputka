@@ -22,7 +22,7 @@
 		<script type="text/javascript" src="style/js/jquery-1.9.1.min.js"></script>
 		<script type="text/javascript" charset="utf-8" src="style/js/jquery.leanModal.min.js"></script>
 	</head>
-	<body>
+		<body>
 		<!-- Begin Wrapper -->
 		<div id="wrapper">
 			<!-- Begin Sidebar -->
@@ -31,29 +31,43 @@
 				<!-- Begin Menu -->
 				<% 
 				
-				int userID = Integer.parseInt((String)request.getAttribute("id"));
-				System.out.println(userID);
+				int userID = Integer.parseInt((String)request.getParameter("id"));
+				
 				BasicDataSource source = (BasicDataSource) application
 						.getAttribute("connectionPool");
 				User current = (User) session.getAttribute("user");
+				ParseInfo parseInfo = new ParseInfo(source);
+				
+				
 				int userIDGuest = current.getID();
+				
 				UserParseInfo userParse = new UserParseInfo(source);
 				User user = userParse.getUserByID(userID);
+				String statuses = parseInfo.getInfoAboutStatuses(userID);
 				
 				
 				
 				%>
-				
+				<div id="Usermenu" class="menu-v" style="marign-top: 20px;">
 				  <ul>
-		<!-- 		  	<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li> -->
+				  	<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li> 
 				  	<li style="color: #fff;">
-						რეიტინგი 
+						<h4>რეიტინგი </h4> 
 					</li>
 					<li style="color: #fff;">
-						 სტატუსი  
+						<h4>დაბადების თარიღი:  <%= user.getBirthdate() %>  </h4>
 					</li>
 					<li style="color: #fff;">
-						დაბადების თარიღი  <%= user.getBirthdate() %>
+						<h4>სქესი:	 </h4> 
+						<% if (user.getGender()){%>
+							<img   src="style/images/male.png"/>
+						<% }else{ %>
+							<img   src="style/images/female.png"/>
+						<%}%>
+						
+					</li>
+					<li style="color: #fff;">
+						<h4> სტატუსი: </h4>  <%= statuses  %>
 					</li>
 					
 				  </ul>
@@ -64,7 +78,7 @@
 			<div class="line"></div>
 		<!-- Begin Content -->
 			<div id="content">
-				<h2> <%=user.getFirstName()%><%=user.getLastName()%></h2>
+				<h2> <%=user.getFirstName() + " " + user.getLastName()%></h2>
 				<div class="line"></div>
 		<!-- End Content -->
 			</div>
