@@ -14,10 +14,8 @@ import javax.sql.DataSource;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
-import JavaPackage.BaseConnection;
 import JavaPackage.ParseInfo;
 import JavaPackage.User;
-import JavaPackage.UserConnection;
 import JavaPackage.UserParseInfo;
 
 /**
