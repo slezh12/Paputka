@@ -144,5 +144,4 @@ public class UserParseInfo extends ParseInfo {
 		connect.update("Tel", "PhoneNumber", tel, id);
 		connect.CloseConnection();
 	}
-
 }

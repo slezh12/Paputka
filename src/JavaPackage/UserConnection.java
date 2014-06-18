@@ -43,13 +43,6 @@ public class UserConnection extends BaseConnection {
 		return rs;
 	}
 
-	public ResultSet selectRatings(int secondID) throws SQLException {
-		ResultSet rs = stmt
-				.executeQuery("SELECT * FROM Ratings where SecondID = "
-						+ secondID);
-		return rs;
-	}
-
 	public void insertIntoRequestss(int userID, int eventID, String text,
 			int acception, String date) {
 		try {
@@ -116,4 +109,14 @@ public class UserConnection extends BaseConnection {
 		return rs;
 	}
 
+	public ResultSet getRaitingBoolean(int firstUserID, int secondUserID)
+			throws SQLException {
+		ResultSet rs = stmt
+				.executeQuery("select Participants.ID from participants join events on participants.eventid=events.id  where Participants.userID = "
+						+ firstUserID
+						+ "and events.UserID = "
+						+ secondUserID
+						+ ")");
+		return rs;
+	}
 }
