@@ -45,7 +45,9 @@
 				User user = userParse.getUserByID(userID);
 				String statuses = parseInfo.getInfoAboutStatuses(userID);
 				
-				
+				EventParseInfo events = new EventParseInfo(source);
+				ArrayList<Event> list = events.getEvents();
+
 				
 				%>
 				<div id="Usermenu" class="menu-v" style="marign-top: 20px;">
@@ -66,15 +68,7 @@
 						<%}%>
 						
 					</li>
-					<li style="color: #fff;">
-						<h4>შეაფასე:	</h4> 
-						<% if (userParse.canRate(userIDGuest, userID)){%>
-							<img   src="style/images/male.png"/>
-						<% }else{ %>
-							თქვენ არ გაქვთ ამ მომხმარებლის შეფასების უფლება
-						<%}%>
-						
-					</li>
+					
 					<li style="color: #fff;">
 						<h4> სტატუსი: </h4>  <%= statuses  %>
 					</li>
@@ -87,9 +81,18 @@
 			<div class="line"></div>
 		<!-- Begin Content -->
 			<div id="content">
-				<h2> <%=user.getFirstName() + " " + user.getLastName()%></h2>
+				<h2>მომხმარებლის სახელი და გვარი:  <%=user.getFirstName() + " " + user.getLastName()%></h2>
 				<div class="line"></div>
 		<!-- End Content -->
+		<%for (int i = 1; i < list.size(); i++) {
+			Event temp = list.get(i);
+			
+		%>	
+			<strong><a href="Event.jsp?id=<%=temp.getID()%>"><%= "ივენთი: "+temp.getRoute().getFromPlace() + " " +temp.getRoute().getToPlace() %></a></strong>
+			<p> </p>
+			
+		<div class="line"></div>	
+		<% } %>
 			</div>
 		</div>
 <script type="text/javascript">
