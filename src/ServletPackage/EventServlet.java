@@ -18,8 +18,6 @@ import JavaPackage.EventConnection;
 import JavaPackage.EventParseInfo;
 import JavaPackage.TimeChange;
 import JavaPackage.User;
-import JavaPackage.WantToGoConnection;
-import JavaPackage.WantToGoParseInfo;
 
 /**
  * Servlet implementation class EventServlet
