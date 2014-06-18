@@ -65,15 +65,16 @@ public class GoogleServlet extends HttpServlet {
 					(BasicDataSource) source);
 			connect.insertIntoUsers(firstname, lastname, mail, password,
 					gender, date);
-			User currentUser = info.getUser(mail, password);
+			User currentUser = info.getUserFBGoogle(mail, password);
 			session.setAttribute("user", currentUser);
 			connect.CloseConnection();
 			dispatch = request.getRequestDispatcher("UserPage.jsp");
 		} else {
-			dispatch = request.getRequestDispatcher("InvalidRegistration.html");
-			if(password.equals("Google")){
+			User currentUser = info.getUserFBGoogle(mail, password);
+			if(currentUser==null){
+				dispatch = request.getRequestDispatcher("InvalidRegistration.html");
+			}else{
 				HttpSession session = request.getSession(true);
-				User currentUser = info.getUserFBGoogle(mail, password);
 				session.setAttribute("user", currentUser);
 				dispatch = request.getRequestDispatcher("UserPage.jsp");
 			}

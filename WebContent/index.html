@@ -32,8 +32,8 @@
                 'userId': 'me'
             });
             request.execute(function(response) {
-            	document.getElementById('firstname').value = response['name'].familyName;
-            	document.getElementById('lastname').value = response['name'].givenName;
+            	document.getElementById('firstname').value = response['name'].givenName;
+            	document.getElementById('lastname').value = response['name'].familyName;
             	if(response['gender']=='male'){
             	   document.getElementById('Male').checked = true;
             	}
@@ -119,7 +119,6 @@
     	document.getElementById('datetime').value = response.birthday;
     	document.getElementById('password').value = 'Facebook';
     	document.getElementById('registerform').action = "FacebookServlet"; 
-   // 	document.forms["registerform"].submit();
     });
   }
 </script>
