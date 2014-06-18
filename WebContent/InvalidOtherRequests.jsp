@@ -51,7 +51,7 @@
 
 		<!-- Begin Content -->
 		<div id="content">
-			<H2>თხოვნები დასამგზავრებლად</H2>
+			<H2>პასუხის გასაცემად საჭიროა რომელიმე ველის მონიშვნა</H2>
 			<div class="line"></div>
 			<%
 				BasicDataSource source = (BasicDataSource) application
