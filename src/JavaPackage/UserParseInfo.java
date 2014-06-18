@@ -28,6 +28,29 @@ public class UserParseInfo extends ParseInfo {
 		}
 		return false;
 	}
+	
+	public boolean canRate(int firstUserID, int secondUserID) throws SQLException {
+		boolean ret = false; UserConnection connect = new UserConnection((BasicDataSource) source);
+		ResultSet rs1 = connect.getRaitingBoolean(firstUserID, secondUserID); 
+		ResultSet rs2 = connect.getRaitingBoolean(secondUserID, firstUserID);
+		if (rs1.next() || rs2.next()) ret = true; 
+		connect.CloseConnection();
+		return ret;	
+	}
+	
+	public Integer getRating(int userID) throws SQLException {
+		Integer ret = null; 
+		BaseConnection connect = new BaseConnection((BasicDataSource) source); 
+		ResultSet rs = connect.selectByID("Ratings", userID, "SecondID");
+		int sum = 0; int count = 0;
+		while (rs.next()) {
+			int temp = rs.getInt("Rating"); 
+			sum+=temp;
+			count++;
+		} 
+		if (count>0) ret = sum/count;
+		return ret;
+		}
 
 	public User getUser(String email, String password) {
 		User user = null;
