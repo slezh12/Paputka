@@ -102,19 +102,20 @@
 </body>
       </html>
       <div class="line"></div>
+      <h3>ადგილების რაოდენობა : <%= e.getPlaces() %></h3>
       <h3>გადასახადი : <%= e.getPrice() %></h3>
       <h3>მძღოლი : <%= u.getFirstName()+ " " + u.getLastName() %></h3>
       <h3><%= r.getFromPlace() + " - " + r.getToPlace() %></h3>
       <div class="line"></div>
-      <h2>komentarebi</h2>
+      <h2>კომენტარები</h2>
       
       <div id="column">
         <ul id="latestnews">
         <% for(int i =0; i<arr.size(); i++){ 
           User temp = userParse.getUserByID(arr.get(i).getUserID());%>
-          <li><img src="images/demo/80x80.gif" alt="" />
+          <li>
             <p>
-              <strong><a href="#"><%= temp.getFirstName() + " " + temp.getLastName() %></a></strong>
+              <strong><a href="Profile.jsp?id=<%=u.getID()%>"><%= temp.getFirstName() + " " + temp.getLastName() %></a></strong>
               <%=  arr.get(i).getText() + "  :" + arr.get(i).getDate()%>
             </p></li>
           
