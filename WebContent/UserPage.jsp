@@ -24,13 +24,14 @@
 				User user = (User) session.getAttribute("user");
 				String name = user.getFirstName();
 				String lastname = user.getLastName();
+				int userID = user.getID();
 				%>
 				<h3 id="welcomeUser">Welcome, <%= name+" "+lastname %> </h3> 
 				<div id="Usermenu" class="menu-v" style="marign-top: 20px;">
 				  <ul>
 				  	<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
 				  	<li>
-						<a href="#">პროფილი</a>
+						<a href="Profile.jsp?id=<%=userID%>>">პროფილი</a>
 					</li>
 					<li>
 						<a href="ChangePrivateInfo.jsp">პროფილის შეცვლა</a>
