@@ -5,21 +5,41 @@ public class TimeChange {
 	public static String getCorrectDate(String time) {
 		String result = "";
 		int count = 0;
-		String first = "";
-		String second = "";
-		String third = "";
+		String day = "";
+		String month = "";
+		String year = "";
 		for (int i = 0; i < time.length(); i++) {
 			if (time.charAt(i) == '-') {
 				count++;
 			} else if (count == 0) {
-				first += time.charAt(i);
+				day += time.charAt(i);
 			} else if (count == 1) {
-				second += time.charAt(i);
+				month += time.charAt(i);
 			} else if (count == 2) {
-				third += time.charAt(i);
+				year += time.charAt(i);
 			}
 		}
-		result = third + "-" + second + "-" + first;
+		result = year + "-" + month + "-" + day;
+		return result;
+	}
+	public static String getCorrectDateForFacebook(String time) {
+		String result = "";
+		int count = 0;
+		String day = "";
+		String month = "";
+		String year = "";
+		for (int i = 0; i < time.length(); i++) {
+			if (time.charAt(i) == '/') {
+				count++;
+			} else if (count == 0) {
+				month += time.charAt(i);
+			} else if (count == 1) {
+				day += time.charAt(i);
+			} else if (count == 2) {
+				year += time.charAt(i);
+			}
+		}
+		result = year + "-" + month + "-" + day;
 		return result;
 	}
 
