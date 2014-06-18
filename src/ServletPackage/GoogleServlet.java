@@ -47,42 +47,39 @@ public class GoogleServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-//		String firstname = request.getParameter("firstname");
-//		String lastname = request.getParameter("lastname");
-//		String mail = request.getParameter("mail");
-//		String date1 = request.getParameter("datetime");
-//		String date = TimeChange.getCorrectDateForFacebook(date1);
-//		String radio = request.getParameter("gender");
-//		boolean gender = false;
-//		if (radio.equals("Male")) {
-//			gender = true;
-//		}
-//		String password = request.getParameter("password");
-//		ServletContext context = getServletContext();
-//		DataSource source = (DataSource) context.getAttribute("connectionPool");
-//		UserParseInfo info = new UserParseInfo((BasicDataSource) source);
-//		RequestDispatcher dispatch;
-//		if (!info.isUserAlreadyInBase(mail)) {
-//			HttpSession session = request.getSession(true);
-//			UserConnection connect = new UserConnection(
-//					(BasicDataSource) source);
-//			connect.insertIntoUsers(firstname, lastname, mail, password,
-//					gender, date);
-//			User currentUser = info.getUser(mail, password);
-//			session.setAttribute("user", currentUser);
-//			connect.CloseConnection();
-//			dispatch = request.getRequestDispatcher("UserPage.jsp");
-//		} else {
-//			if(password=="Google"){
-//				HttpSession session = request.getSession(true);
-//				User currentUser = info.getUser(mail, password);
-//				session.setAttribute("user", currentUser);
-//				dispatch = request.getRequestDispatcher("UserPage.jsp");
-//			}else{
-//				dispatch = request.getRequestDispatcher("InvalidRegistration.html");
-//			}
-//		}	
-		RequestDispatcher dispatch = request.getRequestDispatcher("InvalidRegistration.html");
+		String firstname = request.getParameter("firstname");
+		String lastname = request.getParameter("lastname");
+		String mail = request.getParameter("mail");
+		String date = request.getParameter("datetime");
+		String radio = request.getParameter("gender");
+		boolean gender = false;
+		if (radio.equals("Male")) {
+			gender = true;
+		}
+		String password = request.getParameter("password");
+		ServletContext context = getServletContext();
+		DataSource source = (DataSource) context.getAttribute("connectionPool");
+		UserParseInfo info = new UserParseInfo((BasicDataSource) source);
+		RequestDispatcher dispatch;
+		if (!info.isUserAlreadyInBase(mail)) {
+			HttpSession session = request.getSession(true);
+			UserConnection connect = new UserConnection(
+					(BasicDataSource) source);
+			connect.insertIntoUsers(firstname, lastname, mail, password,
+					gender, date);
+			User currentUser = info.getUser(mail, password);
+			session.setAttribute("user", currentUser);
+			connect.CloseConnection();
+			dispatch = request.getRequestDispatcher("UserPage.jsp");
+		} else {
+			dispatch = request.getRequestDispatcher("InvalidRegistration.html");
+			if(password.equals("Google")){
+				HttpSession session = request.getSession(true);
+				User currentUser = info.getUser(mail, password);
+				session.setAttribute("user", currentUser);
+				dispatch = request.getRequestDispatcher("UserPage.jsp");
+			}
+		}	
 		dispatch.forward(request, response);
 	}
 }
