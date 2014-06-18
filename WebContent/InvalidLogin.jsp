@@ -6,7 +6,7 @@
 <%@page import="JavaPackage.Event"%>
 <%@page import="JavaPackage.EventParseInfo"%>
 <%@page import="JavaPackage.Request"%>
-<%@page import="JavaPackage.ParseInfo"%>
+<%@page import="JavaPackage.EventParseInfo"%>
 <%@page import="JavaPackage.Route"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="JavaPackage.Comment" %>
@@ -316,7 +316,7 @@ function initialize() {
 			mapProp);
 	<%
     	BasicDataSource source = (BasicDataSource) application.getAttribute("connectionPool");
-		ParseInfo parse = new ParseInfo(source);
+		EventParseInfo parse = new EventParseInfo(source);
 		ArrayList<Event> arr = parse.getEvents();
 		for(int i = 0; i<arr.size(); i++){
 			Route r = arr.get(i).getRoute();
