@@ -31,7 +31,7 @@
 				  <ul>
 				  	<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
 				  	<li>
-						<a href="Profile.jsp?id=<%=userID%>>">პროფილი</a>
+						<a href="Profile.jsp?id=<%=userID%>">პროფილი</a>
 					</li>
 					<li>
 						<a href="ChangePrivateInfo.jsp">პროფილის შეცვლა</a>

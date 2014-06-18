@@ -32,16 +32,14 @@
 				<% 
 				
 				int userID = Integer.parseInt((String)request.getAttribute("id"));
+				System.out.println(userID);
 				BasicDataSource source = (BasicDataSource) application
 						.getAttribute("connectionPool");
 				User current = (User) session.getAttribute("user");
 				int userIDGuest = current.getID();
 				UserParseInfo userParse = new UserParseInfo(source);
 				User user = userParse.getUserByID(userID);
-				String gender = "";
-				if(user.getGender()){
-					
-				}
+				
 				
 				
 				%>
@@ -66,7 +64,7 @@
 			<div class="line"></div>
 		<!-- Begin Content -->
 			<div id="content">
-				<h2> <%= user.getFirstName() + " " + user.getLastName() %></h2>
+				<h2> <%=user.getFirstName()%><%=user.getLastName()%></h2>
 				<div class="line"></div>
 		<!-- End Content -->
 			</div>
