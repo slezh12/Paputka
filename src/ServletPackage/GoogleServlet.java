@@ -14,8 +14,6 @@ import javax.sql.DataSource;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
-import JavaPackage.Hash;
-import JavaPackage.TimeChange;
 import JavaPackage.User;
 import JavaPackage.UserConnection;
 import JavaPackage.UserParseInfo;
