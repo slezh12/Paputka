@@ -52,7 +52,7 @@
 						<a href="MyWantToGos.jsp">ჩემივონთთუგოუ</a>
 					</li>
 					<li>
-						<a href="index.html" >გამოსვლა </a>
+						<a href="index.jsp" >გამოსვლა </a>
 					</li>
 
 				  </ul>

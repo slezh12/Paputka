@@ -59,11 +59,11 @@
             });
         });
       } else {
-      	window.location.href = 'InvalidLogin.html';
+      	window.location.href = 'InvalidLogin.jsp';
         console.log('An error occurred');
       }
     } else {
-      window.location.href = 'InvalidLogin.html';
+      window.location.href = 'InvalidLogin.jsp';
       console.log('Empty authResult');  // Something went wrong
     }
   }
@@ -192,7 +192,7 @@
 			<!-- Begin Menu -->
 			<div id="menu" class="menu-v">
 				<ul>
-					<li><a href="index.html" class="active">მთავარი გვერდი</a></li>
+					<li><a href="index.jsp" class="active">მთავარი გვერდი</a></li>
 				</ul>
 			</div>
 			<!-- End Menu -->

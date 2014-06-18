@@ -59,7 +59,7 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("user", user);
 			dispatch = request.getRequestDispatcher("UserPage.jsp");
 		} else {
-			dispatch = request.getRequestDispatcher("InvalidLogin.html");
+			dispatch = request.getRequestDispatcher("InvalidLogin.jsp");
 		}
 		dispatch.forward(request, response);
 	}
