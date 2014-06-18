@@ -297,8 +297,8 @@
 			for(int i = 0; i<arr.size(); i++){
 				Route r = arr.get(i).getRoute();
 		%>
-		 var myLatlng = new google.maps.LatLng(<%=r.getFromLongitude() %>,<%=r.getFromLatitude() %>);
-		    var myLatlng2 = new google.maps.LatLng(<%=r.getToLongitude() %>,<%=r.getToLatitude() %>);
+		 var myLatlng = new google.maps.LatLng(<%=r.getFromLatitude() %>,<%= r.getFromLongitude()%>);
+		    var myLatlng2 = new google.maps.LatLng(<%=r.getToLatitude()%>,<%=r.getToLongitude() %>);
 		    var marker = new google.maps.Marker({
 		      position : myLatlng,
 		      map : map,

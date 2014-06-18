@@ -82,7 +82,7 @@ public class ParseInfo {
 			e.printStackTrace();
 		}
 		base.CloseConnection();
-		return null;
+		return res;
 		
 	}
 

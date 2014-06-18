@@ -169,7 +169,8 @@ public class UserParseInfo extends ParseInfo {
 	
 			
 	public boolean canRate(int firstUserID, int secondUserID) throws SQLException {
-		boolean ret = false; UserConnection connect = new UserConnection((BasicDataSource) source);
+		boolean ret = false; 
+		UserConnection connect = new UserConnection((BasicDataSource) source);
 		ResultSet rs1 = connect.getRaitingBoolean(firstUserID, secondUserID); 
 		ResultSet rs2 = connect.getRaitingBoolean(secondUserID, firstUserID);
 		if (rs1.next() || rs2.next()) ret = true; 
