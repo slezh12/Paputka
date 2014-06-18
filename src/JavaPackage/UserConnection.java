@@ -115,8 +115,7 @@ public class UserConnection extends BaseConnection {
 				.executeQuery("select Participants.ID from participants join events on participants.eventid=events.id  where Participants.userID = "
 						+ firstUserID
 						+ "and events.UserID = "
-						+ secondUserID
-						+ ")");
+						+ secondUserID );
 		return rs;
 	}
 }

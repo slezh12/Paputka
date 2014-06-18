@@ -67,6 +67,15 @@
 						
 					</li>
 					<li style="color: #fff;">
+						<h4>შეაფასე:	</h4> 
+						<% if (userParse.canRate(userIDGuest, userID)){%>
+							<img   src="style/images/male.png"/>
+						<% }else{ %>
+							თქვენ არ გაქვთ ამ მომხმარებლის შეფასების უფლება
+						<%}%>
+						
+					</li>
+					<li style="color: #fff;">
 						<h4> სტატუსი: </h4>  <%= statuses  %>
 					</li>
 					
