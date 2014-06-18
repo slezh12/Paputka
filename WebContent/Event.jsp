@@ -30,6 +30,20 @@
   href="style/js/DateTimePicker.css" />
 <script type="text/javascript" src="style/js/DateTimePicker.js"></script>
 
+<script>function CheckAlerts() {
+		if ((registerform.about.value).length > 400) {
+			alert("კომენტარის სიგრძე არ უნდა აღემატებოდეს 400 სიმბოლოს");
+			return false;
+		}
+		
+		if ((registerform.about.value).length == 0) {
+			alert("შეიყვანეთ ტექსტი");
+			return false;
+		}
+		return true;
+	}
+	</script>
+
 </head>
 <body>
   <!-- Begin Wrapper -->
@@ -40,7 +54,7 @@
         <img src="style/images/logo.png" alt="Paputka" />
       </div>
       <!-- Begin Menu -->
-      <div id="menu" class="menu-v">
+		<div id="Usermenu" class="menu-v" style="marign-top: 20px;">
         <ul>
           <li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
           
@@ -102,8 +116,8 @@
 </body>
       </html>
       <div class="line"></div>
-      <h3>ადგილების რაოდენობა : <%= e.getPlaces() %></h3>
       <h3>გადასახადი : <%= e.getPrice() %></h3>
+      <h3>ადგილების რაოდენობა : <%= e.getPlaces() %></h3>
       <h3>მძღოლი : <%= u.getFirstName()+ " " + u.getLastName() %></h3>
       <h3><%= r.getFromPlace() + " - " + r.getToPlace() %></h3>
       <div class="line"></div>
@@ -113,13 +127,27 @@
         <ul id="latestnews">
         <% for(int i =0; i<arr.size(); i++){ 
           User temp = userParse.getUserByID(arr.get(i).getUserID());%>
-          <li>
+          <li><img src="images/demo/80x80.gif" alt="" />
             <p>
-              <strong><a href="Profile.jsp?id=<%=u.getID()%>"><%= temp.getFirstName() + " " + temp.getLastName() %></a></strong>
+              <strong><a href="#"><%= temp.getFirstName() + " " + temp.getLastName() %></a></strong>
               <%=  arr.get(i).getText() + "  :" + arr.get(i).getDate()%>
             </p></li>
           
         <%} %>
+        <li>
+        <div class="line"></div>
+        <H2>კომენტარის დამატება</H2>				
+					<form action="CommentServlet" method="post">
+						<h4>კომენტარის სიგრძე არ უნდა აღემატებოდეს 400 სიმბოლოს</h4>
+						<textarea style="resize:none;" class="textfield" rows="3" placeholder="გთხოვთ შეიყვანოთ ტექსტი" name="comment" tabindex="1"></textarea>
+						<br>
+						<p>
+						<input type="submit" name="create" id="registerbtn"
+							class="flatbtn-blu hidemodal" value="კომენტარის დამატება" tabindex="3"></input>
+						</p>
+						<input type="hidden" name="eventID" value="<%=EventID%>">
+					</form>
+        </li>
         </ul>
       </div>
       <!-- End Content -->

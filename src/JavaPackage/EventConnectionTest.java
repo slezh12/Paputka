@@ -184,8 +184,7 @@ public class EventConnectionTest {
 					.executeQuery("SELECT * FROM Events order by ID desc limit 1");
 			rs1.next();
 			int ID = rs1.getInt("ID");
-			base.insertIntoComments(ID, 1, "sandro lezhava",
-					"1000-01-01 00:00:00");
+			base.insertIntoComments(ID, 1, "sandro lezhava");
 			ResultSet rs = stmt
 					.executeQuery("SELECT * FROM Comments order by ID desc limit 1");
 			if (rs.isBeforeFirst()) {
@@ -193,7 +192,7 @@ public class EventConnectionTest {
 				assertEquals(ID, rs.getInt("eventID"));
 				assertEquals(1, rs.getInt("userID"));
 				assertEquals("sandro lezhava", rs.getString("comment"));
-				assertEquals("1000-01-01 00:00:00.0", rs.getString("date"));
+				//assertEquals("1000-01-01 00:00:00.0", rs.getString("date"));
 				stmt.executeUpdate("DELETE FROM Comments ORDER BY ID DESC LIMIT 1");
 				stmt.executeUpdate("DELETE FROM Events ORDER BY ID DESC LIMIT 1");
 			} else

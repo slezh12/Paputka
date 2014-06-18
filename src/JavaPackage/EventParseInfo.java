@@ -117,5 +117,9 @@ public class EventParseInfo extends ParseInfo {
 		return res;
 	}
 	
+	public void InsertIntoComments(int eventID,int userID,String comment){
+		EventConnection ev = new EventConnection(source);
+		ev.insertIntoComments(eventID, userID, comment);
+	}
 	
 }

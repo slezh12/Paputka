@@ -83,8 +83,7 @@ public class EventConnection extends BaseConnection {
 		}
 	}
 
-	public void insertIntoComments(int eventID, int userID, String comment,
-			String date) {
+	public void insertIntoComments(int eventID, int userID, String comment) {
 		try {
 			super.stmt
 					.executeUpdate("INSERT INTO Comments (eventID,userID,comment,date) VALUES("
@@ -94,7 +93,7 @@ public class EventConnection extends BaseConnection {
 							+ ","
 							+ "'"
 							+ comment
-							+ "'" + "," + "'" + date + "'" + ")");
+							+ "'" + ","  + " now() "  + ")");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
