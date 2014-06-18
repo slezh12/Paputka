@@ -1,4 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@page import="org.apache.tomcat.dbcp.dbcp.BasicDataSource"%>
+<%@page import="JavaPackage.Route"%>
+<%@page import="JavaPackage.Event"%>
+<%@page import="JavaPackage.EventParseInfo"%>
+<%@page import="JavaPackage.Request"%>
+<%@page import="JavaPackage.EventParseInfo"%>
+<%@page import="JavaPackage.Route"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="JavaPackage.Comment" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -296,17 +307,35 @@
 <script
 	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
 <script>
-	function initialize() {
-		var mapProp = {
-			center : new google.maps.LatLng(42.347485, 43.7),
-			zoom : 7,
-			mapTypeId : google.maps.MapTypeId.ROADMAP
-		};
-		var map = new google.maps.Map(document.getElementById("googleMap"),
-				mapProp);
-	}
+function initialize() {
+	var mapProp = {
+		center : new google.maps.LatLng(42.347485, 43.7),
+		zoom : 7,
+		mapTypeId : google.maps.MapTypeId.ROADMAP
+	};
+	var map = new google.maps.Map(document.getElementById("googleMap"),
+			mapProp);
+	<%
+    	BasicDataSource source = (BasicDataSource) application.getAttribute("connectionPool");
+		EventParseInfo parse = new EventParseInfo(source);
+		ArrayList<Event> arr = parse.getEvents();
+		for(int i = 0; i<arr.size(); i++){
+			Route r = arr.get(i).getRoute();
+	%>
+	 var myLatlng = new google.maps.LatLng(<%=r.getFromLatitude() %>,<%= r.getFromLongitude()%>);
+	    var myLatlng2 = new google.maps.LatLng(<%=r.getToLatitude()%>,<%=r.getToLongitude() %>);
+	    var marker = new google.maps.Marker({
+	      position : myLatlng,
+	      map : map,
+	    });
+	    var marker2 = new google.maps.Marker({
+	      position : myLatlng2,
+	      map : map,
+	    });
+	<%} %>
+}
 
-	google.maps.event.addDomListener(window, 'load', initialize);
+google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 </head>
 <body>

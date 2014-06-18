@@ -77,15 +77,17 @@ public class EventParseInfo extends ParseInfo {
 	public ArrayList<Event> getEvents(){
 		BaseConnection base = new BaseConnection((BasicDataSource) source);
 		ResultSet rs = base.selectAll("Events");
+		ArrayList<Event> res  = formEvents(rs);
 		base.CloseConnection();
-		return formEvents(rs);
+		return res;
 	}
 	
 	public ArrayList<Event> getUsersEvents(int UserID){
 		BaseConnection base = new BaseConnection((BasicDataSource) source);
 		ResultSet rs = base.selectByID("Events",UserID,"UserID");
+		ArrayList<Event> res  = formEvents(rs);
 		base.CloseConnection();
-		return formEvents(rs);
+		return res;
 	}
 	
 	public ArrayList<Event> formEvents(ResultSet rs){

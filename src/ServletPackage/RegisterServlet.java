@@ -77,7 +77,7 @@ public class RegisterServlet extends HttpServlet {
 			connect.CloseConnection();
 			dispatch = request.getRequestDispatcher("UserPage.jsp");
 		} else {
-			dispatch = request.getRequestDispatcher("InvalidRegistration.html");
+			dispatch = request.getRequestDispatcher("InvalidRegistration.jsp");
 		}
 		dispatch.forward(request, response);
 	}

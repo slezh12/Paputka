@@ -6,7 +6,7 @@
 <%@page import="JavaPackage.Event"%>
 <%@page import="JavaPackage.EventParseInfo"%>
 <%@page import="JavaPackage.Request"%>
-<%@page import="JavaPackage.EventParseInfo"%>
+<%@page import="JavaPackage.ParseInfo"%>
 <%@page import="JavaPackage.Route"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="JavaPackage.Comment" %>
