@@ -82,15 +82,14 @@ public class EventConnection extends BaseConnection {
 			e.printStackTrace();
 		}
 	}
-	
-	public int getParticipantsByEventID(int eventID){
+
+	public int getParticipantsByEventID(int eventID) {
 		ResultSet rs;
 		int result = 0;
 		try {
 			String name = "count(id)";
-			rs = stmt
-					.executeQuery("select " + name + " from participants where eventID ="
-							+ eventID);
+			rs = stmt.executeQuery("select " + name
+					+ " from participants where eventID =" + eventID);
 			rs.next();
 			result = rs.getInt(name);
 		} catch (SQLException e) {
@@ -110,7 +109,7 @@ public class EventConnection extends BaseConnection {
 							+ ","
 							+ "'"
 							+ comment
-							+ "'" + ","  + " now() "  + ")");
+							+ "'" + "," + " now() " + ")");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -124,15 +123,47 @@ public class EventConnection extends BaseConnection {
 			e.printStackTrace();
 		}
 	}
-	public ResultSet CommentsByID(int eventID){
+
+	public ResultSet CommentsByID(int eventID) {
 		ResultSet rs = null;
 		try {
-			rs = stmt.executeQuery("SELECT * FROM Comments WHERE EventID = "+ eventID + " order by ID desc");
+			rs = stmt.executeQuery("SELECT * FROM Comments WHERE EventID = "
+					+ eventID + " order by ID desc");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return rs;
 	}
+
+	public void InsertIntoRequsets(int UserID, int EventID, String text) {
+		try {
+			super.stmt
+					.executeUpdate("INSERT INTO Requests(UserID, EventID, Text, Acception, Date) VALUES ("
+							+ UserID
+							+ ","
+							+ EventID
+							+ ","
+							+ "'"
+							+ text
+							+ "'"
+							+ ", 0, now())");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 	
+	public ResultSet Request(int UserID, int EventID){
+		ResultSet rs = null;
+		try {
+			rs = stmt.executeQuery("SELECT * FROM Requests Where UserID = " + UserID + " and EventID = " + EventID);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return rs;
+	}
+
 }
