@@ -29,7 +29,7 @@
 <link rel="stylesheet" type="text/css"
 	href="style/js/DateTimePicker.css" />
 <script type="text/javascript" src="style/js/DateTimePicker.js"></script>
-	
+
 </head>
 <body>
 	<!-- Begin Wrapper -->
@@ -66,19 +66,22 @@
 					int eventID = temp.getEventID();
 					EventParseInfo eventParse = new EventParseInfo(source);
 					Event tempEvent = eventParse.getEventByID(eventID);
-					Route route = tempEvent.getRoute();
-					String from = route.getFromPlace();
-					String to = route.getToPlace();
-					int accept = temp.getAcception();
-					ParseInfo parse = new ParseInfo(source);
-					String tel = parse.getPrivateInfo(temp.getFromUserID(),
-							"PhoneNumber", "Tel");
-					User eventOwner = userParse.getUserByID(temp.getFromUserID());
-					String mail = eventOwner.getEmail();
+					boolean validation = tempEvent.getValidation();
+					if (validation) {
+						Route route = tempEvent.getRoute();
+						String from = route.getFromPlace();
+						String to = route.getToPlace();
+						int accept = temp.getAcception();
+						ParseInfo parse = new ParseInfo(source);
+						String tel = parse.getPrivateInfo(temp.getFromUserID(),
+								"PhoneNumber", "Tel");
+						User eventOwner = userParse.getUserByID(temp
+								.getFromUserID());
+						String mail = eventOwner.getEmail();
 			%>
 			<div id="column">
 				<ul id="latestnews">
-					<strong><a href="Event.jsp?id=<%=eventID%>"><h2><%=from+" "%>-----><%=" "+to%></h2></a></strong>
+					<strong><a href="Event.jsp?id=<%=eventID%>"><h2><%=from + " "%>-----><%=" " + to%></h2></a></strong>
 					<h4>
 						<%=temp.getText()%>
 					</h4>
@@ -86,38 +89,42 @@
 						<%
 							if (accept == 0) {
 						%>
-						<form action="OtherRequestsServlet" method="post">
-							<img style="opacity: 1; float: left;"
-							src="style/images/onebit_34.png"><input type="radio" class="radio1" name="acc"
-							value="yes" tabindex="5"></input><img style="float: left; opacity: 1;"
-							src="style/images/onebit_35.png"> <input type="radio" class="radio2" name="acc"
-							value="no" tabindex="6"></input>
-							<input type="hidden" name="request" value=<%=requestID%>>
-							<input type="submit" class="login" value="პასუხის გაცემა"></input> 
-						</form>
-						<%
-							} else if (accept == 1) {
-						%>
+					
+					<form action="OtherRequestsServlet" method="post">
 						<img style="opacity: 1; float: left;"
-							src="style/images/onebit_34.png"> <img
-							style="float: left; opacity: 0.4;"
-							src="style/images/onebit_35.png"> 
-						<%
-							} else if (accept == 2) {
-						%>
-						<img style="opacity: 0.4; float: left;"
-							src="style/images/onebit_34.png">
-						<img style="float: left; opacity: 1;"
-							src="style/images/onebit_35.png">
-						<%
-							}
-						%>
-						<h3>ტელეფონი:<%=" "+tel%>მეილი:<%=mail%></h3>
+							src="style/images/onebit_34.png"><input type="radio"
+							class="radio1" name="acc" value="yes" tabindex="5"></input><img
+							style="float: left; opacity: 1;" src="style/images/onebit_35.png">
+						<input type="radio" class="radio2" name="acc" value="no"
+							tabindex="6"></input> <input type="hidden" name="request"
+							value=<%=requestID%>> <input type="submit" class="login"
+							value="პასუხის გაცემა"></input>
+					</form>
+					<%
+						} else if (accept == 1) {
+					%>
+					<img style="opacity: 1; float: left;"
+						src="style/images/onebit_34.png">
+					<img style="float: left; opacity: 0.4;"
+						src="style/images/onebit_35.png">
+					<%
+						} else if (accept == 2) {
+					%>
+					<img style="opacity: 0.4; float: left;"
+						src="style/images/onebit_34.png">
+					<img style="float: left; opacity: 1;"
+						src="style/images/onebit_35.png">
+					<%
+						}
+					%>
+					<h3>
+						ტელეფონი:<%=" " + tel%>მეილი:<%=mail%></h3>
 					</p>
 				</ul>
 			</div>
 			<div class="line"></div>
 			<%
+				}
 				}
 			%>
 			<!-- End Content -->

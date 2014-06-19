@@ -167,15 +167,23 @@ public class UserParseInfo extends ParseInfo {
 		connect.CloseConnection();
 	}
 	
-			
+	private boolean rateHelper( ResultSet rs) throws SQLException {
+		while (rs.next()) {
+			if (rs.getBoolean("Events.Type") && !rs.getBoolean("Events.Validation"))
+				return true;
+		}
+		return false;
+	}
+	
 	public boolean canRate(int firstUserID, int secondUserID) throws SQLException {
-		boolean ret = false; 
 		UserConnection connect = new UserConnection((BasicDataSource) source);
 		ResultSet rs1 = connect.getRaitingBoolean(firstUserID, secondUserID); 
 		ResultSet rs2 = connect.getRaitingBoolean(secondUserID, firstUserID);
-		if (rs1.next() || rs2.next()) ret = true; 
+		boolean timeFactor = false;
+		if (rateHelper(rs1) || rateHelper(rs2))
+			timeFactor = true;
 		connect.CloseConnection();
-		return ret;	
+		return timeFactor;	
 	}
 			
 	public Integer getRating(int userID) throws SQLException {

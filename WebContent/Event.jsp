@@ -31,12 +31,12 @@
 <script type="text/javascript" src="style/js/DateTimePicker.js"></script>
 
 <script>function CheckAlerts() {
-		if ((registerbtn.create.value).length == 0) {
+		if ((registerform.comment.value).length == 0) {
 			alert("შეიყვანეთ ტექსტი");
 			return false;
 		}
 	
-		if ((registerbtn.create.value).length > 400) {
+		if ((registerform.comment.value).length > 400) {
 			alert("კომენტარის სიგრძე არ უნდა აღემატებოდეს 400 სიმბოლოს");
 			return false;
 		}
@@ -140,12 +140,12 @@
         <li>
         <div class="line"></div>
         <H2>კომენტარის დამატება</H2>				
-					<form action="CommentServlet" method="post" id="registerbtn">
+					<form action="CommentServlet" method="post" id="registerform" name="registerform">
 						<h4>კომენტარის სიგრძე არ უნდა აღემატებოდეს 400 სიმბოლოს</h4>
 						<textarea style="resize:none;" class="textfield" rows="3" placeholder="გთხოვთ შეიყვანოთ ტექსტი" name="comment" tabindex="1"></textarea>
 						<br>
 						<p>
-						<input type="submit" name="create" 
+						<input type="submit" name="create" id="registerbtn"
 							class="flatbtn-blu hidemodal" value="კომენტარის დამატება" tabindex="3" onClick="return CheckAlerts();"></input>
 						</p>
 						<input type="hidden" name="eventID" value="<%=EventID%>" >
