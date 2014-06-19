@@ -179,7 +179,8 @@ public class UserParseInfo extends ParseInfo {
 	}
 			
 	public Integer getRating(int userID) throws SQLException {
-		Integer ret = null; 
+		double rate = 0; 
+		Integer forReturn = null;
 		BaseConnection connect = new BaseConnection((BasicDataSource) source); 
 		ResultSet rs = connect.selectByID("Ratings", userID, "SecondID");
 		int sum = 0; int count = 0;
@@ -188,8 +189,15 @@ public class UserParseInfo extends ParseInfo {
 			sum+=temp;
 			count++;
 		} 
-		if (count>0) ret = sum/count;
-		return ret;
+		
+		if (count>0){
+			rate = (double)sum/(double)count;
+			forReturn = (int) Math.round(rate);
+		}
+		
+		
+		
+		return forReturn;
 	}
 
 }
