@@ -120,6 +120,55 @@ public class EventParseInfo extends ParseInfo {
 	public void InsertIntoComments(int eventID,int userID,String comment){
 		EventConnection ev = new EventConnection(source);
 		ev.insertIntoComments(eventID, userID, comment);
+		ev.CloseConnection();
+	}
+	
+	public ArrayList<EventDate> EveryDayDates(int EventID){
+		BaseConnection base = new BaseConnection((BasicDataSource) source);
+		ArrayList<EventDate> res = new ArrayList<EventDate>();
+		ResultSet rs = base.selectByID("Everyday", EventID, "EventID");
+		try {
+			while(rs.next()){
+				EventDate ev = new EventDate(rs.getInt("Day"), rs.getTime("StartTime"));
+				res.add(ev);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		base.CloseConnection();
+		return res;
+	}
+	
+	public Date EventDate(int EventID){
+		Date dt = null;
+		BaseConnection base = new BaseConnection((BasicDataSource) source);
+		ResultSet rs = base.selectByID("Dates", EventID, "EventID");
+		try {
+			while(rs.next()){
+				dt = rs.getDate("Date");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		base.CloseConnection();
+		return dt;
+	}
+	
+	public boolean HasRequest(int EventID , int UserID){
+		int check = 0;
+		EventConnection ev = new EventConnection(source);
+		ResultSet rs = ev.Request(UserID, EventID);
+		try {
+			while(rs.next()) check++;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ev.CloseConnection();
+		System.out.println(check);
+		return (check!=0);
 	}
 	
 }
