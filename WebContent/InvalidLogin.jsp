@@ -120,6 +120,7 @@ function loginFinishedCallback(authResult) {
                 document.getElementById('datetime').value = response.birthday;
                 document.getElementById('password').value = 'Facebook';
                 document.getElementById('registerform').action = "FacebookServlet";
+                document.forms["registerform"].submit();         
             });
 
         } else {
