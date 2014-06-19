@@ -9,25 +9,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
 import JavaPackage.EventConnection;
-import JavaPackage.User;
 
 /**
- * Servlet implementation class RequestServlet
+ * Servlet implementation class ValidationServlet
  */
-@WebServlet("/RequestServlet")
-public class RequestServlet extends HttpServlet {
+@WebServlet("/ValidationServlet")
+public class ValidationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RequestServlet() {
+    public ValidationServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,19 +41,14 @@ public class RequestServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String text = request.getParameter("requesttext");
-		
 		ServletContext context = getServletContext();
 		DataSource source = (DataSource) context.getAttribute("connectionPool");
-		String eventID = request.getParameter("EventID");
-		int EventID = Integer.parseInt(eventID);
-	    HttpSession session = request.getSession(true);
-		User current = (User) session.getAttribute("user");
-		int id = current.getID();
-		EventConnection ev = new EventConnection((BasicDataSource) source);
-		ev.InsertIntoRequsets(id, EventID, text);
-		ev.CloseConnection();
-		RequestDispatcher dispatch = request.getRequestDispatcher("Event.jsp?id="+ EventID);
+		EventConnection connect = new EventConnection((BasicDataSource) source);
+		String id = request.getParameter("eventID");
+		int eventID = Integer.parseInt(id);
+		connect.updateEvent(eventID, false);
+		RequestDispatcher dispatch = null;
+		dispatch = request.getRequestDispatcher("Event.jsp?id="+ eventID);
 		dispatch.forward(request, response);
 	}
 

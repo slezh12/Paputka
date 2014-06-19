@@ -83,7 +83,7 @@
     		}
     	}
     }
-    
+    ev.CloseConnection();
   %>
   <!-- Begin Wrapper -->
   <div id="wrapper">
@@ -102,14 +102,15 @@
           <li><a href="#registermodal" id="modaltrigger">გააგზავნე მოთხოვნა</a></li>
           <%} %>
           <%
-          if((Currentuser.getID()==e.getUserID()) && e.getValidation()){  
-        	  System.out.println("shemovidaaq");
-				e.setValidation(false);
-				ev.updateEvent(e.getID(), false);
-          %>
-          <li><a href="Event.jsp?id=<%=e.getID() %>" >გააუქმე მოთხოვნა</a></li>
-          <%} 
-          ev.CloseConnection();%>
+          if((Currentuser.getID()==e.getUserID()) && e.getValidation()){
+          %>          		
+          <li>
+          		<form id="validation" action="ValidationServlet" method="post">
+				<input type="submit" name="btn" class="login" value="გაუქმება" ></input>
+				<input type="hidden" name="eventID" value="<%=EventID%>" ></input>
+				</form>
+          </li>
+          <%} %>
         </ul>
       </div>
       <!-- End Menu -->
@@ -156,11 +157,20 @@
       position : myLatlng,
       map : map,
     });
+    var infowindow = new google.maps.InfoWindow({
+		content : 'საწყისი პუნქტი'
+	});
+	infowindow.open(map, marker);
+	
     var marker2 = new google.maps.Marker({
       position : myLatlng2,
       map : map,
     });
 
+    var infowindow = new google.maps.InfoWindow({
+		content : 'სააბოლოო პუნქტი'
+	});
+	infowindow.open(map, marker2);
   }
 
 
@@ -170,6 +180,11 @@
 </body>
       </html>
       <div class="line"></div>
+      <%if (e.getValidation()) {%>
+      <h3>მოქმედი მგზავრობა</h3>
+      <%}else{ %>
+      <h3>გაუქმებული მგზავრობა</h3>
+      <%} %>
       <h3>გადასახადი : <%= e.getPrice() %></h3>
       <h3>ადგილების რაოდენობა : <%= e.getPlaces() %></h3>
       <h3>მძღოლი : <%= u.getFirstName()+ " " + u.getLastName() %></h3>
@@ -181,19 +196,19 @@
     	 for(int i = 0; i<ar.size(); i++){
     		 EventDate d = ar.get(i);
     		 switch(d.getDay()){
-    		 case 1: %>
+    		 case 0: %>
     		 <h3>ორშაბათი - <%= d.getDate() %></h3> <% break; 
-    		 case 2:%>
+    		 case 1:%>
 			  <h3>სამშაბათი - <%= d.getDate() %></h3> <% break; 
-    		 case 3:%>
+    		 case 2:%>
 			  <h3>ოთხშაბათი - <%= d.getDate() %></h3> <% break; 
-    		 case 4: %>
+    		 case 3: %>
 			  <h3>ხუთშაბათი - <%= d.getDate() %></h3> <% break;
-    		 case 5:%>
+    		 case 4:%>
 			  <h3>პარასკევი - <%= d.getDate() %></h3> <% break; 
-    		 case 6: %>
+    		 case 5: %>
 			  <h3>შაბათი - <%= d.getDate() %></h3> <% break;
-    		 case 7: %>
+    		 case 6: %>
 			  <h3>კვირა - <%= d.getDate() %></h3> <% break; 
     			
     		 }
