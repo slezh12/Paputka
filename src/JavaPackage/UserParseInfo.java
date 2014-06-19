@@ -177,11 +177,13 @@ public class UserParseInfo extends ParseInfo {
 	
 	public boolean canRate(int firstUserID, int secondUserID) throws SQLException {
 		UserConnection connect = new UserConnection((BasicDataSource) source);
+		UserConnection con = new UserConnection((BasicDataSource) source);
 		ResultSet rs1 = connect.getRaitingBoolean(firstUserID, secondUserID); 
-		ResultSet rs2 = connect.getRaitingBoolean(secondUserID, firstUserID);
-		boolean timeFactor = false;
+		ResultSet rs2 = con.getRaitingBoolean(secondUserID, firstUserID);
+		boolean timeFactor = false;		
 		if (rateHelper(rs1) || rateHelper(rs2))
 			timeFactor = true;
+		con.CloseConnection();
 		connect.CloseConnection();
 		return timeFactor;	
 	}
@@ -197,14 +199,11 @@ public class UserParseInfo extends ParseInfo {
 			sum+=temp;
 			count++;
 		} 
-		
 		if (count>0){
 			rate = (double)sum/(double)count;
 			forReturn = (int) Math.round(rate);
 		}
-		
-		
-		
+		connect.CloseConnection();
 		return forReturn;
 	}
 

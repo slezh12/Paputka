@@ -53,8 +53,45 @@
 				<div id="Usermenu" class="menu-v" style="marign-top: 20px;">
 				  <ul>
 				  	<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li> 
+					<li style="color: #fff;">
+						<h4>დაბადების თარიღი:  <%= user.getBirthdate() %>  </h4>
+					</li>
+					<li style="color: #fff;">
+						<h4>სქესი:	 </h4> 
+						<% if (user.getGender()){%>
+							<img   src="style/images/male.png"/>
+						<% }else{ %>
+							<img   src="style/images/female.png"/>
+						<%}%>
+						
+					</li>					
+					<li style="color: #fff;">
+						<h4> სტატუსი: </h4>  <%= statuses  %>
+					</li>
+					<li style="color: #fff;">
+					<% 
+					Integer rating = userParse.getRating(userID);
+					if (rating != null) {
+					%>
+						<h4>მომხმარებლის რეიტინგი:</h4> 						
+							<form id="ratingsForm1">
+								<div class="stars">
+									<%
+										for (int i = 1; i <= userParse.getRating(userID); i++) {
+									%>
+									<input type="radio" name="star" class="star-<%=i %>" id="<%=i %>" checked/>
+									<label class="star-<%=i %>" for="star-<%=i %>"></label>  
+										<%} %>
+									<span></span>
+								</div>
+							</form>
+						<%} else { %>
+						<h4>მომხმარებელს შეფასება არ აქვს</h4> 
+						<%}%>
+					</li>
+					<% if (userParse.canRate(userIDGuest, userID)){%>
 				  	<li style="color: #fff;">
-						<h4>რეიტინგი </h4> 
+						<h4>შეაფასეთ მომხმარებელი</h4> 
 						
 							<form id="ratingsForm">
 								<div class="stars">
@@ -73,23 +110,7 @@
 							</form>
 						
 					</li>
-					<li style="color: #fff;">
-						<h4>დაბადების თარიღი:  <%= user.getBirthdate() %>  </h4>
-					</li>
-					<li style="color: #fff;">
-						<h4>სქესი:	 </h4> 
-						<% if (user.getGender()){%>
-							<img   src="style/images/male.png"/>
-						<% }else{ %>
-							<img   src="style/images/female.png"/>
-						<%}%>
-						
-					</li>
-					
-					<li style="color: #fff;">
-						<h4> სტატუსი: </h4>  <%= statuses  %>
-					</li>
-					
+					<%}%>
 				  </ul>
 				</div>
 				<!-- End Menu -->
@@ -101,11 +122,11 @@
 				<h2>მომხმარებლის სახელი და გვარი:  <%=user.getFirstName() + " " + user.getLastName()%></h2>
 				<div class="line"></div>
 		<!-- End Content -->
-		<%for (int i = 1; i < list.size(); i++) {
+		<%for (int i = 0; i < list.size(); i++) {
 			Event temp = list.get(i);
 			
 		%>	
-			<strong><a href="Event.jsp?id=<%=temp.getID()%>"><%= "ივენთი: "+temp.getRoute().getFromPlace() + " " +temp.getRoute().getToPlace() %></a></strong>
+			<strong><a href="Event.jsp?id=<%=temp.getID()%>"><%= temp.getRoute().getFromPlace() + " -----> " +temp.getRoute().getToPlace() %></a></strong>
 			<p> </p>
 			
 		<div class="line"></div>	

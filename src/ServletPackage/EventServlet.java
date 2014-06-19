@@ -78,9 +78,9 @@ public class EventServlet extends HttpServlet {
 			String startTime = request.getParameter("time") + ":00";
 			connection.insertIntoDates(eventID, startDate+" "+startTime);
 		} else {
-			for (int i = 0; i < 6; i++) {
-				String isMarked = request.getParameter("0");
-				if (isMarked.equals("0")) {
+			for (int i = 0; i < 7; i++) {
+				String isMarked = request.getParameter(""+i);
+				if (isMarked!=null && isMarked.equals(""+i)) {
 					String startTime = request.getParameter("time"+i) + ":00";
 					connection.insertIntoEveryday(eventID, startTime, i);
 				}
