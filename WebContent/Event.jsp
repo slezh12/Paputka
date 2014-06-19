@@ -31,15 +31,16 @@
 <script type="text/javascript" src="style/js/DateTimePicker.js"></script>
 
 <script>function CheckAlerts() {
-		if ((registerform.about.value).length > 400) {
+		if ((registerbtn.create.value).length == 0) {
+			alert("შეიყვანეთ ტექსტი");
+			return false;
+		}
+	
+		if ((registerbtn.create.value).length > 400) {
 			alert("კომენტარის სიგრძე არ უნდა აღემატებოდეს 400 სიმბოლოს");
 			return false;
 		}
 		
-		if ((registerform.about.value).length == 0) {
-			alert("შეიყვანეთ ტექსტი");
-			return false;
-		}
 		return true;
 	}
 	</script>
@@ -129,23 +130,25 @@
           User temp = userParse.getUserByID(arr.get(i).getUserID());%>
           <li><img src="images/demo/80x80.gif" alt="" />
             <p>
-              <strong><a href="#"><%= temp.getFirstName() + " " + temp.getLastName() %></a></strong>
-              <%=  arr.get(i).getText() + "  :" + arr.get(i).getDate()%>
-            </p></li>
+              <strong><a href="Profile.jsp?id=<%= temp.getID()%>>"><%= temp.getFirstName() + " " + temp.getLastName() %></a></strong>
+              <%=  arr.get(i).getText() %>
+            </p><br>
+            <p>თარიღი:  <%= arr.get(i).getDate()%></p>
+            </li>
           
         <%} %>
         <li>
         <div class="line"></div>
         <H2>კომენტარის დამატება</H2>				
-					<form action="CommentServlet" method="post">
+					<form action="CommentServlet" method="post" id="registerbtn">
 						<h4>კომენტარის სიგრძე არ უნდა აღემატებოდეს 400 სიმბოლოს</h4>
 						<textarea style="resize:none;" class="textfield" rows="3" placeholder="გთხოვთ შეიყვანოთ ტექსტი" name="comment" tabindex="1"></textarea>
 						<br>
 						<p>
-						<input type="submit" name="create" id="registerbtn"
-							class="flatbtn-blu hidemodal" value="კომენტარის დამატება" tabindex="3"></input>
+						<input type="submit" name="create" 
+							class="flatbtn-blu hidemodal" value="კომენტარის დამატება" tabindex="3" onClick="return CheckAlerts();"></input>
 						</p>
-						<input type="hidden" name="eventID" value="<%=EventID%>">
+						<input type="hidden" name="eventID" value="<%=EventID%>" >
 					</form>
         </li>
         </ul>

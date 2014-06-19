@@ -53,7 +53,7 @@ public class CommentServlet extends HttpServlet {
 		User current = (User) session.getAttribute("user");
 		int id = current.getID();
 		EventParseInfo info = new EventParseInfo((BasicDataSource) source);
-		if(text.length() > 0 && text.length() < 401) info.InsertIntoComments(EventID, id, text);
+		if(text.length() > 0) info.InsertIntoComments(EventID, id, text);
 		RequestDispatcher dispatch = null;
 		dispatch = request.getRequestDispatcher("Event.jsp?id="+ eventID);
 		dispatch.forward(request, response);
