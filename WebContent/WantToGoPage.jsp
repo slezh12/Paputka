@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<%@page import="java.sql.Timestamp"%>
+<%@page import="java.sql.Time"%>
+<%@page import="JavaPackage.WantToGoForEveryDay"%>
 <%@page import="JavaPackage.WantToGo"%>
 <%@page import="JavaPackage.WantToGoParseInfo"%>
 <%@page import="JavaPackage.ParseInfo"%>
@@ -48,44 +51,109 @@
 		<!-- End Sidebar -->
 		<!-- Begin Content -->
 		<div id="content">
-			<h2>ჩემი მინდა წასვლები</h2>
+			<h2>ჩემი მინდა წასვლა</h2>
 			<div class="line"></div>
 			<%
-				BasicDataSource source = (BasicDataSource) application
-						.getAttribute("connectionPool");
+				String id = request.getParameter("id");
 				User current = (User) session.getAttribute("user");
 				int userID = current.getID();
-				WantToGoParseInfo wantToGo = new WantToGoParseInfo(source);
-				ArrayList<WantToGo> list = wantToGo.getWantToGos(userID);
-				for (int i = 0; i < list.size(); i++) {
-					WantToGo temp = list.get(i);
-					int wantToGoID = temp.getID();
-					String title = temp.getTitle();
-					boolean type = temp.getType();
+				int wantToGoID = Integer.parseInt(id);
+				BasicDataSource source = (BasicDataSource) application
+						.getAttribute("connectionPool");
+				WantToGoParseInfo parse = new WantToGoParseInfo(source);
+				WantToGo want = parse.getWantToGo(wantToGoID, userID);
+				String title = want.getTitle();
+				boolean type = want.getType();
 			%>
-			<div id="column">
-				<ul id="latestnews">
-					<strong><a href="WantToGoPage.jsp?id=<%=wantToGoID%>"><h2><%=title%></h2></a></strong>
-					<p>
-						<%
-							if (type) {
-						%>
-					
-					<h2>ერთჯერადი</h2>
-					<%
-						} else {
-					%>
-					<h2>განმეორებადი</h2>
-					<%
-						}
-					%>
-					</p>
-				</ul>
-			</div>
-			<div class="line"></div>
+			<h2>
+				<%=title%></h2>
+
+			<%
+				if (type) {
+			%>
+			<h2>ერთჯერადი</h2>
+			<%
+				ArrayList<Timestamp> list = parse.getOnce(wantToGoID);
+			%>
+			<h2>
+				დასაწყისი:<%=list.get(0)%>
+				დასასრული:<%=list.get(1)%></h2>
+			<%
+				} else {
+					ArrayList<WantToGoForEveryDay> list = parse
+							.getEveryDay(wantToGoID);
+			%>
+			<h2>განმეორებადი</h2>
+			<%
+				for (int i = 0; i < list.size(); i++) {
+						WantToGoForEveryDay temp = list.get(i);
+						int day = temp.getDay();
+						Time start = temp.getStart();
+						Time finish = temp.getFinish();
+						if (day == 0) {
+			%>
+			<h4>
+				ორშაბათი:
+				<%=start%>
+				<%=finish%>
+			</h4>
+			<%
+				} else if (day == 1) {
+			%>
+			<h4>
+				სამშაბათი:
+				<%=start%>
+				<%=finish%>
+			</h4>
+			<%
+				} else if (day == 2) {
+			%>
+			<h4>
+				ოთხშაბათი:
+				<%=start%>
+				<%=finish%>
+			</h4>
+
+			<%
+				} else if (day == 3) {
+			%>
+			<h4>
+				ხუთშაბათი:
+				<%=start%>
+				<%=finish%>
+			</h4>
+			<%
+				} else if (day == 4) {
+			%>
+			<h4>
+				პარასკევი:
+				<%=start%>
+				<%=finish%>
+			</h4>
+			<%
+				} else if (day == 5) {
+			%>
+			<h4>
+				შაბათი:
+				<%=start%>
+				<%=finish%>
+			</h4>
+			<%
+				} else if (day == 6) {
+			%>
+			<h4>
+				კვირა:
+				<%=start%>
+				<%=finish%>
+			</h4>
 			<%
 				}
+					}
+				}
 			%>
+
+			<div class="line"></div>
+
 			<!-- End Content -->
 		</div>
 	</div>

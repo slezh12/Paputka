@@ -69,4 +69,5 @@ public class WantToGoConnection extends BaseConnection {
 			e.printStackTrace();
 		}
 	}
+	
 }
