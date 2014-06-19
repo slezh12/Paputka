@@ -87,7 +87,7 @@ public class WantToGoParseInfoTest {
 		return (first == second);
 	}
 	
-//	@Test
+	@Test
 	public void testgetWantToGos() {
 		int userID = 1;
 		
@@ -116,9 +116,77 @@ public class WantToGoParseInfoTest {
 					+ ","
 					+ type +")");
 			
+			stmt.executeUpdate("INSERT INTO WantToGo (UserID , title, FromLongitude , FromLatitude ,ToLongitude, ToLatitude , Type) VALUES("
+					+ userID
+					+ ","
+					+ "'"
+					+ "bla2"
+					+ "'"
+					+ ","
+					+ 0
+					+ ","
+					+ 0
+					+ ","
+					+ 0
+					+ ","
+					+ 0
+					+ ","
+					+ type +")");
+			
+			
 			WantToGoParseInfo temp = new WantToGoParseInfo((BasicDataSource) source);
-			assertEquals(1, temp.getLastID(1));
-			assertFalse(isEqual(-1, temp.getLastID(1)));
+			assertEquals(2, temp.getWantToGos(1).size());
+			assertFalse(isEqual(3, temp.getLastID(1)));
+			
+			stmt.executeUpdate("DELETE FROM WantToGO ORDER BY ID DESC LIMIT 2");
+				
+		//	stmt.executeUpdate("DELETE FROM WantToGO WHERE UserID  = "
+		//				+ 1);
+			
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testgetWantToGos2() {
+		int userID = 1;
+		
+		boolean type = false;
+		try {
+		//	WantToGoConnection base = new WantToGoConnection((BasicDataSource) source);
+		//	base.insertIntoWantToGo(userID, "bla", 0, 0, 0, 0, true);
+		//	base.CloseConnection();
+			Connection con = source.getConnection();
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			
+			
+			stmt.executeUpdate("INSERT INTO WantToGo (UserID , title, FromLongitude , FromLatitude ,ToLongitude, ToLatitude , Type) VALUES("
+					+ userID
+					+ ","
+					+ "'"
+					+ "bla2"
+					+ "'"
+					+ ","
+					+ 0
+					+ ","
+					+ 0
+					+ ","
+					+ 0
+					+ ","
+					+ 0
+					+ ","
+					+ type +")");
+			
+			
+			WantToGoParseInfo temp = new WantToGoParseInfo((BasicDataSource) source);
+			assertEquals(1, temp.getWantToGos(1).size());
+			assertEquals(1, temp.getWantToGos(1).get(0).getUserID());
+			assertTrue(temp.getWantToGos(1).get(0).getTitle().equals("bla2"));
+			assertFalse(type);
+			assertFalse(isEqual(4, temp.getLastID(1)));
 			
 			stmt.executeUpdate("DELETE FROM WantToGO ORDER BY ID DESC LIMIT 1");
 				
@@ -130,6 +198,5 @@ public class WantToGoParseInfoTest {
 			e.printStackTrace();
 		}
 	}
-	
 
 }
