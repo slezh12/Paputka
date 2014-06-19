@@ -7,7 +7,7 @@
 <%@page import="JavaPackage.User"%>
 <%@page import="JavaPackage.UserParseInfo"%>
 <%@page import="JavaPackage.Route"%>
-<%@page import="JavaPackage.EventDate"%>
+<%@page import="JavaPackage.EventDate "%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="JavaPackage.Comment" %>
 <%//@page import="java.sql.Date;"%>

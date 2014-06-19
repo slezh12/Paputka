@@ -62,7 +62,7 @@ public class RatingServlet extends HttpServlet {
 			connect.updateRatings(id, rating);
 		}
 		connect.CloseConnection();
-		RequestDispatcher dispatch = request.getRequestDispatcher("Profile.jsp?id="+userID);
+		RequestDispatcher dispatch = request.getRequestDispatcher("SuccessfullyRated.jsp?id="+userID);
 		dispatch.forward(request, response);
 	}
 
