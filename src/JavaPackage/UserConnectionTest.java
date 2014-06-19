@@ -86,7 +86,8 @@ public class UserConnectionTest {
 				assertEquals("Khaburdzania", rs.getString("LastName"));
 				assertEquals(true, rs.getBoolean("Gender"));
 				assertEquals(date, rs.getDate("BirthDate"));
-				stmt.executeUpdate("DELETE FROM Users WHERE EMail = 'bkhab12@freeuni.edu.ge'");
+				stmt.executeUpdate("DELETE FROM Users ORDER BY ID DESC LIMIT 1");
+			//	stmt.executeUpdate("DELETE FROM Users WHERE EMail = 'bkhab12@freeuni.edu.ge'");
 			} else
 				assertEquals(1, 2);
 			con.close();
@@ -128,8 +129,10 @@ public class UserConnectionTest {
 				assertFalse(isEqual(2, rs.getInt("Acception")));
 
 				assertEquals(date, rs.getDate("Date"));
-				stmt.executeUpdate("DELETE FROM Requests WHERE UserID  = "
-						+ userID);
+				
+				stmt.executeUpdate("DELETE FROM Requests ORDER BY ID DESC LIMIT 1");
+		//		stmt.executeUpdate("DELETE FROM Requests WHERE UserID  = "
+		//				+ userID);
 			} else
 				assertEquals(1, 2);
 			con.close();
@@ -269,8 +272,9 @@ public class UserConnectionTest {
 
 				assertEquals(1, rs.getInt("UserID"));
 				assertFalse(isEqual(2, rs.getInt("UserID")));
-
-				stmt.executeUpdate("DELETE FROM Avatars WHERE UserID  = " + 1);
+				
+				stmt.executeUpdate("DELETE FROM Avatars ORDER BY ID DESC LIMIT 1");
+		//		stmt.executeUpdate("DELETE FROM Avatars WHERE UserID  = " + 1);
 			} else
 				assertEquals(1, 2);
 			con.close();
