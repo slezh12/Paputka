@@ -72,7 +72,7 @@ public class GoogleServlet extends HttpServlet {
 		} else {
 			User currentUser = info.getUserFBGoogle(mail, password);
 			if(currentUser==null){
-				dispatch = request.getRequestDispatcher("InvalidRegistration.html");
+				dispatch = request.getRequestDispatcher("InvalidRegistration.jsp");
 			}else{
 				HttpSession session = request.getSession(true);
 				session.setAttribute("user", currentUser);
