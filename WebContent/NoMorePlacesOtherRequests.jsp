@@ -66,16 +66,19 @@
 					int eventID = temp.getEventID();
 					EventParseInfo eventParse = new EventParseInfo(source);
 					Event tempEvent = eventParse.getEventByID(eventID);
-					Route route = tempEvent.getRoute();
-					String from = route.getFromPlace();
-					String to = route.getToPlace();
-					int accept = temp.getAcception();
-					ParseInfo parse = new ParseInfo(source);
-					int fromUserID = temp.getFromUserID();
-					String tel = parse.getPrivateInfo(temp.getFromUserID(),
-							"PhoneNumber", "Tel");
-					User eventOwner = userParse.getUserByID(temp.getFromUserID());
-					String mail = eventOwner.getEmail();
+					boolean validation = tempEvent.getValidation();
+					if (validation) {
+						Route route = tempEvent.getRoute();
+						String from = route.getFromPlace();
+						String to = route.getToPlace();
+						int accept = temp.getAcception();
+						ParseInfo parse = new ParseInfo(source);
+						int fromUserID = temp.getFromUserID();
+						String tel = parse.getPrivateInfo(temp.getFromUserID(),
+								"PhoneNumber", "Tel");
+						User eventOwner = userParse.getUserByID(temp
+								.getFromUserID());
+						String mail = eventOwner.getEmail();
 			%>
 			<div id="column">
 				<ul id="latestnews">
@@ -124,6 +127,7 @@
 			</div>
 			<div class="line"></div>
 			<%
+				}
 				}
 			%>
 			<!-- End Content -->
