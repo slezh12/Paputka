@@ -112,10 +112,8 @@ public class UserConnection extends BaseConnection {
 	public ResultSet getRaitingBoolean(int firstUserID, int secondUserID)
 			throws SQLException {
 		ResultSet rs = stmt
-				.executeQuery("select Participants.ID from participants join events on participants.eventid=events.id  where Participants.userID = "
-						+ firstUserID
-						+ "and events.UserID = "
-						+ secondUserID );
+				.executeQuery("select Participants.ID,EventID,Events.Type,Events.Validation from participants join events on participants.eventid=events.id  where Participants.userID = "
+						+ firstUserID + " and events.UserID = " + secondUserID);
 		return rs;
 	}
 }

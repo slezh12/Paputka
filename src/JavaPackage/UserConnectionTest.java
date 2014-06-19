@@ -40,7 +40,7 @@ public class UserConnectionTest {
 	 * N'40bd001563085fc35165329ea1ff5c5ecbdbbeef',
 	 * N'achi_baxlosania@yahoo.com');
 	 */
-	@Test
+	 @Test
 	public void test() {
 		UserConnection base = new UserConnection((BasicDataSource) source);
 		try {
@@ -65,7 +65,7 @@ public class UserConnectionTest {
 
 	}
 
-	@Test
+	 @Test
 	public void testInsertIntoUsers() {
 		UserConnection base = new UserConnection((BasicDataSource) source);
 		String password1 = Hash.calculateHashCode("123456");
@@ -97,7 +97,7 @@ public class UserConnectionTest {
 	}
 
 	// chems bazashi gavakete ragac cvlilebebi rac damchirda testistvis
-	@Test
+	 @Test
 	public void testInsertIntoRequest() {
 		UserConnection base = new UserConnection((BasicDataSource) source);
 		Date date = Date.valueOf("2000-03-04");
@@ -145,7 +145,7 @@ public class UserConnectionTest {
 	}
 
 	// am metodis dasatestadac damchirda bazis cvlileba
-	@Test
+	 @Test
 	public void testSelectRatings() {
 		int secondID = 1;
 		try {
@@ -177,7 +177,7 @@ public class UserConnectionTest {
 	}
 
 	// es ar imushavebs anu shecdomaze gava tu baza carielia
-	@Test
+	 @Test
 	public void testUpdateRequest() {
 		UserConnection base = new UserConnection((BasicDataSource) source);
 		int requestID = 1;
@@ -212,7 +212,7 @@ public class UserConnectionTest {
 	}
 
 	// es ar imushavebs anu shecdomaze gava tu baza carielia
-	@Test
+	 @Test
 	public void testUpdate() {
 		UserConnection base = new UserConnection((BasicDataSource) source);
 		int AvatarID = 1;
@@ -280,7 +280,7 @@ public class UserConnectionTest {
 
 	}
 
-	@Test
+	 @Test
 	public void test3() {
 		try {
 			UserConnection user = new UserConnection((BasicDataSource) source);
@@ -328,7 +328,7 @@ public class UserConnectionTest {
 
 	}
 
-	@Test
+	 @Test
 	public void getUsersRequestsTest() {
 		try {
 			UserConnection user = new UserConnection((BasicDataSource) source);
@@ -370,8 +370,9 @@ public class UserConnectionTest {
 				assertEquals(EventID, rs.getInt("EventID"));
 				assertEquals(ID, rs.getInt("UserID"));
 				assertEquals(0, rs.getInt("Acception"));
-				assertEquals("quteisamde gamwie brat",rs.getString("Text"));
-				assertEquals(Timestamp.valueOf("2014-01-02 00:00:00"),rs.getTimestamp("Date"));
+				assertEquals("quteisamde gamwie brat", rs.getString("Text"));
+				assertEquals(Timestamp.valueOf("2014-01-02 00:00:00"),
+						rs.getTimestamp("Date"));
 				stmt.executeUpdate("DELETE FROM Events WHERE UserID =" + ID);
 				stmt.executeUpdate("DELETE FROM Users Where ID = " + ID);
 				stmt.executeUpdate("DELETE FROM Requests Where UserID = " + ID);
@@ -379,6 +380,23 @@ public class UserConnectionTest {
 				assertEquals(1, 2);
 			}
 			base.CloseConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void getRaitingBooleanTest() {
+		try {
+			UserConnection user = new UserConnection((BasicDataSource) source);
+			Connection con = source.getConnection();
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			ResultSet rs = stmt
+					.executeQuery("select Participants.ID from participants join events on participants.eventid=events.id  where Participants.userID = 1 and events.UserID = 2");
+			ResultSet rs1 = user.getRaitingBoolean(1, 2);
+			assertEquals(rs.next(), rs1.next());
+			user.CloseConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
