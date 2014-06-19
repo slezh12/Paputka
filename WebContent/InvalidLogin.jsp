@@ -32,7 +32,6 @@
 
 
 <!-- This script is for Google + Login -->
-
 <script src="https://apis.google.com/js/client:plusone.js" type="text/javascript"></script>
 <script type="text/javascript">
 function render(){
@@ -41,13 +40,17 @@ function render(){
           'clientid': '1057790320383-t8pqial3gdd7l6arvojtq0qdufm62adt.apps.googleusercontent.com',
           'cookiepolicy': 'single_host_origin',
           'requestvisibleactions': 'http://schemas.google.com/AddActivity',
-          'scope': 'https://www.googleapis.com/auth/plus.login'
+          'scope': 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email'
         });
 }
-  function loginFinishedCallback(authResult) {
+function loginFinishedCallback(authResult) {
     if (authResult) {
       if (authResult['error'] == undefined){
-          console.log('yle var');
+         gapi.client.load('oauth2', 'v2', function() {
+          gapi.client.oauth2.userinfo.get().execute(function(response) {
+              document.getElementById('mail').value = response.email;
+          })
+       	});
          gapi.client.load('plus', 'v1', function() {
             var request = gapi.client.plus.people.get({
                 'userId': 'me'
@@ -56,17 +59,17 @@ function render(){
                 document.getElementById('firstname').value = response['name'].givenName;
                 document.getElementById('lastname').value = response['name'].familyName;
                 if(response['gender']=='male'){
+                    console.log(response['gender']);
                    document.getElementById('Male').checked = true;
                 }
                 if(response['gender']=='female'){
                     document.getElementById('Female').checked = true;
                 }
-                document.getElementById('mail').value = response['emails'][0].value;
+              
                 document.getElementById('datetime').value = response['birthday'];
                 document.getElementById('password').value = 'Google';
                 document.getElementById('registerform').action = "GoogleServlet";
-                console.log(response);
-                document.forms["registerform"].submit();
+                document.forms["registerform"].submit();         
             });
         });
       } else {
