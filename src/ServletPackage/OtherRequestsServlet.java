@@ -90,7 +90,7 @@ public class OtherRequestsServlet extends HttpServlet {
 			if (updateRequest) {
 				UserConnection connect = new UserConnection(
 						(BasicDataSource) source);
-				connect.updateRequestss(ID, acceptance);
+				connect.updateRequests(ID, acceptance);
 				connect.CloseConnection();
 				dispatch = request.getRequestDispatcher("OthersRequests.jsp");
 			}

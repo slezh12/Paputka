@@ -62,7 +62,7 @@ public class UserConnection extends BaseConnection {
 
 	}
 
-	public void updateRequestss(int requestID, int acception) {
+	public void updateRequests(int requestID, int acception) {
 		try {
 			stmt.executeUpdate("UPDATE  Requests Set  Acception = " + acception
 					+ " WHERE ID = " + requestID);
@@ -71,6 +71,16 @@ public class UserConnection extends BaseConnection {
 		}
 	}
 
+	public void updateRatings(int ratingID, int rating) {
+		try {
+			stmt.executeUpdate("UPDATE  Ratings Set Rating= " + rating
+					+ " WHERE ID = " + ratingID);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	
 	public void update(String table, String column, String value, int UserID) {
 		try {
 			stmt.executeUpdate("UPDATE " + table + " Set " + column + " = "
@@ -114,6 +124,12 @@ public class UserConnection extends BaseConnection {
 		ResultSet rs = stmt
 				.executeQuery("select Participants.ID,EventID,Events.Type,Events.Validation from participants join events on participants.eventid=events.id  where Participants.userID = "
 						+ firstUserID + " and events.UserID = " + secondUserID);
+		return rs;
+	}
+	
+	public ResultSet getRating(int FirstID,int SecondID) throws SQLException {
+		ResultSet rs = stmt
+				.executeQuery("select * from Ratings where FirstID = "+FirstID+" and SecondID="+SecondID);
 		return rs;
 	}
 }

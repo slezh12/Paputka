@@ -207,4 +207,20 @@ public class UserParseInfo extends ParseInfo {
 		return forReturn;
 	}
 
+	public Integer getRatingID(int FirstID,int SecondID)  { 
+		Integer ret = null;
+		UserConnection connect = new UserConnection((BasicDataSource) source); 
+		ResultSet rs;
+		try {
+			rs = connect.getRating(FirstID, SecondID);
+			if (rs.next()) 
+				ret = rs.getInt("ID");
+			connect.CloseConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
 }

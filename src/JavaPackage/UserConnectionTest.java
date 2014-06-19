@@ -184,7 +184,7 @@ public class UserConnectionTest {
 	public void testUpdateRequest() {
 		UserConnection base = new UserConnection((BasicDataSource) source);
 		int requestID = 1;
-		base.updateRequestss(requestID, 1);
+		base.updateRequests(requestID, 1);
 		base.CloseConnection();
 		try {
 			Connection con = source.getConnection();
