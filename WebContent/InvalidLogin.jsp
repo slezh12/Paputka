@@ -32,6 +32,7 @@
 
 
 <!-- This script is for Google + Login -->
+
 <script src="https://apis.google.com/js/client:plusone.js" type="text/javascript"></script>
 <script type="text/javascript">
 function render(){
@@ -59,17 +60,35 @@ function loginFinishedCallback(authResult) {
                 document.getElementById('firstname').value = response['name'].givenName;
                 document.getElementById('lastname').value = response['name'].familyName;
                 if(response['gender']=='male'){
-                    console.log(response['gender']);
                    document.getElementById('Male').checked = true;
                 }
                 if(response['gender']=='female'){
                     document.getElementById('Female').checked = true;
                 }
-              
                 document.getElementById('datetime').value = response['birthday'];
+                console.log(response['birthday']);
                 document.getElementById('password').value = 'Google';
+                if(response['birthday']==null){
+                	document.getElementById('datetime').value = "";
+                }
                 document.getElementById('registerform').action = "GoogleServlet";
-                document.forms["registerform"].submit();         
+				if(response['birthday']==null || response['gender']=='other'){
+	                document.getElementById('password').readOnly  = true;
+	                document.getElementById('firstname').readOnly  = true;
+	                document.getElementById('lastname').readOnly  = true;
+	                document.getElementById('mail').readOnly  = true;
+					if(response['birthday']!=null){
+		                document.getElementById('datetime').readOnly = true;
+					}
+					if(response['gender']!='other'){
+		                document.getElementById('Male').disabled = true;
+		                document.getElementById('Female').disabled = true;
+					}
+	                document.getElementById('modaltrigger').click();
+				}
+				if(response['birthday']!=null && response['gender']!='other'){
+	                document.forms["registerform"].submit();         
+				}   
             });
         });
       } else {
@@ -101,7 +120,6 @@ function loginFinishedCallback(authResult) {
                 document.getElementById('datetime').value = response.birthday;
                 document.getElementById('password').value = 'Facebook';
                 document.getElementById('registerform').action = "FacebookServlet";
-                document.forms["registerform"].submit();         
             });
 
         } else {
@@ -142,6 +160,7 @@ function loginFinishedCallback(authResult) {
          });
 </script>
    
+<!-- Check Alerts -->
 <script type="text/javascript">
     function CheckAlerts(){
         if((registerform.firstname.value).length == 0 || (registerform.firstname.value).length >20){

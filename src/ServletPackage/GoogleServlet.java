@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
+import JavaPackage.TimeChange;
 import JavaPackage.User;
 import JavaPackage.UserConnection;
 import JavaPackage.UserParseInfo;
@@ -49,6 +50,9 @@ public class GoogleServlet extends HttpServlet {
 		String lastname = request.getParameter("lastname");
 		String mail = request.getParameter("mail");
 		String date = request.getParameter("datetime");
+		if(date.substring(2, 3).equals("-")){
+			date = TimeChange.getCorrectDate(date);
+		}
 		String radio = request.getParameter("gender");
 		boolean gender = false;
 		if (radio.equals("Male")) {
