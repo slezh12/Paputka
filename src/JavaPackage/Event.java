@@ -19,6 +19,10 @@ public class Event {
 		this.validation = validation;
 	}
 	
+	public void setValidation(boolean value){
+		this.validation = value;
+	}
+	
 	public int getID() {
 		return ID;
 	}
