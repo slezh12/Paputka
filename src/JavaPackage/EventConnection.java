@@ -82,6 +82,23 @@ public class EventConnection extends BaseConnection {
 			e.printStackTrace();
 		}
 	}
+	
+	public int getParticipantsByEventID(int eventID){
+		ResultSet rs;
+		int result = 0;
+		try {
+			String name = "count(id)";
+			rs = stmt
+					.executeQuery("select " + name + " from participants where eventID ="
+							+ eventID);
+			rs.next();
+			result = rs.getInt(name);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 
 	public void insertIntoComments(int eventID, int userID, String comment) {
 		try {

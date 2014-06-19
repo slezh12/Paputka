@@ -1,5 +1,6 @@
 package ServletPackage;
 
+import java.awt.Event;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -13,6 +14,8 @@ import javax.sql.DataSource;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
+import JavaPackage.EventConnection;
+import JavaPackage.EventParseInfo;
 import JavaPackage.UserConnection;
 
 /**
@@ -47,27 +50,51 @@ public class OtherRequestsServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String accept = request.getParameter("acc");
 		String requestID = request.getParameter("request");
+		String event = request.getParameter("event");
+		String fromUser = request.getParameter("fromUserID");
 		int ID = Integer.parseInt(requestID);
-		RequestDispatcher dispatch;
+		int eventID = Integer.parseInt(event);
+		int fromUserID = Integer.parseInt(fromUser);
+		RequestDispatcher dispatch = null;
 		if (accept == null) {
 			dispatch = request.getRequestDispatcher("InvalidOtherRequests.jsp");
 		} else {
-			int acceptance = 0;
-			if (accept.equals("yes")) {
-				acceptance = 1;
-			} else if (accept.equals("no")) {
-				acceptance = 2;
-			}
 			ServletContext context = getServletContext();
 			DataSource source = (DataSource) context
 					.getAttribute("connectionPool");
-			UserConnection connect = new UserConnection(
-					(BasicDataSource) source);
-			connect.updateRequestss(ID, acceptance);
-			connect.CloseConnection();
-			dispatch = request.getRequestDispatcher("OthersRequests.jsp");
+			EventParseInfo parse = new EventParseInfo((BasicDataSource) source);
+			JavaPackage.Event currentEvent = parse.getEventByID(eventID);
+			int acceptance = 0;
+			boolean updateRequest = false;
+			if (accept.equals("yes")) {
+				EventConnection eventConnect = new EventConnection(
+						(BasicDataSource) source);
+				int check = currentEvent.getPlaces()
+						- eventConnect.getParticipantsByEventID(eventID);
+				if (check > 0) {
+					eventConnect.insertIntoParticipants(eventID, fromUserID);
+					acceptance = 1;
+					updateRequest = true;
+					dispatch = request
+							.getRequestDispatcher("OthersRequests.jsp");
+				} else {
+					acceptance = 0;
+					dispatch = request
+							.getRequestDispatcher("NoMorePlacesOtherRequests.jsp");
+				}
+				eventConnect.CloseConnection();
+			} else if (accept.equals("no")) {
+				updateRequest = true;
+				acceptance = 2;
+			}
+			if (updateRequest) {
+				UserConnection connect = new UserConnection(
+						(BasicDataSource) source);
+				connect.updateRequestss(ID, acceptance);
+				connect.CloseConnection();
+				dispatch = request.getRequestDispatcher("OthersRequests.jsp");
+			}
 		}
 		dispatch.forward(request, response);
 	}
-
 }
