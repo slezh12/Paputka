@@ -47,7 +47,6 @@ public class CommentServlet extends HttpServlet {
 		ServletContext context = getServletContext();
 		DataSource source = (DataSource) context.getAttribute("connectionPool");
 		String eventID = request.getParameter("eventID");
-		System.out.println(eventID);
 	    int EventID = Integer.parseInt(eventID);
 	    HttpSession session = request.getSession(true);
 		User current = (User) session.getAttribute("user");

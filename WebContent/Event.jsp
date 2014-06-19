@@ -97,8 +97,8 @@
     };
     var map = new google.maps.Map(document.getElementById("googleMap"),
         mapProp);
-    var myLatlng = new google.maps.LatLng(<%=r.getFromLongitude() %>,<%=r.getFromLatitude() %>);
-    var myLatlng2 = new google.maps.LatLng(<%=r.getToLongitude() %>,<%=r.getToLatitude() %>);
+    var myLatlng = new google.maps.LatLng(<%=r.getFromLatitude() %>,<%= r.getFromLongitude()%>);
+    var myLatlng2 = new google.maps.LatLng(<%= r.getToLatitude()%>,<%=r.getToLongitude() %>);
     var marker = new google.maps.Marker({
       position : myLatlng,
       map : map,
