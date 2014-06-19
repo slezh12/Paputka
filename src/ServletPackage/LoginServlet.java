@@ -1,6 +1,7 @@
 package ServletPackage;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -58,9 +59,13 @@ public class LoginServlet extends HttpServlet {
 			HttpSession session = request.getSession(true);
 			session.setAttribute("user", user);
 			dispatch = request.getRequestDispatcher("UserPage.jsp");
+			dispatch.forward(request, response);
 		} else {
-			dispatch = request.getRequestDispatcher("InvalidLogin.jsp");
+			PrintWriter out = response.getWriter();  
+			out.println("<script type=\"text/javascript\">");  
+			out.println("alert('Invalid Login.Please Try Again');");
+			out.println("window.location='index.jsp'"); 
+			out.println("</script>"); 
 		}
-		dispatch.forward(request, response);
 	}
 }

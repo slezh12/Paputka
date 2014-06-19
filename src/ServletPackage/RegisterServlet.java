@@ -1,6 +1,7 @@
 package ServletPackage;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -76,10 +77,14 @@ public class RegisterServlet extends HttpServlet {
 			session.setAttribute("user", currentUser);
 			connect.CloseConnection();
 			dispatch = request.getRequestDispatcher("UserPage.jsp");
+			dispatch.forward(request, response);
 		} else {
-			dispatch = request.getRequestDispatcher("InvalidRegistration.jsp");
+			PrintWriter out = response.getWriter();  
+			out.println("<script type=\"text/javascript\">");  
+			out.println("alert('Invalid registration, your email is already used.');");
+			out.println("window.location='index.jsp'"); 
+			out.println("</script>"); 
 		}
-		dispatch.forward(request, response);
 	}
 
 }

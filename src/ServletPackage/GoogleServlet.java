@@ -1,6 +1,7 @@
 package ServletPackage;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -73,16 +74,21 @@ public class GoogleServlet extends HttpServlet {
 			session.setAttribute("user", currentUser);
 			connect.CloseConnection();
 			dispatch = request.getRequestDispatcher("UserPage.jsp");
+			dispatch.forward(request, response);
 		} else {
 			User currentUser = info.getUserFBGoogle(mail, password);
 			if(currentUser==null){
-				dispatch = request.getRequestDispatcher("InvalidRegistration.jsp");
+				PrintWriter out = response.getWriter();  
+				out.println("<script type=\"text/javascript\">");  
+				out.println("alert('Your Google+ Mail is in Used .Please Try Again');");
+				out.println("window.location='index.jsp'"); 
+				out.println("</script>"); 
 			}else{
 				HttpSession session = request.getSession(true);
 				session.setAttribute("user", currentUser);
 				dispatch = request.getRequestDispatcher("UserPage.jsp");
+				dispatch.forward(request, response);
 			}
 		}	
-		dispatch.forward(request, response);
 	}
 }
