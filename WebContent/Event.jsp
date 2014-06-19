@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="JavaPackage.EventConnection"%>
 <%@page import="org.apache.tomcat.dbcp.dbcp.BasicDataSource"%><%@page import="JavaPackage.Route"%>
 <%@page import="JavaPackage.Event"%>
 <%@page import="JavaPackage.EventParseInfo"%>
@@ -6,8 +7,12 @@
 <%@page import="JavaPackage.User"%>
 <%@page import="JavaPackage.UserParseInfo"%>
 <%@page import="JavaPackage.Route"%>
+<%@page import="JavaPackage.EventDate"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="JavaPackage.Comment" %>
+<%//@page import="java.sql.Date;"%>
+<%@page import="java.util.Date;" %>
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -47,6 +52,39 @@
 
 </head>
 <body>
+  <%
+    String id = request.getParameter("id");
+    int EventID = Integer.parseInt(id);
+    BasicDataSource source = (BasicDataSource) application.getAttribute("connectionPool");
+    User Currentuser = (User) session.getAttribute("user");
+    EventParseInfo eventParse = new EventParseInfo(source);
+    UserParseInfo userParse = new UserParseInfo(source);
+    EventConnection ev = new EventConnection(source);
+    Event e = eventParse.getEventByID(EventID);
+    User u = userParse.getUserByID(e.getUserID());
+    Route r = e.getRoute();
+    ArrayList<Comment> arr = eventParse.getComments(EventID);
+    Date dt =null;
+    if(e.getType() && e.getValidation()){
+    	dt = eventParse.EventDate(EventID);
+    	Date now = new Date();
+    	if(dt.getYear() < now.getYear()){
+    		e.setValidation(false);
+    		ev.updateEvent(e.getID(), false);
+    	} else if(dt.getYear() == now.getYear()){
+    		if(dt.getMonth() < now.getMonth()){
+    			e.setValidation(false);
+    			ev.updateEvent(e.getID(), false);
+    		} else if(dt.getMonth() == now.getMonth()){
+    			if(dt.getDay() < now.getDay()){
+    				e.setValidation(false);
+    				ev.updateEvent(e.getID(), false);
+    			}
+    		}
+    	}
+    }
+    
+  %>
   <!-- Begin Wrapper -->
   <div id="wrapper">
     <!-- Begin Sidebar -->
@@ -58,12 +96,38 @@
 		<div id="Usermenu" class="menu-v" style="marign-top: 20px;">
         <ul>
           <li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
-          
+          <%
+          if(e.getValidation() && !eventParse.HasRequest(e.getID(), Currentuser.getID()) && (Currentuser.getID()!=e.getUserID())){
+        	  %>
+          <li><a href="#registermodal" id="modaltrigger">გააგზავნე მოთხოვნა</a></li>
+          <%} %>
+          <%
+          if((Currentuser.getID()==e.getUserID()) && e.getValidation()){  
+        	  System.out.println("shemovidaaq");
+				e.setValidation(false);
+				ev.updateEvent(e.getID(), false);
+          %>
+          <li><a href="Event.jsp?id=<%=e.getID() %>" >გააუქმე მოთხოვნა</a></li>
+          <%} 
+          ev.CloseConnection();%>
         </ul>
       </div>
       <!-- End Menu -->
       <!--Begin Login & Registration -->
-      
+      <div id="registermodal" style="display: none;">
+				<h2 class="txt">გააგზავნეთ მოთხოვნა</h2>
+				<form action="RequestServlet" id="sendrequest" name="sendrequest"
+					method="post">
+					<textarea style="resize:none;" class="textfield" rows="3" placeholder="გთხოვთ შეიყვანოთ ტექსტი" name="requesttext" tabindex="1"></textarea>
+					<br>
+						<p>
+						<input type="submit" name="sendrequest" id="sendrequest"
+							class="flatbtn-blu hidemodal" value="მოთხოვნის გაგზავნა" tabindex="3" ></input>
+						</p>
+						<input type="hidden" name="EventID" value="<%=EventID%>" ></input>
+				</form>
+			</div>
+		</div>
     </div>
     <!-- End Sidebar -->
 
@@ -76,18 +140,7 @@
   src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
 
 <body>
-  <%
-    String id = request.getParameter("id");
-    int EventID = Integer.parseInt(id);
-    BasicDataSource source = (BasicDataSource) application.getAttribute("connectionPool");
-    EventParseInfo eventParse = new EventParseInfo(source);
-    UserParseInfo userParse = new UserParseInfo(source);
-    Event e = eventParse.getEventByID(EventID);
-    User u = userParse.getUserByID(e.getUserID());
-    Route r = e.getRoute();
-    ArrayList<Comment> arr = eventParse.getComments(EventID);
-    
-  %>
+
   <script>
   function initialize() {
     var mapProp = {
@@ -121,6 +174,32 @@
       <h3>ადგილების რაოდენობა : <%= e.getPlaces() %></h3>
       <h3>მძღოლი : <%= u.getFirstName()+ " " + u.getLastName() %></h3>
       <h3><%= r.getFromPlace() + " - " + r.getToPlace() %></h3>
+      <%if(e.getType()){ %>
+       <h3>თარიღი <%= dt %></h3>
+     <%} else {
+    	 ArrayList<EventDate> ar = eventParse.EveryDayDates(EventID);
+    	 for(int i = 0; i<ar.size(); i++){
+    		 EventDate d = ar.get(i);
+    		 switch(d.getDay()){
+    		 case 1: %>
+    		 <h3>ორშაბათი - <%= d.getDate() %></h3> <% break; 
+    		 case 2:%>
+			  <h3>სამშაბათი - <%= d.getDate() %></h3> <% break; 
+    		 case 3:%>
+			  <h3>ოთხშაბათი - <%= d.getDate() %></h3> <% break; 
+    		 case 4: %>
+			  <h3>ხუთშაბათი - <%= d.getDate() %></h3> <% break;
+    		 case 5:%>
+			  <h3>პარასკევი - <%= d.getDate() %></h3> <% break; 
+    		 case 6: %>
+			  <h3>შაბათი - <%= d.getDate() %></h3> <% break;
+    		 case 7: %>
+			  <h3>კვირა - <%= d.getDate() %></h3> <% break; 
+    			
+    		 }
+     %>
+     <%}
+    }%> 
       <div class="line"></div>
       <h2>კომენტარები</h2>
       
@@ -130,7 +209,7 @@
           User temp = userParse.getUserByID(arr.get(i).getUserID());%>
           <li><img src="images/demo/80x80.gif" alt="" />
             <p>
-              <strong><a href="Profile.jsp?id=<%= temp.getID()%>>"><%= temp.getFirstName() + " " + temp.getLastName() %></a></strong>
+              <strong><a href="Profile.jsp?id=<%= temp.getID()%>"><%= temp.getFirstName() + " " + temp.getLastName() %></a></strong>
               <%=  arr.get(i).getText() %>
             </p><br>
             <p>თარიღი:  <%= arr.get(i).getDate()%></p>
@@ -148,7 +227,7 @@
 						<input type="submit" name="create" id="registerbtn"
 							class="flatbtn-blu hidemodal" value="კომენტარის დამატება" tabindex="3" onClick="return CheckAlerts();"></input>
 						</p>
-						<input type="hidden" name="eventID" value="<%=EventID%>" >
+						<input type="hidden" name="eventID" value="<%=EventID%>" ></input>
 					</form>
         </li>
         </ul>
@@ -156,7 +235,19 @@
       <!-- End Content -->
     </div>
   </div>
+<script type="text/javascript">
+		$(function() {
 
+			$('#modaltrigger').leanModal({
+				top : 5,
+				overlay : 0.45,
+				closeButton : ".modal_close"
+			});
+		});
+		$(document).ready(function() {
+			$('.timepicker').timepicker();
+		});
+	</script>
 
 </body>
 </html>
