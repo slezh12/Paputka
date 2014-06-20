@@ -265,6 +265,7 @@
 		if (check == 1) {
 			var marker = new google.maps.Marker({
 				position : location,
+				icon :'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
 				map : map,
 			});
 			fromLongitude = location.lng();

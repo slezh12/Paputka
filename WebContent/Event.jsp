@@ -154,6 +154,7 @@
     var myLatlng2 = new google.maps.LatLng(<%= r.getToLatitude()%>,<%=r.getToLongitude() %>);
     var marker = new google.maps.Marker({
       position : myLatlng,
+      icon :'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
       map : map,
     });
     var infowindow = new google.maps.InfoWindow({
