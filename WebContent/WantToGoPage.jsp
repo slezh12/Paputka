@@ -44,16 +44,7 @@
 			<div id="menu" class="menu-v">
 				<ul>
 					<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
-				</ul>
-			</div>
-			<!-- End Menu -->
-		</div>
-		<!-- End Sidebar -->
-		<!-- Begin Content -->
-		<div id="content">
-			<h2>ჩემი მინდა წასვლა</h2>
-			<div class="line"></div>
-			<%
+					<%
 				String id = request.getParameter("id");
 				User current = (User) session.getAttribute("user");
 				int userID = current.getID();
@@ -65,25 +56,25 @@
 				String title = want.getTitle();
 				boolean type = want.getType();
 			%>
-			<h2>
-				<%=title%></h2>
+			<li style="color: #fff;">
+				სათაური: <br><%=title%></li>
 
 			<%
 				if (type) {
 			%>
-			<h2>ერთჯერადი</h2>
+			<li style="color: #fff;">ერთჯერადი</li>
 			<%
 				ArrayList<Timestamp> list = parse.getOnce(wantToGoID);
 			%>
-			<h2>
-				დასაწყისი:<%=list.get(0)%>
-				დასასრული:<%=list.get(1)%></h2>
+			<li style="color: #fff;">
+				დასაწყისი:<%=list.get(0)%><br>
+				დასასრული:<%=list.get(1)%></li>
 			<%
 				} else {
 					ArrayList<WantToGoForEveryDay> list = parse
 							.getEveryDay(wantToGoID);
 			%>
-			<h2>განმეორებადი</h2>
+			<li style="color: #fff;">განმეორებადი</li>
 			<%
 				for (int i = 0; i < list.size(); i++) {
 						WantToGoForEveryDay temp = list.get(i);
@@ -92,65 +83,145 @@
 						Time finish = temp.getFinish();
 						if (day == 0) {
 			%>
-			<h4>
-				ორშაბათი:
-				<%=start%>
+			<li style="color: #fff;">
+				ორშაბათი:<br>
+				<%=start%> -
 				<%=finish%>
-			</h4>
+			</li>
 			<%
 				} else if (day == 1) {
 			%>
-			<h4>
-				სამშაბათი:
-				<%=start%>
+			<li style="color: #fff;">
+				სამშაბათი:<br>
+				<%=start%> -
 				<%=finish%>
-			</h4>
+			</li>
 			<%
 				} else if (day == 2) {
 			%>
-			<h4>
-				ოთხშაბათი:
-				<%=start%>
+			<li style="color: #fff;">
+				ოთხშაბათი:<br>
+				<%=start%> -
 				<%=finish%>
-			</h4>
+			</li>
 
 			<%
 				} else if (day == 3) {
 			%>
-			<h4>
-				ხუთშაბათი:
-				<%=start%>
+			<li style="color: #fff;">
+				ხუთშაბათი:<br>
+				<%=start%> -
 				<%=finish%>
-			</h4>
+			</li>
 			<%
 				} else if (day == 4) {
 			%>
-			<h4>
-				პარასკევი:
-				<%=start%>
+			<li style="color: #fff;">
+				პარასკევი:<br>
+				<%=start%> -
 				<%=finish%>
-			</h4>
+			</li>
 			<%
 				} else if (day == 5) {
 			%>
-			<h4>
-				შაბათი:
-				<%=start%>
+			<li style="color: #fff;">
+				შაბათი:<br>
+				<%=start%> -
 				<%=finish%>
-			</h4>
+			</li>
 			<%
 				} else if (day == 6) {
 			%>
-			<h4>
-				კვირა:
-				<%=start%>
+			<li style="color: #fff;">
+				კვირა:<br>
+				<%=start%> -
 				<%=finish%>
-			</h4>
+			</li>
 			<%
 				}
 					}
 				}
 			%>
+				</ul>
+			</div>
+			<!-- End Menu -->
+		</div>
+		<!-- End Sidebar -->
+		<!-- Begin Content -->
+		<div id="content">
+			<h2>ძებნის შედეგები</h2>
+			<script>
+			var directionsDisplay;
+			var directionsService = new google.maps.DirectionsService();
+    		var map;    		
+            var waypts = [];
+            var optimal;
+            var current;
+            
+    		function initialize() {
+    			var a = new google.maps.LatLng(<%=want.getFromLatitude() %>,<%= want.getFromLongitude()%>);
+                var b = new google.maps.LatLng(<%=want.getToLatitude()%>,<%=want.getToLongitude() %>);
+                waypts.push({
+                    location:a,
+                    stopover:true
+                });
+                waypts.push({
+                    location:b,
+                    stopover:true
+                });
+    			directionsDisplay = new google.maps.DirectionsRenderer();
+        		var mapProp = {
+        	            center : new google.maps.LatLng(42.347485, 43.7),
+        	            zoom : 7,
+        	            mapTypeId : google.maps.MapTypeId.ROADMAP
+        	    };
+        		map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+        		directionsDisplay.setMap(map);
+        	}
+    		
+            <%
+            EventParseInfo ep = new EventParseInfo(source);
+            ArrayList<Event> arr = ep.getEvents();
+            ArrayList<Event> toShow = new ArrayList<Event>();
+            for(int i = 0; i<arr.size(); i++) {
+                Route r = arr.get(i).getRoute();    
+            %>
+            function calcRoute() {
+            	var start = new google.maps.LatLng(<%=r.getFromLatitude() %>,<%= r.getFromLongitude()%>);
+                var end = new google.maps.LatLng(<%=r.getToLatitude()%>,<%=r.getToLongitude() %>);
+          	  	
+                var request = {
+                	origin: start,
+              	    destination: end,
+              	    waypoints: waypts,
+              	    optimizeWaypoints: true,
+              	    travelMode: google.maps.TravelMode.DRIVING      
+                };
+          	  
+          	    directionsService.route(request, function(response, status) {
+          	    	if (status == google.maps.DirectionsStatus.OK) {
+          	      		directionsDisplay.setDirections(response);
+          	      		var route = response.routes[0];
+          	      		var summaryPanel = document.getElementById('directions_panel');
+          	      		summaryPanel.innerHTML = '';
+          	      		// For each route, display summary information.
+          	      		for (var i = 0; i < route.legs.length; i++) {
+          	        		var routeSegment = i + 1;
+          	        		summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment + '</b><br>';
+          	        		summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+          	        		summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+          	        		summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+          	      		}
+          	    	}
+          	  	});
+          	}
+                
+            <%} %>
+        
+            google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+			<div class="line"></div>
+			
 
 			<div class="line"></div>
 
