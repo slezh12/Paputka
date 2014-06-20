@@ -150,17 +150,19 @@
 		<!-- Begin Content -->
 		<div id="content">
 			<h2>ძებნის შედეგები</h2>
+			<script
+    src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
 			<script>
 			var directionsDisplay;
 			var directionsService = new google.maps.DirectionsService();
+			var dD;
     		var map;    		
             var waypts = [];
             var optimal;
             var current;
-            
+            var a = new google.maps.LatLng(<%=want.getFromLatitude() %>,<%= want.getFromLongitude()%>);
+            var b = new google.maps.LatLng(<%=want.getToLatitude()%>,<%=want.getToLongitude() %>);
     		function initialize() {
-    			var a = new google.maps.LatLng(<%=want.getFromLatitude() %>,<%= want.getFromLongitude()%>);
-                var b = new google.maps.LatLng(<%=want.getToLatitude()%>,<%=want.getToLongitude() %>);
                 waypts.push({
                     location:a,
                     stopover:true
@@ -170,6 +172,7 @@
                     stopover:true
                 });
     			directionsDisplay = new google.maps.DirectionsRenderer();
+    			dD = new google.maps.DirectionsRenderer();
         		var mapProp = {
         	            center : new google.maps.LatLng(42.347485, 43.7),
         	            zoom : 7,
@@ -177,52 +180,56 @@
         	    };
         		map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
         		directionsDisplay.setMap(map);
+        		dD.setMap(map);
+        		calcRoute();
         	}
     		
             <%
             EventParseInfo ep = new EventParseInfo(source);
             ArrayList<Event> arr = ep.getEvents();
             ArrayList<Event> toShow = new ArrayList<Event>();
-            for(int i = 0; i<arr.size(); i++) {
-                Route r = arr.get(i).getRoute();    
+            //for(int i = 0; i<arr.size(); i++) {
+                Route r = arr.get(5).getRoute();    
             %>
+            var start = new google.maps.LatLng(<%=r.getFromLatitude() %>,<%= r.getFromLongitude()%>);
+            var end = new google.maps.LatLng(<%=r.getToLatitude()%>,<%=r.getToLongitude() %>);
             function calcRoute() {
-            	var start = new google.maps.LatLng(<%=r.getFromLatitude() %>,<%= r.getFromLongitude()%>);
-                var end = new google.maps.LatLng(<%=r.getToLatitude()%>,<%=r.getToLongitude() %>);
-          	  	
                 var request = {
                 	origin: start,
               	    destination: end,
-              	    waypoints: waypts,
-              	    optimizeWaypoints: true,
+              	  	waypoints: waypts,
               	    travelMode: google.maps.TravelMode.DRIVING      
                 };
-          	  
-          	    directionsService.route(request, function(response, status) {
+                directionsService.route(request, function(response, status) {
           	    	if (status == google.maps.DirectionsStatus.OK) {
           	      		directionsDisplay.setDirections(response);
           	      		var route = response.routes[0];
-          	      		var summaryPanel = document.getElementById('directions_panel');
-          	      		summaryPanel.innerHTML = '';
-          	      		// For each route, display summary information.
-          	      		for (var i = 0; i < route.legs.length; i++) {
-          	        		var routeSegment = i + 1;
-          	        		summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment + '</b><br>';
-          	        		summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-          	        		summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-          	        		summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-          	      		}
-          	    	}
-          	  	});
-          	}
+          	      		var distance = route.distance.text;
+          	      		document.getElementById("demo").innerHTML = "Paragraph changed.";
+          	    } 
+      	  	});   
+                request = {
+                    	origin: start,
+                  	    destination: end,
+                  	    travelMode: google.maps.TravelMode.DRIVING      
+                    };
+                directionsService.route(request, function(response, status) {
+          	    	if (status == google.maps.DirectionsStatus.OK) {
+          	      		dD.setDirections(response);
+          	      		var route = response.routes[0];
+          	      		var distance = route.distance;
+          	    } 
+      	  	});   
+          	  
+          	} 
                 
-            <%} %>
+            <%//} %>
         
             google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 			<div class="line"></div>
-			
-
+			<p id="demo">My First Paragraph</p>
+			<div id="googleMap" style="width: 800px; height: 400px;"></div>
 			<div class="line"></div>
 
 			<!-- End Content -->
