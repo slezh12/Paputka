@@ -46,7 +46,7 @@
 				String statuses = parseInfo.getInfoAboutStatuses(userID);
 				
 				EventParseInfo events = new EventParseInfo(source);
-				ArrayList<Event> list = events.getEvents();
+				ArrayList<Event> list = events.getUsersEvents(userID);
 
 				
 				%>
