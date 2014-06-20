@@ -129,7 +129,6 @@
 				</form>
 			</div>
 		</div>
-    </div>
     <!-- End Sidebar -->
 
     <!-- Begin Content -->
@@ -232,7 +231,6 @@
           
         <%} %>
         <li>
-        <div class="line"></div>
         <H2>კომენტარის დამატება</H2>				
 					<form action="CommentServlet" method="post" id="registerform" name="registerform">
 						<h4>კომენტარის სიგრძე არ უნდა აღემატებოდეს 400 სიმბოლოს</h4>

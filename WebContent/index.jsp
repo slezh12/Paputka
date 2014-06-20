@@ -66,7 +66,6 @@ function loginFinishedCallback(authResult) {
                     document.getElementById('Female').checked = true;
                 }
                 document.getElementById('datetime').value = response['birthday'];
-                console.log(response['birthday']);
                 document.getElementById('password').value = 'Google';
                 if(response['birthday']==null){
                 	document.getElementById('datetime').value = "";
@@ -79,10 +78,6 @@ function loginFinishedCallback(authResult) {
 	                document.getElementById('mail').readOnly  = true;
 					if(response['birthday']!=null){
 		                document.getElementById('datetime').readOnly = true;
-					}
-					if(response['gender']!='other'){
-		                document.getElementById('Male').disabled = true;
-		                document.getElementById('Female').disabled = true;
 					}
 	                document.getElementById('modaltrigger').click();
 				}
@@ -120,14 +115,28 @@ function loginFinishedCallback(authResult) {
                 document.getElementById('datetime').value = response.birthday;
                 document.getElementById('password').value = 'Facebook';
                 document.getElementById('registerform').action = "FacebookServlet";
-                document.forms["registerform"].submit();         
+                if(response.birthday==null){
+                    document.getElementById('datetime').value = "";
+                }
+				if(response.birthday==null || response.gender ==null){
+	                document.getElementById('password').readOnly  = true;
+	                document.getElementById('firstname').readOnly  = true;
+	                document.getElementById('lastname').readOnly  = true;
+	                document.getElementById('mail').readOnly  = true;
+					if(response.birthday!=null){
+		                document.getElementById('datetime').readOnly = true;
+					}
+	                document.getElementById('modaltrigger').click();
+				}
+				if(response.birthday!=null && response.gender!=null){
+	                document.forms["registerform"].submit();         
+				}   
             });
-
         } else {
                 console.log('User cancelled login or did not fully authorize.');
         }
     }, {
-        scope: 'publish_stream,email'
+        scope: 'public_profile,email,user_birthday '
     });
 }
 
