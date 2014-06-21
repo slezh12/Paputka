@@ -192,15 +192,7 @@
                 	Route r = e.getRoute();  
                 	String p1 = r.getFromPlace();
                 	String p2 = r.getToPlace();
-            %>
-            </script>
-            <div id="div<%=i %>">
-            <strong>
-            <a id="link<%=i %>" href="http://www.microsoft.com"><%=p1%> <i class="fa fa-arrow-right fa-spin"></i> <%=p2%></a>
-            </strong>
-            <div class="line"></div>
-            </div>
-            <script>           
+            %>           
             function calcRoute() {
             	var optimal = 0;
                 var current = 0;
@@ -232,18 +224,28 @@
           	      		dD.setDirections(response);
           	      		var route = response.routes[0];
           	      		for (var i = 0; i < route.legs.length; i++) {
-                        	optimal+=route.legs[i].distance.value;                     
+                        	optimal+=route.legs[i].distance.value;                         	
                    		}
+          	      		optimal = optimal*1.15;
+                    	if (current < optimal) {
+                    		var summaryPanel = document.getElementById("link"+<%=i %>);
+                    		summaryPanel.href="Event.jsp?id="+<%=e.getID()%>;
+                    	} else {
+                    		var summaryPanel = document.getElementById("div"+<%=i %>);
+                    		summaryPanel.innerHTML='';
+                    	}
           	    	} 
       	  		});
-                if (current <= optimal*1.15) {
-                	var summaryPanel = document.getElementById("link"+<%=i %>);
-                	summaryPanel.href="Event.jsp?id="+<%=e.getID()%>;
-                } else {
-                	var summaryPanel = document.getElementById("div"+<%=i %>);
-                	summaryPanel.innerHTML='';
-                }
-          	} 
+                
+          	}
+            </script>
+            <div id="div<%=i %>">
+            <strong>
+            <a id="link<%=i %>" href="http://www.microsoft.com"><%=p1%> <i class="fa fa-arrow-right fa-spin"></i> <%=p2%></a>
+            </strong>
+            <div class="line"></div>
+            </div>
+            <script>
             calcRoute();
                 
             <%
@@ -256,8 +258,8 @@
 <%				
 			}
 %>
-			
-			<div id="googleMap" ></div>
+			<p id=di></p>
+			<div id="googleMap"></div>
 
 			<!-- End Content -->
 		</div>
