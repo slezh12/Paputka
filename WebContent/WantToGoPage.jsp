@@ -187,7 +187,7 @@
     		
             <%
             EventParseInfo ep = new EventParseInfo(source);
-            ArrayList<Event> arr = ep.getEvents();
+            ArrayList<Event> arr = ep.getEventsForSearch(want);
             ArrayList<Event> toShow = new ArrayList<Event>(); 
             for(int i = 0; i<arr.size(); i++) {
             	Event e = arr.get(i);
