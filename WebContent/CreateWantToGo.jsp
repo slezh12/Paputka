@@ -323,11 +323,7 @@
 			</html>
 			<div class="line"></div>
 			<div id="footer">
-				<h2>აირჩიეთ მარშრუტის საწყისი და საბოლოო პუნქტები</h2>
-				<p>
-					<span class="lite1">ტელ:</span> +555 636 646 62 <span class="lite1">მეილი:</span>
-					name@domain.com
-				</p>
+				<h2 style="color:#8693EE"><strong>აირჩიეთ მარშრუტის საწყისი და საბოლოო პუნქტები</strong></h2>	
 			</div>
 			<!-- End Content -->
 		</div>

@@ -1,6 +1,7 @@
 package ServletPackage;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -95,8 +96,10 @@ public class WantToGoServlet extends HttpServlet {
 			}
 		}
 		connection.CloseConnection();
-		dispatch = request
-				.getRequestDispatcher("SuccessfullyAddedWantToGo.jsp");
-		dispatch.forward(request, response);
+		PrintWriter out = response.getWriter();  
+		out.println("<script type=\"text/javascript\">");  
+		out.println("alert('Your Event has been successfully added. Add more event or go to HomePage');");
+		out.println("window.location='CreateWantToGo.jsp'"); 
+		out.println("</script>"); 
 	}
 }

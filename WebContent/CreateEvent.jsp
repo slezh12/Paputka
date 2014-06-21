@@ -301,7 +301,7 @@
 			</html>
 			<div class="line"></div>
 			<div id="footer">
-				<H2>აირჩიეთ მარშრუტის საწყისი და საბოლოო პუნქტები.</H2>
+								<h2 style="color:#8693EE"><strong>აირჩიეთ მარშრუტის საწყისი და საბოლოო პუნქტები</strong></h2>	
 			</div>
 			<!-- End Content -->
 		</div>

@@ -1,6 +1,7 @@
 package ServletPackage;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -59,8 +60,11 @@ public class ChangeProfileServlet extends HttpServlet {
 		UserParseInfo userParse = new UserParseInfo((BasicDataSource) source);
 		RequestDispatcher dispatch = null;
 		if (about.length() == 0 && tel.length() == 0) {
-			dispatch = request
-					.getRequestDispatcher("InvalidChangePrivateInfo.jsp");
+			PrintWriter out = response.getWriter();  
+			out.println("<script type=\"text/javascript\">");  
+			out.println("alert('Please fill one of the field or go to HomePage');");
+			out.println("window.location='ChangePrivateInfo.jsp'"); 
+			out.println("</script>"); 
 		} else {
 			if (about.length() != 0) {
 				if (parse.getInfoAboutStatuses(id).length() == 0) {
@@ -69,6 +73,7 @@ public class ChangeProfileServlet extends HttpServlet {
 					userParse.updateStatuses(about, id);
 				}
 				dispatch = request.getRequestDispatcher("UserPage.jsp");
+				dispatch.forward(request, response);
 			}
 			if (tel.length() != 0) {
 				if (parse.getInfoAboutTel(id).length() == 0) {
@@ -77,8 +82,8 @@ public class ChangeProfileServlet extends HttpServlet {
 					userParse.updateTel(tel, id);
 				}
 				dispatch = request.getRequestDispatcher("UserPage.jsp");
+				dispatch.forward(request, response);
 			}
 		}
-		dispatch.forward(request, response);
 	}
 }

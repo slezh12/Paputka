@@ -1,6 +1,7 @@
 package ServletPackage;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -87,8 +88,11 @@ public class EventServlet extends HttpServlet {
 			}
 		}
 		connection.CloseConnection();
-		dispatch = request.getRequestDispatcher("SuccessfullyAddedEvent.jsp");
-		dispatch.forward(request, response);
+		PrintWriter out = response.getWriter();  
+		out.println("<script type=\"text/javascript\">");  
+		out.println("alert('Your Event has been successfully added. Add more event or go to HomePage');");
+		out.println("window.location='CreateEvent.jsp'"); 
+		out.println("</script>"); 
 	}
 
 }

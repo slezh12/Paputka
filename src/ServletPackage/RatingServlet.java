@@ -1,6 +1,7 @@
 package ServletPackage;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -62,8 +63,11 @@ public class RatingServlet extends HttpServlet {
 			connect.updateRatings(id, rating);
 		}
 		connect.CloseConnection();
-		RequestDispatcher dispatch = request.getRequestDispatcher("SuccessfullyRated.jsp?id="+userID);
-		dispatch.forward(request, response);
+		PrintWriter out = response.getWriter();  
+		out.println("<script type=\"text/javascript\">");  
+		out.println("alert('User has been successfully rated!');");
+		out.println("window.location='SuccessfullyRated.jsp?id=" + userID +"'"); 
+		out.println("</script>"); 
 	}
 
 }
