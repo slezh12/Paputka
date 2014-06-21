@@ -323,11 +323,13 @@ function loginFinishedCallback(authResult) {
             var marker = new google.maps.Marker({
               position : myLatlng,
               icon :'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+              title : '<%=r.getFromPlace() %>',
               map : map
             });
             var marker2 = new google.maps.Marker({
               position : myLatlng2,
               icon :'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+              title : '<%=r.getToPlace()%>',
               map : map
             });
         <%} %>

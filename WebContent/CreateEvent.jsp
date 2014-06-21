@@ -247,8 +247,11 @@
 	var fromLatitude;
 	var toLongitude;
 	var toLatitude;
+	var geocoder;
+	
 	function initialize() {
 		check = 0;
+		geocoder = new google.maps.Geocoder();
 		var mapProp = {
 			center : new google.maps.LatLng(42.347485, 43.7),
 			zoom : 7,
@@ -265,8 +268,8 @@
 		if (check == 1) {
 			var marker = new google.maps.Marker({
 				position : location,
-				icon :'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
 				map : map,
+				icon :'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
 			});
 			fromLongitude = location.lng();
 			document.getElementById("hiddenField1").value=fromLongitude;
@@ -279,8 +282,8 @@
 		} else if (check == 2) {
 			var marker = new google.maps.Marker({
 				position : location,
-	            icon :'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
 				map : map,
+				icon :'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
 			});
 			toLongitude = location.lng();
 			document.getElementById("hiddenField3").value=toLongitude;
@@ -292,6 +295,54 @@
 			infowindow.open(map, marker);
 		}
 	}
+	
+	function codeAddress() {
+		 if(check<2){
+		  var address = document.getElementById('address').value;
+		  geocoder.geocode( { 'address': address}, function(results, status) {
+		    if (status == google.maps.GeocoderStatus.OK) {
+		      map.setCenter(results[0].geometry.location);
+		      if(check == 0){
+		    	fromLongitude = results[0].geometry.location.lng();
+				document.getElementById("hiddenField1").value=fromLongitude;
+				fromLatitude = results[0].geometry.location.lat();
+				document.getElementById("hiddenField2").value=fromLatitude;
+		      var marker = new google.maps.Marker({
+		          map: map,
+		          position: results[0].geometry.location,
+		          icon :'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+		          
+		      });
+		      var infowindow = new google.maps.InfoWindow({
+					content : 'საწყისი პუნქტი'
+				});
+				infowindow.open(map, marker);
+		      } else {
+		    	var marker = new google.maps.Marker({
+			          map: map,
+			          position: results[0].geometry.location,
+			          icon :'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+			    });
+		    	toLongitude = results[0].geometry.location.lng();
+				document.getElementById("hiddenField3").value=toLongitude;
+				toLatitude = results[0].geometry.location.lat();
+				document.getElementById("hiddenField4").value=toLatitude;
+		    	var infowindow = new google.maps.InfoWindow({
+					content : 'საბოლოო პუნქტი'
+				});
+				infowindow.open(map, marker);
+		      }
+		      check++;
+		    } else {
+		      alert('თქვენს მიერ მითითებული ადგილი არ მოიძებნა. გთხოვთ რუქაზე მონიშნოთ ან შეიყვანოთ სხვა პუნქტი');
+		    }
+		  });
+		} else {
+			alert('თქვენ უკვე შეყვანილი გყავთ საწყისი და საბოლოო პუნქტები');
+		}
+	}
+	
+	
 
 	google.maps.event.addDomListener(window, 'load', initialize);
 </script>
@@ -302,7 +353,9 @@
 			</html>
 			<div class="line"></div>
 			<div id="footer">
-								<h2 style="color:#8693EE"><strong>აირჩიეთ მარშრუტის საწყისი და საბოლოო პუნქტები</strong></h2>	
+				<H3>აირჩიეთ მარშრუტის საწყისი და საბოლოო პუნქტები. ან შეიყვანეთ მათი დასახელებები (ქართულად)</H3>
+ 				<input id="address" type="textbox" value="">
+				 <input type="button" value="შეიყვანეთ პუნქტი" onclick="codeAddress()">
 			</div>
 			<!-- End Content -->
 		</div>
