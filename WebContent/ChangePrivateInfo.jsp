@@ -51,7 +51,7 @@
 		<!-- End Sidebar -->
 		<!-- Begin Content -->
 		<div id="content">
-				<H2>პროფილის შეცვლა</H2>				
+				<h2 style="color:#8693EE"><strong>პროფილის შეცვლა</strong></h2>				
 				<div class="line"></div>
 					<form action="ChangeProfileServlet" id="registerform" name="registerform"
 						method="post">

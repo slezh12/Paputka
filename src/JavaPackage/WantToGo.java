@@ -9,10 +9,11 @@ public class WantToGo {
 	private double toLongitude;
 	private double toLatitude;
 	private boolean type;
+	private boolean validation;
 
 	public WantToGo(double fromLongitude, double fromLatitude,
 			double toLongitude, double toLatitude, boolean type, int ID,
-			int userID,String title) {
+			int userID,String title,boolean validation) {
 		this.fromLatitude = fromLatitude;
 		this.fromLongitude = fromLongitude;
 		this.toLatitude = toLatitude;
@@ -21,6 +22,7 @@ public class WantToGo {
 		this.type = type;
 		this.userID = userID;
 		this.title = title;
+		this.validation = validation;
 	}
 	
 	public double getFromLongitude() {
@@ -53,5 +55,9 @@ public class WantToGo {
 	
 	public boolean getType() {
 		return type;
+	}
+	
+	public boolean getValidation() {
+		return validation;
 	}
 }

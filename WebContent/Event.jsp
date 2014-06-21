@@ -129,7 +129,6 @@
 				</form>
 			</div>
 		</div>
-    </div>
     <!-- End Sidebar -->
 
     <!-- Begin Content -->
@@ -155,6 +154,7 @@
     var myLatlng2 = new google.maps.LatLng(<%= r.getToLatitude()%>,<%=r.getToLongitude() %>);
     var marker = new google.maps.Marker({
       position : myLatlng,
+      icon :'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
       map : map,
     });
     var infowindow = new google.maps.InfoWindow({
@@ -232,7 +232,6 @@
           
         <%} %>
         <li>
-        <div class="line"></div>
         <H2>კომენტარის დამატება</H2>				
 					<form action="CommentServlet" method="post" id="registerform" name="registerform">
 						<h4>კომენტარის სიგრძე არ უნდა აღემატებოდეს 400 სიმბოლოს</h4>
