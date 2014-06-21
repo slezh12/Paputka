@@ -150,6 +150,7 @@
 		<!-- Begin Content -->
 		<div id="content">
 			<h2>ძებნის შედეგები</h2>
+			<%if (want.getValidation()) { %>
 			<script
     src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
 			<script>
@@ -187,10 +188,22 @@
             <%
             EventParseInfo ep = new EventParseInfo(source);
             ArrayList<Event> arr = ep.getEvents();
-            ArrayList<Event> toShow = new ArrayList<Event>();
-            //for(int i = 0; i<arr.size(); i++) {
-                Route r = arr.get(5).getRoute();    
+            ArrayList<Event> toShow = new ArrayList<Event>(); 
+            for(int i = 0; i<arr.size(); i++) {
+            	Event e = arr.get(i);
+                Route r = e.getRoute();  
+                String p1 = r.getFromPlace();
+                String p2 = r.getToPlace();
             %>
+            </script>
+            <div id="div<%=i %>">
+            <div class="line"></div>
+            <strong>
+            <a id="link<%=i %>" href="http://www.microsoft.com"><%=p1%> -----> <%=p2%></a>
+            </strong>
+            <div class="line"></div>
+            </div>
+            <script>
             var start = new google.maps.LatLng(<%=r.getFromLatitude() %>,<%= r.getFromLongitude()%>);
             var end = new google.maps.LatLng(<%=r.getToLatitude()%>,<%=r.getToLongitude() %>);
             function calcRoute() {
@@ -201,8 +214,6 @@
               	    travelMode: google.maps.TravelMode.DRIVING ,   
               	  	unitSystem: google.maps.UnitSystem.METRIC
                 };
-                var summaryPanel = document.getElementById("demo");
-  	      		summaryPanel.innerHTML='';
                 directionsService.route(request, function(response, status) {
           	    	if (status == google.maps.DirectionsStatus.OK) {
           	      		directionsDisplay.setDirections(response);
@@ -210,8 +221,6 @@
           	      		for (var i = 0; i < route.legs.length; i++) {
                         	current+=route.legs[i].distance.value;                       
                    		}
-          	      		summaryPanel.innerHTML+=current;
-          	      	summaryPanel.innerHTML+=' ';
           	    	} 
       	  		});   
                 request = {
@@ -226,21 +235,24 @@
           	      		for (var i = 0; i < route.legs.length; i++) {
                         	optimal+=route.legs[i].distance.value;                     
                    		}
-          	      		summaryPanel.innerHTML+=optimal*1.15;
           	    	} 
       	  		});
-                
-          	  
+                if (current <= optimal*1.15) {
+                	var summaryPanel = document.getElementById("link"+<%=i %>);
+                	summaryPanel.href="Event.jsp?id="+<%=e.getID()%>;
+                } else {
+                	var summaryPanel = document.getElementById("div"+<%=i %>);
+                	summaryPanel.innerHTML='';
+                }
           	} 
                 
-            <%//} %>
+            <%} %>
         
             google.maps.event.addDomListener(window, 'load', initialize);
 </script>
-			<div class="line"></div>
-			<p id="demo">My First Paragraph</p>
-			<div id="googleMap" style="width: 800px; height: 400px;"></div>
-			<div class="line"></div>
+<%} %>
+			
+			<div id="googleMap" ></div>
 
 			<!-- End Content -->
 		</div>
