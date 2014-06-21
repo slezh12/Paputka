@@ -73,7 +73,6 @@ public class ChangeProfileServlet extends HttpServlet {
 					userParse.updateStatuses(about, id);
 				}
 				dispatch = request.getRequestDispatcher("UserPage.jsp");
-				dispatch.forward(request, response);
 			}
 			if (tel.length() != 0) {
 				if (parse.getInfoAboutTel(id).length() == 0) {
@@ -82,8 +81,8 @@ public class ChangeProfileServlet extends HttpServlet {
 					userParse.updateTel(tel, id);
 				}
 				dispatch = request.getRequestDispatcher("UserPage.jsp");
-				dispatch.forward(request, response);
 			}
+			dispatch.forward(request, response);
 		}
 	}
 }

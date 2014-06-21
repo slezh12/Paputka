@@ -53,9 +53,9 @@
 				
 				%>
 				<h3 id="welcomeUser">Welcome, <%= user.getFirstName()+" "+user.getLastName() %> </h3> 				
-				<div id="Usermenu" class="menu-v" style="marign-top: 20px;">
+				<div id="menu" class="menu-v">
 					<ul>
-				 	 	<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li> 
+						<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
 					</ul>
 				</div>
 				<div id="UserProfile">
@@ -125,7 +125,7 @@
 			Event temp = list.get(i);
 			
 		%>	
-			<strong><a href="Event.jsp?id=<%=temp.getID()%>"><%= temp.getRoute().getFromPlace()%> <i class="fa fa-arrow-right fa-spin"></i><%="  " +  temp.getRoute().getToPlace()%></a></strong>
+			<strong><a style="font-size:17px;"href="Event.jsp?id=<%=temp.getID()%>"><%= temp.getRoute().getFromPlace()%> <i class="fa fa-arrow-right fa-spin"></i><%="  " +  temp.getRoute().getToPlace()%></a></strong>
 			<p> </p>
 			
 		<div class="line"></div>	

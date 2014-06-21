@@ -26,6 +26,16 @@
 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="style/js/jquery.leanModal.min.js"></script>
+<script type="text/javascript">
+function ShowMail()
+{
+ document.getElementById('mail').style.display = "block"; 
+}
+function ShowNumber()
+{
+ document.getElementById('number').style.display = "block"; 
+}
+</script>
 </head>
 <body>
 	<!-- Begin Wrapper -->
@@ -46,7 +56,7 @@
 		<!-- End Sidebar -->
 		<!-- Begin Content -->
 		<div id="content">
-			<h2>ჩემი მოთხოვნები</h2>
+						<h2 style="color:#8693EE"><strong>ჩემი მოთხოვნები</strong></h2>	
 			<div class="line"></div>
 			<%
 				BasicDataSource source = (BasicDataSource) application
@@ -73,7 +83,7 @@
 			%> 
 			<div id="column">
 				<ul id="latestnews">
-					<strong><a href="Event.jsp?id=<%=eventID%>"><h2><%=from+" "%>-----><%=" "+to%></h2></a></strong>
+							<strong><a style="font-size:17px; "href="Event.jsp?id=<%=temp.getID()%>"><%= from%> <i class="fa fa-arrow-right fa-spin"></i><%="  " +  to%></a></strong>
 					<h4>
 						<%=temp.getText()%>
 					</h4>
@@ -94,7 +104,11 @@
 							style="float: left; opacity: 0.4;"
 							src="style/images/onebit_35.png"> <img
 							style="opacity: 0.4;" src="style/images/onebit_36.png">
-							<h3>ტელეფონი:<%=" "+tel%>მეილი:<%=mail%></h3>
+							<button class="mailnumber" onclick="ShowNumber();" style="float:left;">Click For <i style="color:#FFF" class="fa fa-phone"></i></button>
+							<button class="mailnumber" onclick="ShowMail();" style="float:left;">Click For <i style="color:#FFF" class="fa fa-envelope-o"></i></button>
+							<br><br>
+							<div id="number" style="display:none; float:left; font-size:15px; color:#79bbff;"><strong>ტელეფონი:</strong> <%=" "+ tel %></div>
+							<div id="mail" style="display:none; float:right;font-size:15px; color:#79bbff;"><strong>ელ-ფოსტა:</strong> <%=" " + mail %></div>
 						<%
 							} else if (accept == 2) {
 						%>
@@ -109,7 +123,7 @@
 					</p>
 				</ul>
 			</div>
-			<div class="line"></div>
+			<div style="margin-top:50px"class="line"></div>
 			<%
 				}
 			%>
