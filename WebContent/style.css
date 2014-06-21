@@ -181,6 +181,21 @@ input[class="radio2"] {
 .radio2 {
 	float: left;
 }
+#UserProfile br{
+	line-height:20px;
+}
+#UserProfile {
+	font-family: 'Amaranth', sans-serif;
+	font-size: 15px;
+	margin-top: 50px;
+	float:left;
+	position: relative;
+	color:#fff;
+	text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+}
+#userProfile {
+	margin:100px;
+}
 #welcomeUser{
 	margin-top:20px;	
 	width: 247PX;

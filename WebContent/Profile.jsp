@@ -16,7 +16,9 @@
 		<title>Paputka</title>
 		<link rel="shortcut icon" type="image/x-icon" href="style/images/favicon.png" />
 		<link rel="stylesheet" type="text/css" href="style.css" />
-		
+		<link
+    href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
+    rel="stylesheet" />
 		<script type="text/javascript" src="style/js/jquery-1.6.4.min.js"></script>
 		<script type="text/javascript" src="style/js/ddsmoothmenu.js"></script>
 		<script type="text/javascript" src="style/js/jquery-1.9.1.min.js"></script>
@@ -50,30 +52,30 @@
 
 				
 				%>
+				<h3 id="welcomeUser">Welcome, <%= user.getFirstName()+" "+user.getLastName() %> </h3> 				
 				<div id="Usermenu" class="menu-v" style="marign-top: 20px;">
-				  <ul>
-				  	<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li> 
-					<li style="color: #fff;">
-						<h4>დაბადების თარიღი:  <%= user.getBirthdate() %>  </h4>
-					</li>
-					<li style="color: #fff;">
-						<h4>სქესი:	 </h4> 
+					<ul>
+				 	 	<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li> 
+					</ul>
+				</div>
+				<div id="UserProfile">
+						<strong style="color:#6AA86B; float:left;">დაბადების თარიღი:</strong>  <%= user.getBirthdate() %>  
+					<br><br>
+						<div style="float:left" > <strong style="color:#6AA86B"> სქესი:</strong> 
+						</div>		
 						<% if (user.getGender()){%>
-							<img   src="style/images/male.png"/>
+							<img  style="margin-left:50px; " src="style/images/male.png"/>
 						<% }else{ %>
-							<img   src="style/images/female.png"/>
+							<img  style="margin-left: 50px; " src="style/images/female.png"/>
 						<%}%>
-						
-					</li>					
-					<li style="color: #fff;">
-						<h4> სტატუსი: </h4>  <%= statuses  %>
-					</li>
-					<li style="color: #fff;">
+						<div style="float:left;" ><strong style="float:left; color:#6AA86B;"> სტატუსი:</strong>  <%= statuses  %></div>
+					
+					<div style="float:left; margin-top:20px;" >
 					<% 
 					Integer rating = userParse.getRating(userID);
 					if (rating != null) {
 					%>
-						<h4>მომხმარებლის რეიტინგი:</h4> 						
+					<strong style="float:left ; color:#6AA86B">	მომხმარებლის რეიტინგი:	</strong>				
 							<form id="ratingsForm1">
 								<div class="stars">
 									<%
@@ -86,13 +88,12 @@
 								</div>
 							</form>
 						<%} else { %>
-						<h4>მომხმარებელს შეფასება არ აქვს</h4> 
+						<strong style="float:left; color:#6AA86B">მომხმარებელს რეიტინგი არ აქვს</strong>
 						<%}%>
-					</li>
+					</div>
+					<br>
 					<% if (userParse.canRate(userIDGuest, userID)){%>
-				  	<li style="color: #fff;">
-						<h4>შეაფასეთ მომხმარებელი</h4> 
-						
+						<strong style="float:left; color:#6AA86B">შეაფასეთ მომხმარებელი </strong>
 							<form id="ratingsForm" action="RatingServlet" method="post">
 								<div class="stars">
 									<input type="radio" name="star" class="star-1" id="star-1" value="1" /> 
@@ -110,25 +111,21 @@
 								<input type="submit" name="btn" class="login" value="გაგზავნა" ></input>
 								<input type="hidden" name="userID" value="<%=userID%>" >
 							</form>
-						
-					</li>
 					<%}%>
-				  </ul>
-				</div>
+				</div>	
 				<!-- End Menu -->
 			</div>
 			<!-- End Sidebar -->
-			<div class="line"></div>
 		<!-- Begin Content -->
 			<div id="content">
-				<h2>მომხმარებლის სახელი და გვარი:  <%=user.getFirstName() + " " + user.getLastName()%></h2>
+				<h2 style="color:#8693EE"><strong>მომხმარებლის პოსტები</strong></h2>	
 				<div class="line"></div>
 		<!-- End Content -->
 		<%for (int i = 0; i < list.size(); i++) {
 			Event temp = list.get(i);
 			
 		%>	
-			<strong><a href="Event.jsp?id=<%=temp.getID()%>"><%= temp.getRoute().getFromPlace() + " -----> " +temp.getRoute().getToPlace() %></a></strong>
+			<strong><a href="Event.jsp?id=<%=temp.getID()%>"><%= temp.getRoute().getFromPlace()%> <i class="fa fa-arrow-right fa-spin"></i><%="  " +  temp.getRoute().getToPlace()%></a></strong>
 			<p> </p>
 			
 		<div class="line"></div>	
