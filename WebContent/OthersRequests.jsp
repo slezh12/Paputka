@@ -51,7 +51,7 @@
 
 		<!-- Begin Content -->
 		<div id="content">
-			<H2>თხოვნები დასამგზავრებლად</H2>
+			<h2 style="color:#8693EE"><strong>თხოვნები დასამგზავრებლად</strong></h2>	
 			<div class="line"></div>
 			<%
 				BasicDataSource source = (BasicDataSource) application
@@ -82,50 +82,50 @@
 			%>
 			<div id="column">
 				<ul id="latestnews">
-					<strong><a href="Event.jsp?id=<%=eventID%>"><h2><%=from + " "%>-----><%=" " + to%></h2></a></strong>
+					<strong><a style="font-size:17px;"href="Event.jsp?id=<%=eventID%>"><%= from%> <i class="fa fa-arrow-right fa-spin"></i><%="  " +  to%></a></strong>
 					<h4>
 						<%=temp.getText()%>
 					</h4>
-					<p>
 						<%
 							if (accept == 0) {
 						%>
 					
 					<form action="OtherRequestsServlet" method="post">
-						<img style="opacity: 1; float: left;"
-							src="style/images/onebit_34.png"><input type="radio"
-							class="radio1" name="acc" value="yes" tabindex="5"></input><img
-							style="float: left; opacity: 1;" src="style/images/onebit_35.png">
-						<input type="radio" class="radio2" name="acc" value="no"
-							tabindex="6"></input> <input type="hidden" name="request"
+						<input type="radio"
+							class="radio1" name="acc" value="yes" tabindex="5"></input><img style="opacity: 1; float: left;"
+							src="style/images/onebit_34.png">
+						<input type="radio"  class="radio2" name="acc" value="no"
+							tabindex="6"><img
+							style=" opacity: 1;" src="style/images/onebit_35.png"></input> <input type="hidden" name="request"
 							value=<%=requestID%>> <input type="hidden" name="event"
 							value=<%=eventID%>> <input type="hidden"
 							name="fromUserID" value=<%=fromUserID%>> <input
-							type="submit" class="login" value="პასუხის გაცემა"></input>
+							type="submit" style=" width:150px;"class="mailnumber" value="პასუხის გაცემა"></input>
 					</form>
 					<%
 						} else if (accept == 1) {
 					%>
 					<img style="opacity: 1; float: left;"
 						src="style/images/onebit_34.png">
-					<img style="float: left; opacity: 0.4;"
+					<img style=" opacity: 0.4;"
 						src="style/images/onebit_35.png">
 					<%
 						} else if (accept == 2) {
 					%>
 					<img style="opacity: 0.4; float: left;"
 						src="style/images/onebit_34.png">
-					<img style="float: left; opacity: 1;"
+					<img style="opacity: 1;"
 						src="style/images/onebit_35.png">
 					<%
 						}
 					%>
-					<h3>
-						ტელეფონი:<%=" " + tel%>მეილი:<%=mail%></h3>
+					<p>
+					<div id="number<%=i%>" style="float:left; font-size:15px; color:#79bbff;"><strong>ტელეფონი:</strong> <%=" "+ tel %></div>
+				    <div id="mail<%=i%>" style="float:right;font-size:15px; color:#79bbff;"><strong>ელ-ფოსტა:</strong> <%=" " + mail %></div>
 					</p>
 				</ul>
 			</div>
-			<div class="line"></div>
+			<div class="line" style="margin-top:50px"></div>
 			<%
 				}
 				}
