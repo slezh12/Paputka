@@ -52,7 +52,7 @@
 
 				
 				%>
-				<h3 id="welcomeUser">Welcome, <%= user.getFirstName()+" "+user.getLastName() %> </h3> 				
+				<h3 id="welcomeUser"><%= user.getFirstName()+" "+user.getLastName() %> </h3> 				
 				<div id="menu" class="menu-v">
 					<ul>
 						<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>

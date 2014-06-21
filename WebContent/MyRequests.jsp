@@ -26,16 +26,6 @@
 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="style/js/jquery.leanModal.min.js"></script>
-<script type="text/javascript">
-function ShowMail()
-{
- document.getElementById('mail').style.display = "block"; 
-}
-function ShowNumber()
-{
- document.getElementById('number').style.display = "block"; 
-}
-</script>
 </head>
 <body>
 	<!-- Begin Wrapper -->
@@ -104,11 +94,8 @@ function ShowNumber()
 							style="float: left; opacity: 0.4;"
 							src="style/images/onebit_35.png"> <img
 							style="opacity: 0.4;" src="style/images/onebit_36.png">
-							<button class="mailnumber" onclick="ShowNumber();" style="float:left;">Click For <i style="color:#FFF" class="fa fa-phone"></i></button>
-							<button class="mailnumber" onclick="ShowMail();" style="float:left;">Click For <i style="color:#FFF" class="fa fa-envelope-o"></i></button>
-							<br><br>
-							<div id="number" style="display:none; float:left; font-size:15px; color:#79bbff;"><strong>ტელეფონი:</strong> <%=" "+ tel %></div>
-							<div id="mail" style="display:none; float:right;font-size:15px; color:#79bbff;"><strong>ელ-ფოსტა:</strong> <%=" " + mail %></div>
+							<div id="number<%=i%>" style="float:left; font-size:15px; color:#79bbff;"><strong>ტელეფონი:</strong> <%=" "+ tel %></div>
+							<div id="mail<%=i%>" style="float:right;font-size:15px; color:#79bbff;"><strong>ელ-ფოსტა:</strong> <%=" " + mail %></div>
 						<%
 							} else if (accept == 2) {
 						%>
@@ -123,7 +110,7 @@ function ShowNumber()
 					</p>
 				</ul>
 			</div>
-			<div style="margin-top:50px"class="line"></div>
+			<div style="margin-top:30px"class="line"></div>
 			<%
 				}
 			%>

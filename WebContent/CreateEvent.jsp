@@ -169,11 +169,11 @@
 					method="post">
 					<div class="txtfield">
 						<input type="text" name="from" placeholder="გასვლის ადგილი"
-							class="textfield" tabindex="1"></input>
+							class="textfield" id="from" tabindex="1"></input>
 					</div>
 					<div class="txtfield">
 						<input type="text" name="to" placeholder="დანიშნულების ადგილი"
-							class="textfield" tabindex="2"></input>
+							class="textfield" id="to" tabindex="2"></input>
 					</div>
 					<div class="txtfield">
 						<input type="number" min="0" step="0.01" name="fee"
@@ -339,6 +339,9 @@
 			    		  {
 			    		      SavePosition(marker.getPosition(),1);
 			    		  });
+		        document.getElementById('from').value = document.getElementById('address').value;
+                document.getElementById('from').readOnly  = true;
+		        document.getElementById('address').value = "";
 		      } else {
 		    	var marker = new google.maps.Marker({
 			          map: map,
@@ -361,8 +364,12 @@
 		    			{
 		    			    SavePosition(marker.getPosition(),2);
 		    			});
+				document.getElementById('to').value = document.getElementById('address').value;
+                document.getElementById('to').readOnly  = true;
+		        document.getElementById('address').value = "";
 		      }
 		      check++;
+		      
 		    } else {
 		      alert('თქვენს მიერ მითითებული ადგილი არ მოიძებნა. გთხოვთ რუქაზე მონიშნოთ ან შეიყვანოთ სხვა პუნქტი');
 		    }
@@ -395,9 +402,9 @@
 			</html>
 			<div class="line"></div>
 			<div id="footer">
-				<H3>აირჩიეთ მარშრუტის საწყისი და საბოლოო პუნქტები. ან შეიყვანეთ მათი დასახელებები (ქართულად)</H3>
+				<h3 style="color:#8693EE"><strong>აირჩიეთ მარშრუტის საწყისი და საბოლოო პუნქტები. ან შეიყვანეთ მათი დასახელებები (ქართულად)</strong></h3>	
  				<input id="address" type="textbox" value="">
-				 <input type="button" value="შეიყვანეთ პუნქტი" onclick="codeAddress()">
+ 				<button class="mailnumber" style="width:150px;"onclick="codeAddress();" >შეიყვანეთ  <i style="color:#a5cc52; font-size:1.5em;" class="fa fa-map-marker"></i></button>
 			</div>
 			<!-- End Content -->
 		</div>
