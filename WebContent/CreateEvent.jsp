@@ -403,7 +403,7 @@
 			<div class="line"></div>
 			<div id="footer">
 				<h3 style="color:#8693EE"><strong>აირჩიეთ მარშრუტის საწყისი და საბოლოო პუნქტები. ან შეიყვანეთ მათი დასახელებები (ქართულად)</strong></h3>	
- 				<input id="address" type="textbox" value="">
+ 				<input id="address" type="textbox" class="textfield" style="width:140px; height:14px"value="">
  				<button class="mailnumber" style="width:150px;"onclick="codeAddress();" >შეიყვანეთ  <i style="color:#a5cc52; font-size:1.5em;" class="fa fa-map-marker"></i></button>
 			</div>
 			<!-- End Content -->
