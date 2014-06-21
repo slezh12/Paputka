@@ -188,7 +188,7 @@
       <%} %>
       <h3>გადასახადი : <%= e.getPrice() %></h3>
       <h3>ადგილების რაოდენობა : <%= e.getPlaces() %></h3>
-      <h3>მძღოლი : <%= u.getFirstName()+ " " + u.getLastName() %></h3>
+      <h3>მძღოლი : <a href="Profile.jsp?id=<%= u.getID()%>"><%= u.getFirstName()+ " " + u.getLastName() %></a></h3>
       <h3><%= r.getFromPlace() + " - " + r.getToPlace() %></h3>
       <%if(e.getType()){ %>
        <h3>თარიღი <%= dt %></h3>

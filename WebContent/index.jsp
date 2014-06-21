@@ -316,6 +316,7 @@ function loginFinishedCallback(authResult) {
             EventParseInfo parse = new EventParseInfo(source);
             ArrayList<Event> arr = parse.getEvents();
             for(int i = 0; i<arr.size(); i++){
+            	if(arr.get(i).getValidation()){
                 Route r = arr.get(i).getRoute();
         %>
          var myLatlng = new google.maps.LatLng(<%=r.getFromLatitude() %>,<%= r.getFromLongitude()%>);
@@ -332,7 +333,8 @@ function loginFinishedCallback(authResult) {
               title : '<%=r.getToPlace()%>',
               map : map
             });
-        <%} %>
+        <%} 
+        }%>
     }
 
     google.maps.event.addDomListener(window, 'load', initialize);

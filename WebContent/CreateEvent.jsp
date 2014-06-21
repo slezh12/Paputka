@@ -269,8 +269,11 @@
 			var marker = new google.maps.Marker({
 				position : location,
 				map : map,
+				draggable : true,
 				icon :'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
 			});
+			
+
 			fromLongitude = location.lng();
 			document.getElementById("hiddenField1").value=fromLongitude;
 			fromLatitude = location.lat();
@@ -279,12 +282,19 @@
 				content : 'საწყისი პუნქტი'
 			});
 			infowindow.open(map, marker);
+			google.maps.event.addListener(marker, 'dragend', function() 
+					{
+					    SavePosition(marker.getPosition(),1);
+					});
 		} else if (check == 2) {
 			var marker = new google.maps.Marker({
 				position : location,
 				map : map,
+				draggable : true,
 				icon :'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
 			});
+			
+
 			toLongitude = location.lng();
 			document.getElementById("hiddenField3").value=toLongitude;
 			toLatitude = location.lat();
@@ -293,6 +303,10 @@
 				content : 'საბოლოო პუნქტი'
 			});
 			infowindow.open(map, marker);
+			google.maps.event.addListener(marker, 'dragend', function() 
+					{
+					    SavePosition(marker.getPosition(),2);
+					});
 		}
 	}
 	
@@ -310,19 +324,31 @@
 		      var marker = new google.maps.Marker({
 		          map: map,
 		          position: results[0].geometry.location,
+				  draggable : true,
+
 		          icon :'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
 		          
 		      });
+		     
+
 		      var infowindow = new google.maps.InfoWindow({
 					content : 'საწყისი პუნქტი'
 				});
 				infowindow.open(map, marker);
+				 google.maps.event.addListener(marker, 'dragend', function() 
+			    		  {
+			    		      SavePosition(marker.getPosition(),1);
+			    		  });
 		      } else {
 		    	var marker = new google.maps.Marker({
 			          map: map,
+					  draggable : true,
+
 			          position: results[0].geometry.location,
 			          icon :'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
 			    });
+		    
+
 		    	toLongitude = results[0].geometry.location.lng();
 				document.getElementById("hiddenField3").value=toLongitude;
 				toLatitude = results[0].geometry.location.lat();
@@ -331,6 +357,10 @@
 					content : 'საბოლოო პუნქტი'
 				});
 				infowindow.open(map, marker);
+				google.maps.event.addListener(marker, 'dragend', function() 
+		    			{
+		    			    SavePosition(marker.getPosition(),2);
+		    			});
 		      }
 		      check++;
 		    } else {
@@ -342,8 +372,20 @@
 		}
 	}
 	
-	
-
+	function SavePosition(pos, inti) 
+	{
+		if(inti == 1){
+			fromLongitude = pos.lng();
+			document.getElementById("hiddenField1").value=fromLongitude;
+			fromLatitude = pos.lat();
+			document.getElementById("hiddenField2").value=fromLatitude;
+		} else {
+			toLongitude =pos.lng();
+			document.getElementById("hiddenField3").value=toLongitude;
+			toLatitude = pos.lat();
+			document.getElementById("hiddenField4").value=toLatitude;
+		}
+	}
 	google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 </head>
