@@ -126,7 +126,6 @@
 			
 		%>	
 			<strong><a style="font-size:17px;"href="Event.jsp?id=<%=temp.getID()%>"><%= temp.getRoute().getFromPlace()%> <i class="fa fa-arrow-right fa-spin"></i><%="  " +  temp.getRoute().getToPlace()%></a></strong>
-			<p> </p>
 			
 		<div class="line"></div>	
 		<% } %>

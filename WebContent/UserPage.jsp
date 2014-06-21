@@ -17,6 +17,9 @@
 <link rel="shortcut icon" type="image/x-icon"
 	href="style/images/favicon.png" />
 <link rel="stylesheet" type="text/css" href="style.css" />
+<link
+    href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
+    rel="stylesheet" />
 
 <script type="text/javascript" src="style/js/jquery-1.6.4.min.js"></script>
 <script type="text/javascript" src="style/js/ddsmoothmenu.js"></script>
@@ -66,7 +69,7 @@
 		<!-- End Sidebar -->
 		<!-- Begin Content -->
 		<div id="content">
-			<h2>რელევანტური პოსტები</h2>
+				<h2 style="color:#8693EE"><strong>რელევანტური  პოსტები</strong></h2>	
 			<div class="line"></div>
 			<%
 				if(list.size() == 0){
@@ -84,7 +87,7 @@
 			%>
 			<div id="column">
 				<ul id="latestnews">
-					<strong><a href="Event.jsp?id=<%=eventID%>"><h2><%=from+" "%>-----><%=" "+to%></h2></a></strong>
+					<strong><a style="font-size:17px; "href="Event.jsp?id=<%=eventID%>"><%= from%> <i class="fa fa-arrow-right fa-spin"></i><%="  " +  to%></a></strong>
 					<strong><a href="Profile.jsp?id=<%=eventOwnerID%>"><h4><%=postOwner.getFirstName()+" "%><%=postOwner.getLastName()%></h4></a></strong>
 				</ul>
 			</div>
