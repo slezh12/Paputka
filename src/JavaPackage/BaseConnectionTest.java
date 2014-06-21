@@ -32,8 +32,8 @@ public class BaseConnectionTest {
 		((BasicDataSource) source).setUrl("jdbc:mysql://" + server + ":3306/"
 				+ database);
 		UserConnection user = new UserConnection((BasicDataSource) source);
-		user.insertIntoUsers("Tedo", "Chubinidze",
-				"tedochubinidze@yahoo.com", "123", true, "'1994-02-04'");
+		user.insertIntoUsers("Tedo", "Chubinidze", "tedochubinidze@yahoo.com",
+				"123", true, "'1994-02-04'");
 		user.CloseConnection();
 	}
 
@@ -58,7 +58,7 @@ public class BaseConnectionTest {
 			rs = base.selectByID("Users", ID, "ID");
 			if (rs.isBeforeFirst()) {
 				rs.next();
-				assertEquals(ID,rs.getInt("ID"));
+				assertEquals(ID, rs.getInt("ID"));
 				assertEquals("123", rs.getString("Password"));
 				assertEquals("Tedo", rs.getString("FirstName"));
 				assertEquals("Chubinidze", rs.getString("LastName"));
@@ -76,7 +76,7 @@ public class BaseConnectionTest {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
 	public void selectAllTest() {
 		try {
@@ -84,8 +84,7 @@ public class BaseConnectionTest {
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + database);
 			int ID = 0;
-			ResultSet rs = stmt
-					.executeQuery("SELECT * from Users");
+			ResultSet rs = stmt.executeQuery("SELECT * from Users");
 			if (rs.isBeforeFirst()) {
 				rs.next();
 				ID = rs.getInt("ID");
@@ -94,7 +93,7 @@ public class BaseConnectionTest {
 			rs = base.selectAll("Users");
 			if (rs.isBeforeFirst()) {
 				rs.next();
-				assertEquals(ID,rs.getInt("ID"));
+				assertEquals(ID, rs.getInt("ID"));
 				assertEquals("123", rs.getString("Password"));
 				assertEquals("Tedo", rs.getString("FirstName"));
 				assertEquals("Chubinidze", rs.getString("LastName"));
@@ -135,7 +134,7 @@ public class BaseConnectionTest {
 					"bobokvati", false, false);
 
 			BaseConnection base = new BaseConnection((BasicDataSource) source);
-			rs = base.selectEvent(ID, "Events");
+			rs = base.selectEvent(ID, "Events", 1);
 			if (rs.isBeforeFirst()) {
 				rs.next();
 				assertEquals(rs.getInt("Places"), 2);

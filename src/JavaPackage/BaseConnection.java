@@ -53,8 +53,8 @@ public class BaseConnection {
 	}
 	
 	// order by date desc limit 1 <- es selectia
-	public ResultSet selectEvent(int userID, String table) throws SQLException {
-		ResultSet rs = stmt.executeQuery("SELECT * FROM " + table + " Where UserID  = " + userID + " ORDER BY ID DESC LIMIT 1");
+	public ResultSet selectEvent(int userID, String table,int num) throws SQLException {
+		ResultSet rs = stmt.executeQuery("SELECT * FROM " + table + " Where UserID  = " + userID + " ORDER BY ID DESC LIMIT " + num);
 		return rs;
 	}
 

@@ -70,7 +70,7 @@
 					UserParseInfo use = new UserParseInfo(source);
 					User eventOwner = use.getUserByID(tempEvent.getUserID());
 					String mail = eventOwner.getEmail();
-			%>
+			%> 
 			<div id="column">
 				<ul id="latestnews">
 					<strong><a href="Event.jsp?id=<%=eventID%>"><h2><%=from+" "%>-----><%=" "+to%></h2></a></strong>

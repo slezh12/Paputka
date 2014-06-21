@@ -43,6 +43,39 @@ public class EventParseInfo extends ParseInfo {
 		return event;
 	}
 
+	public ArrayList<Event> getLastEvents() {
+		ArrayList<Event> events = new ArrayList<Event>();
+		EventConnection base = new EventConnection((BasicDataSource) source);
+		try {
+			ResultSet rs =  base.selectLastEvents(15);
+			while (rs.next()) {
+				int id = rs.getInt("ID");
+				int places = rs.getInt("Places");
+				String fromPlace = rs.getString("FromPlace");
+				String toPlace = rs.getString("ToPlace");
+				boolean validation = rs.getBoolean("Validation");
+				boolean type = rs.getBoolean("Type");
+				int user = rs.getInt("UserID");
+				double fee = rs.getDouble("Fee");
+				double fromLatitude = rs.getDouble("FromLatitude");
+				double fromLongitude = rs.getDouble("FromLongitude");
+				double toLatitude = rs.getDouble("ToLatitude");
+				double toLongitude = rs.getDouble("ToLongitude");
+				Route route = new Route(fromPlace, toPlace, fromLongitude,
+						fromLatitude, toLongitude, toLatitude);
+				Event event = new Event(id, fee, user, places, validation,
+						type, route);
+				if (validation) {
+					events.add(event);
+				}
+			}
+			base.CloseConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return events;
+	}
+
 	public ArrayList<Comment> getComments(int EventID) {
 		EventConnection ev = new EventConnection(source);
 		ResultSet rs = ev.CommentsByID(EventID);
@@ -67,7 +100,7 @@ public class EventParseInfo extends ParseInfo {
 		int ret = 0;
 		BaseConnection base = new BaseConnection((BasicDataSource) source);
 		try {
-			ResultSet rs = base.selectEvent(userID, "Events");
+			ResultSet rs = base.selectEvent(userID, "Events", 1);
 			if (rs.next())
 				ret = rs.getInt("ID");
 			base.CloseConnection();

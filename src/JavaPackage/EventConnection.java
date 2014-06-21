@@ -154,15 +154,23 @@ public class EventConnection extends BaseConnection {
 		}
 
 	}
-	
-	public ResultSet Request(int UserID, int EventID){
+
+	public ResultSet Request(int UserID, int EventID) {
 		ResultSet rs = null;
 		try {
-			rs = stmt.executeQuery("SELECT * FROM Requests Where UserID = " + UserID + " and EventID = " + EventID);
+			rs = stmt.executeQuery("SELECT * FROM Requests Where UserID = "
+					+ UserID + " and EventID = " + EventID);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return rs;
+	}
+
+	public ResultSet selectLastEvents(int num) throws SQLException {
+		ResultSet rs = stmt
+				.executeQuery("SELECT * FROM Events ORDER BY ID DESC LIMIT "
+						+ num);
 		return rs;
 	}
 

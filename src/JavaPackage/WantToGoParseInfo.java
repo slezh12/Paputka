@@ -29,7 +29,8 @@ public class WantToGoParseInfo extends ParseInfo {
 				boolean type = rs.getBoolean("Type");
 				boolean validation = rs.getBoolean("Validation");
 				WantToGo want = new WantToGo(fromLongitude, fromLatitude,
-						toLongitude, toLatitude, type, ID, userID, title,validation);
+						toLongitude, toLatitude, type, ID, userID, title,
+						validation);
 				wanttogos.add(want);
 			}
 			base.CloseConnection();
@@ -43,7 +44,7 @@ public class WantToGoParseInfo extends ParseInfo {
 		int ret = 0;
 		BaseConnection base = new BaseConnection((BasicDataSource) source);
 		try {
-			ResultSet rs = base.selectEvent(userID, "WantToGo");
+			ResultSet rs = base.selectEvent(userID, "WantToGo", 1);
 			if (rs.next())
 				ret = rs.getInt("ID");
 			base.CloseConnection();
@@ -68,7 +69,7 @@ public class WantToGoParseInfo extends ParseInfo {
 				boolean type = rs.getBoolean("Type");
 				boolean validation = rs.getBoolean("Validation");
 				want = new WantToGo(fromLongitude, fromLatitude, toLongitude,
-						toLatitude, type, ID, userID, title,validation);
+						toLatitude, type, ID, userID, title, validation);
 				base.CloseConnection();
 			}
 		} catch (SQLException e) {
@@ -97,13 +98,12 @@ public class WantToGoParseInfo extends ParseInfo {
 		}
 		return list;
 	}
-	
+
 	public ArrayList<Timestamp> getOnce(int id) {
 		BaseConnection base = new BaseConnection((BasicDataSource) source);
 		ArrayList<Timestamp> list = new ArrayList<Timestamp>();
 		try {
-			ResultSet rs = base
-					.selectByID("WantToGoDates", id, "WantToGoID");
+			ResultSet rs = base.selectByID("WantToGoDates", id, "WantToGoID");
 			rs.next();
 			Timestamp start = rs.getTimestamp("StartDate");
 			Timestamp finish = rs.getTimestamp("EndDate");

@@ -1,112 +1,114 @@
+<%@page import="JavaPackage.UserParseInfo"%>
+<%@page import="JavaPackage.Route"%>
+<%@page import="JavaPackage.EventParseInfo"%>
+<%@page import="JavaPackage.Event"%>
+<%@page import="JavaPackage.BaseConnection"%>
+<%@page import="JavaPackage.WantToGo"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="org.apache.tomcat.dbcp.dbcp.BasicDataSource"%>
+<%@page import="JavaPackage.WantToGoParseInfo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@page import="JavaPackage.User"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<title>Paputka</title>
-		<link rel="shortcut icon" type="image/x-icon" href="style/images/favicon.png" />
-		<link rel="stylesheet" type="text/css" href="style.css" />
-		
-		<script type="text/javascript" src="style/js/jquery-1.6.4.min.js"></script>
-		<script type="text/javascript" src="style/js/ddsmoothmenu.js"></script>
-		<script type="text/javascript" src="style/js/jquery-1.9.1.min.js"></script>
-		<script type="text/javascript" charset="utf-8" src="style/js/jquery.leanModal.min.js"></script>
-	</head>
-	<body>
-		<!-- Begin Wrapper -->
-		<div id="wrapper">
-			<!-- Begin Sidebar -->
-			<div id="sidebar">
-				<div id="logo"><img src="style/images/logo.png" alt="Paputka" /></div>
-				<!-- Begin Menu -->
-				<% 
-				User user = (User) session.getAttribute("user");
-				String name = user.getFirstName();
-				String lastname = user.getLastName();
-				int userID = user.getID();
-				%>
-				<h3 id="welcomeUser">Welcome, <%= name+" "+lastname %> </h3> 
-				<div id="Usermenu" class="menu-v" style="marign-top: 20px;">
-				  <ul>
-				  	<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
-				  	<li>
-						<a href="Profile.jsp?id=<%=userID%>">პროფილი</a>
-					</li>
-					<li>
-						<a href="ChangePrivateInfo.jsp">პროფილის შეცვლა</a>
-					</li>
-					<li>
-						<a href="CreateEvent.jsp">წავიყვან</a>
-					</li>
-					<li>
-						<a href="CreateWantToGo.jsp">წასვლა მინდა</a>
-					</li>
-					<li>
-						<a href="MyRequests.jsp">ჩემი მოთხოვნები</a>
-					</li>
-					<li>
-						<a href="OthersRequests.jsp">სხვისი მოთხოვნები</a>
-					</li>
-					<li>
-						<a href="MyWantToGos.jsp">ჩემივონთთუგოუ</a>
-					</li>
-					<li>
-						<a href="index.jsp" >გამოსვლა </a>
-					</li>
+<head>
+<title>Paputka</title>
+<link rel="shortcut icon" type="image/x-icon"
+	href="style/images/favicon.png" />
+<link rel="stylesheet" type="text/css" href="style.css" />
 
-				  </ul>
-				</div>
-				<!-- End Menu -->
+<script type="text/javascript" src="style/js/jquery-1.6.4.min.js"></script>
+<script type="text/javascript" src="style/js/ddsmoothmenu.js"></script>
+<script type="text/javascript" src="style/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" charset="utf-8"
+	src="style/js/jquery.leanModal.min.js"></script>
+</head>
+<body>
+	<!-- Begin Wrapper -->
+	<div id="wrapper">
+		<!-- Begin Sidebar -->
+		<div id="sidebar">
+			<div id="logo">
+				<img src="style/images/logo.png" alt="Paputka" />
 			</div>
-			<!-- End Sidebar -->
-			<div class="line"></div>
-			
-			<div id="column">
-				<ul id="latestnews">
-					<li><img src="images/demo/80x80.gif" alt="" />
-						<p>
-							<strong><a href="#">didi posti kokos pageze</a></strong>
-							kokoooo
-						</p></li>
-					<li><img src="images/demo/80x80.gif" alt="" />
-						<p>
-							<strong><a href="#">POSTIIIIIIIIIIIIIIIII</a></strong>
-							didi posti
-						</p></li>
-					<li><img src="images/demo/80x80.gif" alt="" />
-						<p>
-							<strong><a href="#">posti</a></strong>
-							ok
-						</p></li>
-					<li><img src="images/demo/80x80.gif" alt="" />
-						<p>
-							<strong><a href="#">bikentia</a></strong>
-							chaartkit dzmakacobis xelebi
-						</p></li>
-					<li class="last"><img src="images/demo/80x80.gif" alt="" />
-						<p>
-							<strong><a href="#">gamcie dzma</a></strong>
-							ok
-						</p></li>
+			<!-- Begin Menu -->
+			<%
+				User user = (User) session.getAttribute("user");
+									String name = user.getFirstName();
+									String lastname = user.getLastName();
+									int userID = user.getID();
+									BasicDataSource source = (BasicDataSource) application
+											.getAttribute("connectionPool");
+									WantToGoParseInfo parse = new WantToGoParseInfo(source);
+									ArrayList<WantToGo> list = parse.getWantToGos(userID);
+			%>
+			<h3 id="welcomeUser">
+				Welcome,
+				<%=name+" "+lastname%>
+			</h3>
+			<div id="Usermenu" class="menu-v" style="marign-top: 20px;">
+				<ul>
+					<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
+					<li><a href="Profile.jsp?id=<%=userID%>">პროფილი</a></li>
+					<li><a href="ChangePrivateInfo.jsp">პროფილის შეცვლა</a></li>
+					<li><a href="CreateEvent.jsp">წავიყვან</a></li>
+					<li><a href="CreateWantToGo.jsp">წასვლა მინდა</a></li>
+					<li><a href="MyRequests.jsp">ჩემი მოთხოვნები</a></li>
+					<li><a href="OthersRequests.jsp">სხვისი მოთხოვნები</a></li>
+					<li><a href="MyWantToGos.jsp">ჩემივონთთუგოუ</a></li>
+					<li><a href="index.jsp">გამოსვლა </a></li>
+
 				</ul>
 			</div>
-			<!-- Begin Content -->
-			<div id="content">
-				<div class="line"></div>
-				<div class="line"></div>
-				
-				<!-- End Content -->
-			</div>
+			<!-- End Menu -->
 		</div>
-<script type="text/javascript">
-$(function(){
-  $('#registerform').submit(function(e){
-    return false;
-  });
-  $('#modaltrigger').leanModal({ top:5, overlay: 0.45, closeButton: ".hidemodal" });
-});
-</script>
+		<!-- End Sidebar -->
+		<!-- Begin Content -->
+		<div id="content">
+			<h2>რელევანტური პოსტები</h2>
+			<div class="line"></div>
+			<%
+				if(list.size() == 0){
+									EventParseInfo parseEvent = new EventParseInfo(source);
+									ArrayList<Event> listOfEvents = parseEvent.getLastEvents();
+									for(int i = 0; i < listOfEvents.size(); i++){
+										Event temp = listOfEvents.get(i);
+										Route rout = temp.getRoute();
+										int eventID = temp.getID();
+										String from = rout.getFromPlace();
+										String to = rout.getToPlace();
+										int eventOwnerID = temp.getUserID();
+										UserParseInfo userParse = new UserParseInfo(source);
+										User postOwner = userParse.getUserByID(eventOwnerID);
+			%>
+			<div id="column">
+				<ul id="latestnews">
+					<strong><a href="Event.jsp?id=<%=eventID%>"><h2><%=from+" "%>-----><%=" "+to%></h2></a></strong>
+					<strong><a href="Profile.jsp?id=<%=eventOwnerID%>"><h4><%=postOwner.getFirstName()+" "%><%=postOwner.getLastName()%></h4></a></strong>
+				</ul>
+			</div>
+			<div class="line"></div>
+
+			<%
+				}
+								}
+			%>
+			<!-- End Content -->
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function() {
+			$('#registerform').submit(function(e) {
+				return false;
+			});
+			$('#modaltrigger').leanModal({
+				top : 5,
+				overlay : 0.45,
+				closeButton : ".hidemodal"
+			});
+		});
+	</script>
 
 </body>
 </html>
