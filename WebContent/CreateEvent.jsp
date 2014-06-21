@@ -279,6 +279,7 @@
 		} else if (check == 2) {
 			var marker = new google.maps.Marker({
 				position : location,
+	            icon :'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
 				map : map,
 			});
 			toLongitude = location.lng();

@@ -327,6 +327,7 @@ function loginFinishedCallback(authResult) {
             });
             var marker2 = new google.maps.Marker({
               position : myLatlng2,
+              icon :'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
               map : map
             });
         <%} %>
