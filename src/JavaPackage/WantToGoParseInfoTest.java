@@ -67,8 +67,14 @@ public class WantToGoParseInfoTest {
 					+ ","
 					+ type +")");
 			
+			int lastID = 0;
+			ResultSet res = stmt.executeQuery("SELECT * FROM WantToGo ORDER BY ID DESC LIMIT 1");
+			while(res.next()){
+				 lastID = res.getInt("ID");
+				
+			}	
 			WantToGoParseInfo temp = new WantToGoParseInfo((BasicDataSource) source);
-			assertEquals(1, temp.getLastID(1));
+			assertEquals(lastID, temp.getLastID(1));
 			assertFalse(isEqual(-1, temp.getLastID(1)));
 			
 			stmt.executeUpdate("DELETE FROM WantToGO ORDER BY ID DESC LIMIT 1");
