@@ -14,7 +14,7 @@ public class WantToGoConnection extends BaseConnection {
 			double FromLongitude, double FromLatitude, double ToLongitude,
 			double ToLatitude, boolean type) {
 		try {
-			stmt.executeUpdate("INSERT INTO WantToGo (userID, title, FromLongitude, FromLatitude, ToLongitude, ToLatitude, Type) VALUES ("
+			stmt.executeUpdate("INSERT INTO WantToGo (userID, title, FromLongitude, FromLatitude, ToLongitude, ToLatitude, Type, Validation) VALUES ("
 					+ userID
 					+ ", "
 					+ "'"
@@ -27,7 +27,7 @@ public class WantToGoConnection extends BaseConnection {
 					+ ", "
 					+ ToLongitude
 					+ ", "
-					+ ToLatitude + ", " + type + ")");
+					+ ToLatitude + ", " + type + "," + true + ")");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -69,5 +69,5 @@ public class WantToGoConnection extends BaseConnection {
 			e.printStackTrace();
 		}
 	}
-	
+
 }

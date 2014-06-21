@@ -27,8 +27,9 @@ public class WantToGoParseInfo extends ParseInfo {
 				double toLatitude = rs.getDouble("ToLatitude");
 				double toLongitude = rs.getDouble("ToLongitude");
 				boolean type = rs.getBoolean("Type");
+				boolean validation = rs.getBoolean("Validation");
 				WantToGo want = new WantToGo(fromLongitude, fromLatitude,
-						toLongitude, toLatitude, type, ID, userID, title);
+						toLongitude, toLatitude, type, ID, userID, title,validation);
 				wanttogos.add(want);
 			}
 			base.CloseConnection();
@@ -65,8 +66,9 @@ public class WantToGoParseInfo extends ParseInfo {
 				double toLatitude = rs.getDouble("ToLatitude");
 				double toLongitude = rs.getDouble("ToLongitude");
 				boolean type = rs.getBoolean("Type");
+				boolean validation = rs.getBoolean("Validation");
 				want = new WantToGo(fromLongitude, fromLatitude, toLongitude,
-						toLatitude, type, ID, userID, title);
+						toLatitude, type, ID, userID, title,validation);
 				base.CloseConnection();
 			}
 		} catch (SQLException e) {

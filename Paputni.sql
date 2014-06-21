@@ -100,6 +100,7 @@ create table WantToGo(
 	ToLongitude double,
 	ToLatitude double,
 	Type boolean,
+	Validation boolean,
 	constraint foreign key (UserID) references Users(ID)
 );
 

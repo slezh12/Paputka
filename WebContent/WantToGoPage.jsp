@@ -158,11 +158,11 @@
 			var dD;
     		var map;    		
             var waypts = [];
-            var optimal;
-            var current;
-            var a = new google.maps.LatLng(<%=want.getFromLatitude() %>,<%= want.getFromLongitude()%>);
-            var b = new google.maps.LatLng(<%=want.getToLatitude()%>,<%=want.getToLongitude() %>);
+            var optimal = 0;
+            var current = 0;
     		function initialize() {
+    			var a = new google.maps.LatLng(<%=want.getFromLatitude() %>,<%= want.getFromLongitude()%>);
+                var b = new google.maps.LatLng(<%=want.getToLatitude()%>,<%=want.getToLongitude() %>);
                 waypts.push({
                     location:a,
                     stopover:true
@@ -198,28 +198,38 @@
                 	origin: start,
               	    destination: end,
               	  	waypoints: waypts,
-              	    travelMode: google.maps.TravelMode.DRIVING      
+              	    travelMode: google.maps.TravelMode.DRIVING ,   
+              	  	unitSystem: google.maps.UnitSystem.METRIC
                 };
+                var summaryPanel = document.getElementById("demo");
+  	      		summaryPanel.innerHTML='';
                 directionsService.route(request, function(response, status) {
           	    	if (status == google.maps.DirectionsStatus.OK) {
           	      		directionsDisplay.setDirections(response);
-          	      		var route = response.routes[0];
-          	      		var distance = route.distance.text;
-          	      		document.getElementById("demo").innerHTML = "Paragraph changed.";
-          	    } 
-      	  	});   
+          	      		var route = response.routes[0];          	      		
+          	      		for (var i = 0; i < route.legs.length; i++) {
+                        	current+=route.legs[i].distance.value;                       
+                   		}
+          	      		summaryPanel.innerHTML+=current;
+          	      	summaryPanel.innerHTML+=' ';
+          	    	} 
+      	  		});   
                 request = {
                     	origin: start,
                   	    destination: end,
                   	    travelMode: google.maps.TravelMode.DRIVING      
-                    };
+                };
                 directionsService.route(request, function(response, status) {
           	    	if (status == google.maps.DirectionsStatus.OK) {
           	      		dD.setDirections(response);
           	      		var route = response.routes[0];
-          	      		var distance = route.distance;
-          	    } 
-      	  	});   
+          	      		for (var i = 0; i < route.legs.length; i++) {
+                        	optimal+=route.legs[i].distance.value;                     
+                   		}
+          	      		summaryPanel.innerHTML+=optimal*1.15;
+          	    	} 
+      	  		});
+                
           	  
           	} 
                 
