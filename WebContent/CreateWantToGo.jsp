@@ -266,55 +266,152 @@
 <script
 	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
 <script>
-	var map;
-	var check;
-	var fromLongitude;
-	var fromLatitude;
-	var toLongitude;
-	var toLatitude;
-	function initialize() {
-		check = 0;
-		var mapProp = {
-			center : new google.maps.LatLng(42.347485, 43.7),
-			zoom : 7,
-			mapTypeId : google.maps.MapTypeId.ROADMAP
-		};
-		map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-		google.maps.event.addListener(map, 'click', function(event) {
-			placeMarker(event.latLng);
+var map;
+var check;
+var fromLongitude;
+var fromLatitude;
+var toLongitude;
+var toLatitude;
+var geocoder;
+
+function initialize() {
+	check = 0;
+	geocoder = new google.maps.Geocoder();
+	var mapProp = {
+		center : new google.maps.LatLng(42.347485, 43.7),
+		zoom : 7,
+		mapTypeId : google.maps.MapTypeId.ROADMAP
+	};
+	map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+	google.maps.event.addListener(map, 'click', function(event) {
+		placeMarker(event.latLng);
+	});
+}
+
+function placeMarker(location) {
+	check++;
+	if (check == 1) {
+		var marker = new google.maps.Marker({
+			position : location,
+			map : map,
+			draggable : true,
+			icon :'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
 		});
+		
+
+		fromLongitude = location.lng();
+		document.getElementById("hiddenField1").value=fromLongitude;
+		fromLatitude = location.lat();
+		document.getElementById("hiddenField2").value=fromLatitude;
+		var infowindow = new google.maps.InfoWindow({
+			content : 'საწყისი პუნქტი'
+		});
+		infowindow.open(map, marker);
+		google.maps.event.addListener(marker, 'dragend', function() 
+				{
+				    SavePosition(marker.getPosition(),1);
+				});
+	} else if (check == 2) {
+		var marker = new google.maps.Marker({
+			position : location,
+			map : map,
+			draggable : true,
+			icon :'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+		});
+		
+
+		toLongitude = location.lng();
+		document.getElementById("hiddenField3").value=toLongitude;
+		toLatitude = location.lat();
+		document.getElementById("hiddenField4").value=toLatitude;
+		var infowindow = new google.maps.InfoWindow({
+			content : 'საბოლოო პუნქტი'
+		});
+		infowindow.open(map, marker);
+		google.maps.event.addListener(marker, 'dragend', function() 
+				{
+				    SavePosition(marker.getPosition(),2);
+				});
 	}
-	function placeMarker(location) {
-		check++;
-		if (check == 1) {
-			var marker = new google.maps.Marker({
-				position : location,
-				map : map,
-			});
-			fromLongitude = location.lng();
+}
+
+function codeAddress() {
+	 if(check<2){
+	  var address = document.getElementById('address').value;
+	  geocoder.geocode( { 'address': address}, function(results, status) {
+	    if (status == google.maps.GeocoderStatus.OK) {
+	      map.setCenter(results[0].geometry.location);
+	      if(check == 0){
+	    	fromLongitude = results[0].geometry.location.lng();
 			document.getElementById("hiddenField1").value=fromLongitude;
-			fromLatitude = location.lat();
+			fromLatitude = results[0].geometry.location.lat();
 			document.getElementById("hiddenField2").value=fromLatitude;
-			var infowindow = new google.maps.InfoWindow({
+	      var marker = new google.maps.Marker({
+	          map: map,
+	          position: results[0].geometry.location,
+			  draggable : true,
+
+	          icon :'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+	          
+	      });
+	     
+
+	      var infowindow = new google.maps.InfoWindow({
 				content : 'საწყისი პუნქტი'
 			});
 			infowindow.open(map, marker);
-		} else if (check == 2) {
-			var marker = new google.maps.Marker({
-				position : location,
-				map : map,
-			});
-			toLongitude = location.lng();
+			 google.maps.event.addListener(marker, 'dragend', function() 
+		    		  {
+		    		      SavePosition(marker.getPosition(),1);
+		    		  });
+	      } else {
+	    	var marker = new google.maps.Marker({
+		          map: map,
+				  draggable : true,
+
+		          position: results[0].geometry.location,
+		          icon :'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+		    });
+	    
+
+	    	toLongitude = results[0].geometry.location.lng();
 			document.getElementById("hiddenField3").value=toLongitude;
-			toLatitude = location.lat();
+			toLatitude = results[0].geometry.location.lat();
 			document.getElementById("hiddenField4").value=toLatitude;
-			var infowindow = new google.maps.InfoWindow({
+	    	var infowindow = new google.maps.InfoWindow({
 				content : 'საბოლოო პუნქტი'
 			});
 			infowindow.open(map, marker);
-		}
+			google.maps.event.addListener(marker, 'dragend', function() 
+	    			{
+	    			    SavePosition(marker.getPosition(),2);
+	    			});
+	      }
+	      check++;
+	    } else {
+	      alert('თქვენს მიერ მითითებული ადგილი არ მოიძებნა. გთხოვთ რუქაზე მონიშნოთ ან შეიყვანოთ სხვა პუნქტი');
+	    }
+	  });
+	} else {
+		alert('თქვენ უკვე შეყვანილი გყავთ საწყისი და საბოლოო პუნქტები');
 	}
-	google.maps.event.addDomListener(window, 'load', initialize);
+}
+
+function SavePosition(pos, inti) 
+{
+	if(inti == 1){
+		fromLongitude = pos.lng();
+		document.getElementById("hiddenField1").value=fromLongitude;
+		fromLatitude = pos.lat();
+		document.getElementById("hiddenField2").value=fromLatitude;
+	} else {
+		toLongitude =pos.lng();
+		document.getElementById("hiddenField3").value=toLongitude;
+		toLatitude = pos.lat();
+		document.getElementById("hiddenField4").value=toLatitude;
+	}
+}
+google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 </head>
 <body>
@@ -323,7 +420,9 @@
 			</html>
 			<div class="line"></div>
 			<div id="footer">
-				<h2 style="color:#8693EE"><strong>აირჩიეთ მარშრუტის საწყისი და საბოლოო პუნქტები</strong></h2>	
+				<H2 style="color:#8693EE">აირჩიეთ მარშრუტის საწყისი და საბოლოო პუნქტები. ან შეიყვანეთ მათი დასახელებები (ქართულად)</H2>
+ 				<input id="address" type="textbox" value="">
+				 <input type="button" value="შეიყვანეთ პუნქტი" onclick="codeAddress()">
 			</div>
 			<!-- End Content -->
 		</div>
