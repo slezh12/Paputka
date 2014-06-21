@@ -38,13 +38,14 @@
 			<!-- Begin Menu -->
 			<%
 				User user = (User) session.getAttribute("user");
-									String name = user.getFirstName();
-									String lastname = user.getLastName();
-									int userID = user.getID();
-									BasicDataSource source = (BasicDataSource) application
-											.getAttribute("connectionPool");
-									WantToGoParseInfo parse = new WantToGoParseInfo(source);
-									ArrayList<WantToGo> list = parse.getWantToGos(userID);
+				String name = user.getFirstName();
+				String lastname = user.getLastName();
+				int userID = user.getID();
+				BasicDataSource source = (BasicDataSource) application
+					.getAttribute("connectionPool");
+				WantToGoParseInfo parse = new WantToGoParseInfo(source);
+				ArrayList<WantToGo> list = parse.getWantToGos(userID);
+				EventParseInfo parseEvent = new EventParseInfo(source);					
 			%>
 			<h3 id="welcomeUser">
 				Welcome,
@@ -73,32 +74,146 @@
 			<div class="line"></div>
 			<%
 				if(list.size() == 0){
-									EventParseInfo parseEvent = new EventParseInfo(source);
-									ArrayList<Event> listOfEvents = parseEvent.getLastEvents();
-									for(int i = 0; i < listOfEvents.size(); i++){
-										Event temp = listOfEvents.get(i);
-										Route rout = temp.getRoute();
-										int eventID = temp.getID();
-										String from = rout.getFromPlace();
-										String to = rout.getToPlace();
-										int eventOwnerID = temp.getUserID();
-										UserParseInfo userParse = new UserParseInfo(source);
-										User postOwner = userParse.getUserByID(eventOwnerID);
+					ArrayList<Event> listOfEvents = parseEvent.getLastEvents();
+					for(int i = 0; i < listOfEvents.size(); i++){
+						Event temp = listOfEvents.get(i);
+						Route rout = temp.getRoute();
+						int eventID = temp.getID();
+						String from = rout.getFromPlace();
+						String to = rout.getToPlace();
+						int eventOwnerID = temp.getUserID();
+						UserParseInfo userParse = new UserParseInfo(source);
+						User postOwner = userParse.getUserByID(eventOwnerID);				
 			%>
 			<div id="column">
 				<ul id="latestnews">
-					<strong><a style="font-size:17px; "href="Event.jsp?id=<%=eventID%>"><%= from%> <i class="fa fa-arrow-right fa-spin"></i><%="  " +  to%></a></strong>
+					<strong><a style="font-size:17px; "href="Event.jsp?id=<%=eventID%>"><%= from+" "%> <i class="fa fa-arrow-right fa-spin"></i><%=" " +  to%></a></strong>
 					<strong><a href="Profile.jsp?id=<%=eventOwnerID%>"><h4><%=postOwner.getFirstName()+" "%><%=postOwner.getLastName()%></h4></a></strong>
 				</ul>
 			</div>
 			<div class="line"></div>
 
 			<%
+					}
+				} else {
+					for(int i = 0; i < list.size(); i++){
+						WantToGo want = list.get(i);
+						if (want.getValidation()) { %>
+						<script
+			    src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
+						<script>
+						var directionsDisplay;
+						var directionsService = new google.maps.DirectionsService();
+						var dD;
+			    		var map;    		
+			            var waypts = [];
+			            var optimal = 0;
+			            var current = 0;
+			    		function initialize() {
+			    			var a = new google.maps.LatLng(<%=want.getFromLatitude() %>,<%= want.getFromLongitude()%>);
+			                var b = new google.maps.LatLng(<%=want.getToLatitude()%>,<%=want.getToLongitude() %>);
+			                waypts.push({
+			                    location:a,
+			                    stopover:true
+			                });
+			                waypts.push({
+			                    location:b,
+			                    stopover:true
+			                });
+			    			directionsDisplay = new google.maps.DirectionsRenderer();
+			    			dD = new google.maps.DirectionsRenderer();
+			        		var mapProp = {
+			        	            center : new google.maps.LatLng(42.347485, 43.7),
+			        	            zoom : 7,
+			        	            mapTypeId : google.maps.MapTypeId.ROADMAP
+			        	    };
+			        		map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+			        		directionsDisplay.setMap(map);
+			        		dD.setMap(map);
+			        		calcRoute();
+			        	}
+			    		
+			            <%			            
+			            ArrayList<Event> arr = parseEvent.getEventsForSearch(want);
+			            for(int j = 0; j<arr.size(); j++) {
+			            	Event e = arr.get(j);
+			            	if (e.getValidation()) {
+			                	Route r = e.getRoute();  
+			                	String p1 = r.getFromPlace();
+			                	String p2 = r.getToPlace();
+			                	int eventOwnerID = e.getUserID();
+								UserParseInfo userParse = new UserParseInfo(source);
+								User postOwner = userParse.getUserByID(eventOwnerID);
+			            %>
+			            </script>
+			            <div id="div<%=j %>">
+			            <strong>
+			            <a id="link<%=j %>" href="http://www.microsoft.com"><%=p1%> <i class="fa fa-arrow-right fa-spin"></i> <%=p2%></a>
+			            </strong>
+			            <strong>
+			            <a href="Profile.jsp?id=<%=eventOwnerID%>"><h4><%=postOwner.getFirstName()+" "%>
+			            <%=postOwner.getLastName()%></h4></a>
+			            </strong>
+			            <div class="line"></div>
+			            </div>
+			            <script>
+			            var start = new google.maps.LatLng(<%=r.getFromLatitude() %>,<%= r.getFromLongitude()%>);
+			            var end = new google.maps.LatLng(<%=r.getToLatitude()%>,<%=r.getToLongitude() %>);
+			            function calcRoute() {
+			                var request = {
+			                	origin: start,
+			              	    destination: end,
+			              	  	waypoints: waypts,
+			              	    travelMode: google.maps.TravelMode.DRIVING ,   
+			              	  	unitSystem: google.maps.UnitSystem.METRIC
+			                };
+			                directionsService.route(request, function(response, status) {
+			          	    	if (status == google.maps.DirectionsStatus.OK) {
+			          	      		directionsDisplay.setDirections(response);
+			          	      		var route = response.routes[0];          	      		
+			          	      		for (var i = 0; i < route.legs.length; i++) {
+			                        	current+=route.legs[i].distance.value;                       
+			                   		}
+			          	    	} 
+			      	  		});   
+			                request = {
+			                    	origin: start,
+			                  	    destination: end,
+			                  	    travelMode: google.maps.TravelMode.DRIVING      
+			                };
+			                directionsService.route(request, function(response, status) {
+			          	    	if (status == google.maps.DirectionsStatus.OK) {
+			          	      		dD.setDirections(response);
+			          	      		var route = response.routes[0];
+			          	      		for (var i = 0; i < route.legs.length; i++) {
+			                        	optimal+=route.legs[i].distance.value;                     
+			                   		}
+			          	    	} 
+			      	  		});
+			                if (current <= optimal*1.15) {
+			                	var summaryPanel = document.getElementById("link"+<%=j %>);
+			                	summaryPanel.href="Event.jsp?id="+<%=e.getID()%>;
+			                } else {
+			                	var summaryPanel = document.getElementById("div"+<%=j %>);
+			                	summaryPanel.innerHTML='';
+			                }
+			          	} 
+			                
+			            <%
+			            	} 
+			            }
+			            %>
+			        
+			            google.maps.event.addDomListener(window, 'load', initialize);
+						</script>
+			<%			
+						}	
+					}
 				}
-								}
 			%>
 			<!-- End Content -->
 		</div>
+		<div id="googleMap" ></div>
 	</div>
 	<script type="text/javascript">
 		$(function() {

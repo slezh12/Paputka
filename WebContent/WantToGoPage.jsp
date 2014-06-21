@@ -150,6 +150,7 @@
 		<!-- Begin Content -->
 		<div id="content">
 			<h2>ძებნის შედეგები</h2>
+			<div class="line"></div>
 			<%if (want.getValidation()) { %>
 			<script
     src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
@@ -159,8 +160,6 @@
 			var dD;
     		var map;    		
             var waypts = [];
-            var optimal = 0;
-            var current = 0;
     		function initialize() {
     			var a = new google.maps.LatLng(<%=want.getFromLatitude() %>,<%= want.getFromLongitude()%>);
                 var b = new google.maps.LatLng(<%=want.getToLatitude()%>,<%=want.getToLongitude() %>);
@@ -182,31 +181,31 @@
         		map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
         		directionsDisplay.setMap(map);
         		dD.setMap(map);
-        		calcRoute();
         	}
     		
             <%
             EventParseInfo ep = new EventParseInfo(source);
             ArrayList<Event> arr = ep.getEventsForSearch(want);
-            ArrayList<Event> toShow = new ArrayList<Event>(); 
             for(int i = 0; i<arr.size(); i++) {
             	Event e = arr.get(i);
-                Route r = e.getRoute();  
-                String p1 = r.getFromPlace();
-                String p2 = r.getToPlace();
+            	if (e.getValidation()) {
+                	Route r = e.getRoute();  
+                	String p1 = r.getFromPlace();
+                	String p2 = r.getToPlace();
             %>
             </script>
             <div id="div<%=i %>">
-            <div class="line"></div>
             <strong>
-            <a id="link<%=i %>" href="http://www.microsoft.com"><%=p1%> -----> <%=p2%></a>
+            <a id="link<%=i %>" href="http://www.microsoft.com"><%=p1%> <i class="fa fa-arrow-right fa-spin"></i> <%=p2%></a>
             </strong>
             <div class="line"></div>
             </div>
-            <script>
-            var start = new google.maps.LatLng(<%=r.getFromLatitude() %>,<%= r.getFromLongitude()%>);
-            var end = new google.maps.LatLng(<%=r.getToLatitude()%>,<%=r.getToLongitude() %>);
+            <script>           
             function calcRoute() {
+            	var optimal = 0;
+                var current = 0;
+                var start = new google.maps.LatLng(<%=r.getFromLatitude() %>,<%= r.getFromLongitude()%>);
+                var end = new google.maps.LatLng(<%=r.getToLatitude()%>,<%=r.getToLongitude() %>);
                 var request = {
                 	origin: start,
               	    destination: end,
@@ -245,12 +244,18 @@
                 	summaryPanel.innerHTML='';
                 }
           	} 
+            calcRoute();
                 
-            <%} %>
+            <%
+            			} 
+            	}
+            %>
         
             google.maps.event.addDomListener(window, 'load', initialize);
-</script>
-<%} %>
+			</script>
+<%				
+			}
+%>
 			
 			<div id="googleMap" ></div>
 
