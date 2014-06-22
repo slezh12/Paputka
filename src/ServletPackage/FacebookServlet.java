@@ -71,7 +71,7 @@ public class FacebookServlet extends HttpServlet {
 		DataSource source = (DataSource) context.getAttribute("connectionPool");
 		UserParseInfo info = new UserParseInfo((BasicDataSource) source);
 		RequestDispatcher dispatch;
-		if (mail == null) {
+		if (mail == null || mail.equals("undefined")) {
 			PrintWriter out = response.getWriter();
 			out.println("<script type=\"text/javascript\">");
 			out.println("alert('Your Facebook Mail is not confirmed. Please first confirm your Facebook mail and than register!');");
