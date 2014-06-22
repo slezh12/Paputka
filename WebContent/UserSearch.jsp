@@ -46,16 +46,31 @@
 		<!-- End Sidebar -->
 		<!-- Begin Content -->
 		<div id="content">
-			<h2 style="color: #8693EE">
-				<strong>ძებნის შედეგები</strong>
-			</h2>
-			<div class="line"></div>
 			<%
 				String firstName = request.getParameter("search");
 				BasicDataSource source = (BasicDataSource) application
 						.getAttribute("connectionPool");
 				UserParseInfo parse = new UserParseInfo(source);
 				ArrayList<User> list = parse.getUsersBySearch(firstName);
+				if (list.size() == 0) {
+			%>
+			<h2 style="color: #8693EE">
+				<strong>მსგავსი სახელით მომხმარებელი არ არის
+					დარეგისტრირებული</strong>
+			</h2>
+			<%
+				} else {
+			%>
+			<h2 style="color: #8693EE">
+				<strong>ძებნის შედეგები</strong>
+			</h2>
+			<%
+				}
+			%>
+
+			<div class="line"></div>
+
+			<%
 				for (int i = 0; i < list.size(); i++) {
 					User temp = list.get(i);
 					String lastName = temp.getLastName();
