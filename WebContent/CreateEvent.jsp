@@ -241,6 +241,8 @@
 <script
 	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
 <script>
+	var directionsDisplay;
+	var directionsService = new google.maps.DirectionsService();
 	var map;
 	var check;
 	var fromLongitude;
@@ -248,10 +250,13 @@
 	var toLongitude;
 	var toLatitude;
 	var geocoder;
+	var start;
+	var end;
 	
 	function initialize() {
 		check = 0;
 		geocoder = new google.maps.Geocoder();
+		directionsDisplay = new google.maps.DirectionsRenderer();
 		var mapProp = {
 			center : new google.maps.LatLng(42.347485, 43.7),
 			zoom : 7,
@@ -261,18 +266,19 @@
 		google.maps.event.addListener(map, 'click', function(event) {
 			placeMarker(event.latLng);
 		});
+		directionsDisplay.setMap(map);
 	}
 
 	function placeMarker(location) {
 		check++;
-		if (check == 1) {
+		if (check == 1) {			
 			var marker = new google.maps.Marker({
 				position : location,
 				map : map,
 				draggable : true,
 				icon :'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
 			});
-			
+			start = marker;
 
 			fromLongitude = location.lng();
 			document.getElementById("hiddenField1").value=fromLongitude;
@@ -287,6 +293,7 @@
 					    SavePosition(marker.getPosition(),1);
 					});
 		} else if (check == 2) {
+			end = location;
 			var marker = new google.maps.Marker({
 				position : location,
 				map : map,

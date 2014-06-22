@@ -127,8 +127,7 @@
 			        	    };
 			        		map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 			        		directionsDisplay.setMap(map);
-			        		dD.setMap(map);
-			        		calcRoute();
+			        		dD.setMap(map);			        		
 			        	}
 			    		
 			            <%			            
@@ -142,12 +141,12 @@
 			                	int eventOwnerID = e.getUserID();
 								UserParseInfo userParse = new UserParseInfo(source);
 								User postOwner = userParse.getUserByID(eventOwnerID);
-			            %>			            
-			            var start = new google.maps.LatLng(<%=r.getFromLatitude() %>,<%= r.getFromLongitude()%>);
-			            var end = new google.maps.LatLng(<%=r.getToLatitude()%>,<%=r.getToLongitude() %>);
-			            function calcRoute() {
+			            %>			            			            
+			            function calcRoute<%=j %>() {
 			            	var optimal = 0;
 				            var current = 0;
+				            var start = new google.maps.LatLng(<%=r.getFromLatitude() %>,<%= r.getFromLongitude()%>);
+				            var end = new google.maps.LatLng(<%=r.getToLatitude()%>,<%=r.getToLongitude() %>);
 			                var request = {
 			                	origin: start,
 			              	    destination: end,
@@ -176,9 +175,9 @@
 			          	      		for (var i = 0; i < route.legs.length; i++) {
 			                        	optimal+=route.legs[i].distance.value;                     
 			                   		}
-			          	      		if (current <= optimal*1.15) {
-				                		var summaryPanel = document.getElementById("link"+<%=j %>);
-				                		summaryPanel.href="Event.jsp?id="+<%=e.getID()%>;
+			          	      		if (current < optimal*1.15) {			          	      		
+				                		var summaryPanel = document.getElementById("div<%=j %>");
+summaryPanel.innerHTML='<strong><a id="link<%=j %>" href="Event.jsp?id=<%=e.getID()%>"><%=p1%> <i class="fa fa-arrow-right fa-spin"></i> <%=p2%></a></strong><strong><a href="Profile.jsp?id=<%=eventOwnerID%>"><h4><%=postOwner.getFirstName()+" "%><%=postOwner.getLastName()%></h4></a></strong><div class="line"></div>';
 				                	} else {
 				                		var summaryPanel = document.getElementById("div"+<%=j %>);
 				                		summaryPanel.innerHTML='';
@@ -189,17 +188,9 @@
 			          	} 
 			            </script>
 			            <div id="div<%=j %>">
-			            <strong>
-			            <a id="link<%=j %>" href="http://www.microsoft.com"><%=p1%> <i class="fa fa-arrow-right fa-spin"></i> <%=p2%></a>
-			            </strong>
-			            <strong>
-			            <a href="Profile.jsp?id=<%=eventOwnerID%>"><h4><%=postOwner.getFirstName()+" "%>
-			            <%=postOwner.getLastName()%></h4></a>
-			            </strong>
-			            <div class="line"></div>
 			            </div>
 			            <script>
-			                
+			            calcRoute<%=j %>();
 			            <%
 			            	} 
 			            }

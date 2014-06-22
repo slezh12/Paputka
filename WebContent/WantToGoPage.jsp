@@ -229,13 +229,12 @@
           	      		for (var i = 0; i < route.legs.length; i++) {
                         	optimal+=route.legs[i].distance.value;                         	
                    		}
-          	      		optimal = optimal*1.15;            	      		
-                    	if (current < optimal) {
-                    		console.log('<%=p1%>');
-              	      		console.log('current'+current);
-              	      		console.log('optimal'+optimal);
-                    		arr[arr.length]=<%= e.getID()%>;
-                    		summaryPanel = document.getElementById("div"+<%=i %>);
+          	      		optimal = optimal*1.15; 
+          	      	console.log('<%=p1%>');
+      	      		console.log('current'+current);
+      	      		console.log('optimal'+optimal);
+                    	if (current < optimal) {                    		
+                       		summaryPanel = document.getElementById("div"+<%=i %>);
                     summaryPanel.innerHTML= '<strong> <a id="link<%=i %>" href="Event.jsp?id=<%=e.getID()%>"><%=p1%> <i class="fa fa-arrow-right fa-spin"></i> <%=p2%></a></strong><div class="line"></div></div>';
                     	} else {
                     		summaryPanel = document.getElementById("div"+<%=i %>);
