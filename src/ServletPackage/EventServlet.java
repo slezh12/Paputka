@@ -46,6 +46,7 @@ public class EventServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		String fromPlace = request.getParameter("from");
 		String toPlace = request.getParameter("to");
 		String feeString =(String) request.getParameter("fee");
