@@ -29,6 +29,7 @@
 
 <script type="text/javascript">
 	function CheckAlerts() {
+		calcRoute();
 		if (check != 2) {
 			alert("მონიშნეთ ორი წერტილი რუკაზე");
 			return false;
@@ -250,8 +251,6 @@
 	var toLongitude;
 	var toLatitude;
 	var geocoder;
-	var start;
-	var end;
 	
 	function initialize() {
 		check = 0;
@@ -268,6 +267,25 @@
 		});
 		directionsDisplay.setMap(map);
 	}
+	
+	function calcRoute() {
+		var fLong = document.getElementById("hiddenField1").value;
+		var fLat = document.getElementById("hiddenField2").value;
+		var tLong = document.getElementById("hiddenField3").value;
+		var tLat = document.getElementById("hiddenField4").value;
+		var start = new google.maps.LatLng(fLat,fLong);
+		var end = new google.maps.LatLng(tLat,tLong);
+		var request = {
+				origin: start,
+          	    destination: end,          	  	
+          	    travelMode: google.maps.TravelMode.DRIVING 	   
+        };                
+		directionsService.route(request, function(response, status) {
+  	    	if (status != google.maps.DirectionsStatus.OK) {
+  	      		alert("მოცემულ ორ პუნქტს შორის საავტომობილო გზა არ არსებობს.");          	      	
+  	    	} 
+	  	});    
+	}
 
 	function placeMarker(location) {
 		check++;
@@ -278,7 +296,6 @@
 				draggable : true,
 				icon :'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
 			});
-			start = marker;
 
 			fromLongitude = location.lng();
 			document.getElementById("hiddenField1").value=fromLongitude;
@@ -293,7 +310,6 @@
 					    SavePosition(marker.getPosition(),1);
 					});
 		} else if (check == 2) {
-			end = location;
 			var marker = new google.maps.Marker({
 				position : location,
 				map : map,

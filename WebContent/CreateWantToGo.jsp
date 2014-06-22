@@ -31,6 +31,7 @@
 
 <script type="text/javascript">
 	function CheckAlerts() {
+		calcRoute();
 		if (check != 2) {
 			alert("მონიშნეთ ორი წერტილი რუკაზე");
 			return false;
@@ -266,6 +267,8 @@
 <script
 	src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
 <script>
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService();
 var map;
 var check;
 var fromLongitude;
@@ -277,6 +280,7 @@ var geocoder;
 function initialize() {
 	check = 0;
 	geocoder = new google.maps.Geocoder();
+	directionsDisplay = new google.maps.DirectionsRenderer();
 	var mapProp = {
 		center : new google.maps.LatLng(42.347485, 43.7),
 		zoom : 7,
@@ -286,6 +290,26 @@ function initialize() {
 	google.maps.event.addListener(map, 'click', function(event) {
 		placeMarker(event.latLng);
 	});
+	directionsDisplay.setMap(map);
+}
+
+function calcRoute() {
+	var fLong = document.getElementById("hiddenField1").value;
+	var fLat = document.getElementById("hiddenField2").value;
+	var tLong = document.getElementById("hiddenField3").value;
+	var tLat = document.getElementById("hiddenField4").value;
+	var start = new google.maps.LatLng(fLat,fLong);
+	var end = new google.maps.LatLng(tLat,tLong);
+	var request = {
+			origin: start,
+      	    destination: end,          	  	
+      	    travelMode: google.maps.TravelMode.DRIVING 	   
+    };                
+	directionsService.route(request, function(response, status) {
+	    	if (status != google.maps.DirectionsStatus.OK) {
+	      		alert("მოცემულ ორ პუნქტს შორის საავტომობილო გზა არ არსებობს.");          	      	
+	    	} 
+  	});    
 }
 
 function placeMarker(location) {
