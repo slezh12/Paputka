@@ -188,7 +188,6 @@
             <%
             EventParseInfo ep = new EventParseInfo(source);
             ArrayList<Event> arr = ep.getEventsForSearch(want);
-            ArrayList<Event> toshow = new ArrayList<Event>();
             for(int i = 0; i<arr.size(); i++) {
             	Event e = arr.get(i);
             	if (e.getValidation()) {
@@ -196,7 +195,7 @@
                 	String p1 = r.getFromPlace();
                 	String p2 = r.getToPlace();
             %>           
-            function calcRoute() {
+            function calcRoute<%=i %>(){
             	var optimal = 0;
                 var current = 0;
                 var start = new google.maps.LatLng(<%=r.getFromLatitude() %>,<%= r.getFromLongitude()%>);
@@ -207,16 +206,16 @@
               	  	waypoints: waypts,
               	    travelMode: google.maps.TravelMode.DRIVING ,   
               	  	unitSystem: google.maps.UnitSystem.METRIC
-                };
+                };                
                 directionsService.route(request, function(response, status) {
           	    	if (status == google.maps.DirectionsStatus.OK) {
           	      		directionsDisplay.setDirections(response);
           	      		var route = response.routes[0];          	      		
           	      		for (var i = 0; i < route.legs.length; i++) {
-                        	current+=route.legs[i].distance.value;                       
-                   		}
+                        	current+=route.legs[i].distance.value;                         	
+                   		}            	      	
           	    	} 
-      	  		});   
+      	  		});               
                 request = {
                     	origin: start,
                   	    destination: end,
@@ -230,29 +229,28 @@
           	      		for (var i = 0; i < route.legs.length; i++) {
                         	optimal+=route.legs[i].distance.value;                         	
                    		}
-          	      		optimal = optimal*1.15;          	      		
+          	      		optimal = optimal*1.15;            	      		
                     	if (current < optimal) {
+                    		console.log('<%=p1%>');
+              	      		console.log('current'+current);
+              	      		console.log('optimal'+optimal);
                     		arr[arr.length]=<%= e.getID()%>;
-                    		document.getElementById("y").innerHTML=arr[0];
-                    		summaryPanel = document.getElementById("link"+<%=i %>);
-                    		summaryPanel.href="Event.jsp?id="+<%=e.getID()%>;
+                    		summaryPanel = document.getElementById("div"+<%=i %>);
+                    summaryPanel.innerHTML= '<strong> <a id="link<%=i %>" href="Event.jsp?id=<%=e.getID()%>"><%=p1%> <i class="fa fa-arrow-right fa-spin"></i> <%=p2%></a></strong><div class="line"></div></div>';
                     	} else {
                     		summaryPanel = document.getElementById("div"+<%=i %>);
                     		summaryPanel.innerHTML='';
                     	}
+                    	
           	    	} 
       	  		});
                 
           	}
             </script>
             <div id="div<%=i %>">
-            <strong>
-            <a id="link<%=i %>" href="http://www.microsoft.com"><%=p1%> <i class="fa fa-arrow-right fa-spin"></i> <%=p2%></a>
-            </strong>
-            <div class="line"></div>
             </div>
             <script>
-            calcRoute();
+            calcRoute<%=i %>();
                 
             <%
             			} 
@@ -264,8 +262,7 @@
 <%				
 			}
 %>
-			<div id="googleMap"></div>
-			<div id="y"></div>
+			<div id="googleMap" ></div>
 
 			<!-- End Content -->
 		</div>
