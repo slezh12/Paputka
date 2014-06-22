@@ -103,13 +103,13 @@
           <%} %>
           <%
           if((Currentuser.getID()==e.getUserID()) && e.getValidation()){
-          %>          		
-          <li>
+          %>       
+          <li>   		
           		<form id="validation" action="ValidationServlet" method="post">
 				<input type="submit" name="btn" class="login" value="გაუქმება" ></input>
 				<input type="hidden" name="eventID" value="<%=EventID%>" ></input>
 				</form>
-          </li>
+				</li>
           <%} %>
         </ul>
       </div>
@@ -188,6 +188,7 @@
       <%} %>
       <h3>გადასახადი : <%= e.getPrice() %></h3>
       <h3>ადგილების რაოდენობა : <%= e.getPlaces() %></h3>
+      <h3>თავისუფალი ადგილების რაოდენობა : <%= e.getPlaces()-ev.getParticipantsByEventID(EventID) %></h3>
       <h3>მძღოლი : <a href="Profile.jsp?id=<%= u.getID()%>"><%= u.getFirstName()+ " " + u.getLastName() %></a></h3>
       <h3><%= r.getFromPlace() + " - " + r.getToPlace() %></h3>
       <%if(e.getType()){ %>
@@ -235,7 +236,7 @@
         <li>
         <H2>კომენტარის დამატება</H2>				
 					<form action="CommentServlet" method="post" id="registerform" name="registerform">
-						<h4>კომენტარის სიგრძე არ უნდა აღემატებოდეს 400 სიმბოლოს</h4>
+						<h4>კო	მენტარის სიგრძე არ უნდა აღემატებოდეს 400 სიმბოლოს</h4>
 						<textarea style="resize:none;" class="textfield" rows="3" placeholder="გთხოვთ შეიყვანოთ ტექსტი" name="comment" tabindex="1"></textarea>
 						<br>
 						<p>
