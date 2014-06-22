@@ -160,6 +160,8 @@
 			var dD;
     		var map;    		
             var waypts = [];
+            var arr = [];
+            var summaryPanel;
     		function initialize() {
     			var a = new google.maps.LatLng(<%=want.getFromLatitude() %>,<%= want.getFromLongitude()%>);
                 var b = new google.maps.LatLng(<%=want.getToLatitude()%>,<%=want.getToLongitude() %>);
@@ -186,6 +188,7 @@
             <%
             EventParseInfo ep = new EventParseInfo(source);
             ArrayList<Event> arr = ep.getEventsForSearch(want);
+            ArrayList<Event> toshow = new ArrayList<Event>();
             for(int i = 0; i<arr.size(); i++) {
             	Event e = arr.get(i);
             	if (e.getValidation()) {
@@ -217,7 +220,8 @@
                 request = {
                     	origin: start,
                   	    destination: end,
-                  	    travelMode: google.maps.TravelMode.DRIVING      
+                  	    travelMode: google.maps.TravelMode.DRIVING,  
+                  	  	unitSystem: google.maps.UnitSystem.METRIC
                 };
                 directionsService.route(request, function(response, status) {
           	    	if (status == google.maps.DirectionsStatus.OK) {
@@ -226,12 +230,14 @@
           	      		for (var i = 0; i < route.legs.length; i++) {
                         	optimal+=route.legs[i].distance.value;                         	
                    		}
-          	      		optimal = optimal*1.15;
+          	      		optimal = optimal*1.15;          	      		
                     	if (current < optimal) {
-                    		var summaryPanel = document.getElementById("link"+<%=i %>);
+                    		arr[arr.length]=<%= e.getID()%>;
+                    		document.getElementById("y").innerHTML=arr[0];
+                    		summaryPanel = document.getElementById("link"+<%=i %>);
                     		summaryPanel.href="Event.jsp?id="+<%=e.getID()%>;
                     	} else {
-                    		var summaryPanel = document.getElementById("div"+<%=i %>);
+                    		summaryPanel = document.getElementById("div"+<%=i %>);
                     		summaryPanel.innerHTML='';
                     	}
           	    	} 
@@ -252,14 +258,14 @@
             			} 
             	}
             %>
-        
+            
             google.maps.event.addDomListener(window, 'load', initialize);
 			</script>
 <%				
 			}
 %>
-			<p id=di></p>
 			<div id="googleMap"></div>
+			<div id="y"></div>
 
 			<!-- End Content -->
 		</div>
