@@ -80,7 +80,6 @@ public class UserConnection extends BaseConnection {
 		}
 	}
 
-	
 	public void update(String table, String column, String value, int UserID) {
 		try {
 			stmt.executeUpdate("UPDATE " + table + " Set " + column + " = "
@@ -126,22 +125,23 @@ public class UserConnection extends BaseConnection {
 						+ firstUserID + " and events.UserID = " + secondUserID);
 		return rs;
 	}
-	
-	public ResultSet getRating(int FirstID,int SecondID) throws SQLException {
+
+	public ResultSet getRating(int FirstID, int SecondID) throws SQLException {
 		ResultSet rs = stmt
-				.executeQuery("select * from Ratings where FirstID = "+FirstID+" and SecondID="+SecondID);
+				.executeQuery("select * from Ratings where FirstID = "
+						+ FirstID + " and SecondID=" + SecondID);
 		return rs;
 	}
-	
-	public ResultSet getUsersByName(String firstName){
+
+	public ResultSet getUsersByName(String firstName) {
 		ResultSet rs = null;
 		try {
-			rs = stmt
-					.executeQuery("select * from Users where firstName = " + firstName);
+			rs = stmt.executeQuery("SELECT * FROM Users WHERE FirstName ="
+					+ "'" + firstName + "'");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return rs;
 	}
-	
+
 }
