@@ -92,7 +92,7 @@
 								class="fa fa-arrow-right fa-spin"></i><%="  " + to%></a></strong>
 					</p>
 					<p>
-						<strong><a href="Profile.jsp?id=<%=fromUserID%>"><%=name + " "%><%=lastName%></strong>
+						<strong><a href="Profile.jsp?id=<%=fromUserID%>"><%=name + " "%><%=lastName%></a></strong>
 					</p>
 					<h4>
 						<%=temp.getText()%>
