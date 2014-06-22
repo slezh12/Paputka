@@ -83,7 +83,6 @@
     		}
     	}
     }
-    ev.CloseConnection();
   %>
   <!-- Begin Wrapper -->
   <div id="wrapper">
@@ -93,7 +92,7 @@
         <img src="style/images/logo.png" alt="Paputka" />
       </div>
       <!-- Begin Menu -->
-		<div id="Usermenu" class="menu-v" style="marign-top: 20px;">
+		<div id="menu" class="menu-v" style="marign-top: 20px;">
         <ul>
           <li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
           <%
@@ -101,18 +100,17 @@
         	  %>
           <li><a href="#registermodal" id="modaltrigger">გააგზავნე მოთხოვნა</a></li>
           <%} %>
+          
+      	  </ul>
+      </div>
           <%
           if((Currentuser.getID()==e.getUserID()) && e.getValidation()){
           %>       
-          <li>   		
           		<form id="validation" action="ValidationServlet" method="post">
-				<input type="submit" name="btn" class="login" value="გაუქმება" ></input>
+				<input type="submit" name="btn" style="margin-top:70px; margin-right:30px; width:80px; height:40px;"class="mailnumber" value="გაუქმება" ></input>
 				<input type="hidden" name="eventID" value="<%=EventID%>" ></input>
 				</form>
-				</li>
           <%} %>
-        </ul>
-      </div>
       <!-- End Menu -->
       <!--Begin Login & Registration -->
       <div id="registermodal" style="display: none;">
@@ -182,15 +180,17 @@
       </html>
       <div class="line"></div>
       <%if (e.getValidation()) {%>
-      <h3>მოქმედი მგზავრობა</h3>
+      <h2 style="color:#4D6DC1">მოქმედი მგზავრობა</2>
       <%}else{ %>
-      <h3>გაუქმებული მგზავრობა</h3>
+      <h2 style="color:#4D6DC1">გაუქმებული მგზავრობა</h2>
       <%} %>
       <h3>გადასახადი : <%= e.getPrice() %></h3>
       <h3>ადგილების რაოდენობა : <%= e.getPlaces() %></h3>
       <h3>თავისუფალი ადგილების რაოდენობა : <%= e.getPlaces()-ev.getParticipantsByEventID(EventID) %></h3>
+      <%ev.CloseConnection(); %>
       <h3>მძღოლი : <a href="Profile.jsp?id=<%= u.getID()%>"><%= u.getFirstName()+ " " + u.getLastName() %></a></h3>
-      <h3><%= r.getFromPlace() + " - " + r.getToPlace() %></h3>
+      
+      <h3><%= r.getFromPlace() + " " %><i class="fa fa-arrow-right fa-spin"></i><%=" " + r.getToPlace()%></h3>
       <%if(e.getType()){ %>
        <h3>თარიღი <%= dt %></h3>
      <%} else {
@@ -236,7 +236,7 @@
         <li>
         <H2>კომენტარის დამატება</H2>				
 					<form action="CommentServlet" method="post" id="registerform" name="registerform">
-						<h4>კო	მენტარის სიგრძე არ უნდა აღემატებოდეს 400 სიმბოლოს</h4>
+						<h4>კომენტარის სიგრძე არ უნდა აღემატებოდეს 400 სიმბოლოს</h4>
 						<textarea style="resize:none;" class="textfield" rows="3" placeholder="გთხოვთ შეიყვანოთ ტექსტი" name="comment" tabindex="1"></textarea>
 						<br>
 						<p>
