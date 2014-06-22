@@ -70,12 +70,12 @@
 						<%}%>
 						<div style="float:left;" ><strong style="float:left; color:#6AA86B;"> სტატუსი:</strong>  <%= statuses  %></div>
 					
-					<div style="float:left; margin-top:20px;" >
+					<div style="float:left; margin-left:23px; margin-top:20px; margin-bottom:30px;" >
 					<% 
 					Integer rating = userParse.getRating(userID);
 					if (rating != null) {
 					%>
-					<strong style="float:left ; color:#6AA86B">	მომხმარებლის რეიტინგი:	</strong>				
+					<strong style=" color:#6AA86B">	მომხმარებლის რეიტინგი:	</strong>				
 							<form id="ratingsForm1">
 								<div class="stars">
 									<%
@@ -88,14 +88,16 @@
 								</div>
 							</form>
 						<%} else { %>
-						<strong style="float:left; color:#6AA86B">მომხმარებელს რეიტინგი არ აქვს</strong>
+						<div style="margin-left:0px;">
+						<strong style="left:0px;float:left; color:#6AA86B">მომხარებელი შეუფასებელია</strong>
+						</div>
 						<%}%>
 					</div>
 					<br>
 					<% if (userParse.canRate(userIDGuest, userID)){%>
-						<strong style="float:left; color:#6AA86B">შეაფასეთ მომხმარებელი </strong>
+						<strong style="color:#6AA86B">შეაფასეთ მომხმარებელი </strong>
 							<form id="ratingsForm" action="RatingServlet" method="post">
-								<div class="stars">
+								<div style="width:60%; margin: 0 auto;"class="stars">
 									<input type="radio" name="star" class="star-1" id="star-1" value="1" /> 
 									<label class="star-1" for="star-1"></label>
 					 				<input type="radio" name="star" class="star-2" id="star-2" value="2" />
@@ -108,7 +110,7 @@
 							 		<label class="star-5" for="star-5"></label>   
 									<span></span>
 								</div> 
-								<input type="submit" name="btn" class="login" value="გაგზავნა" ></input>
+								<input type="submit" name="btn" class="mailnumber" value="გაგზავნა" ></input>
 								<input type="hidden" name="userID" value="<%=userID%>" >
 							</form>
 					<%}%>
