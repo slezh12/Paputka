@@ -51,7 +51,9 @@
 
 		<!-- Begin Content -->
 		<div id="content">
-			<h2 style="color:#8693EE"><strong>თხოვნები დასამგზავრებლად</strong></h2>	
+			<h2 style="color: #8693EE">
+				<strong>თხოვნები დასამგზავრებლად</strong>
+			</h2>
 			<div class="line"></div>
 			<%
 				BasicDataSource source = (BasicDataSource) application
@@ -79,53 +81,66 @@
 						User eventOwner = userParse.getUserByID(temp
 								.getFromUserID());
 						String mail = eventOwner.getEmail();
+						String name = eventOwner.getFirstName();
+						String lastName = eventOwner.getLastName();
 			%>
 			<div id="column">
 				<ul id="latestnews">
-					<strong><a style="font-size:17px;"href="Event.jsp?id=<%=eventID%>"><%= from%> <i class="fa fa-arrow-right fa-spin"></i><%="  " +  to%></a></strong>
+					<p>
+						<strong><a style="font-size: 17px;"
+							href="Event.jsp?id=<%=eventID%>"><%=from%> <i
+								class="fa fa-arrow-right fa-spin"></i><%="  " + to%></a></strong>
+					</p>
+					<p>
+						<strong><a href="Profile.jsp?id=<%=fromUserID%>"><%=name + " "%><%=lastName%></strong>
+					</p>
 					<h4>
 						<%=temp.getText()%>
 					</h4>
-						<%
-							if (accept == 0) {
-						%>
-					
+					<%
+						if (accept == 0) {
+					%>
+
 					<form action="OtherRequestsServlet" method="post">
-						<input type="radio"
-							class="radio1" name="acc" value="yes" tabindex="5"></input><img style="opacity: 1; float: left;"
-							src="style/images/onebit_34.png">
-						<input type="radio"  class="radio2" name="acc" value="no"
-							tabindex="6"><img
-							style=" opacity: 1;" src="style/images/onebit_35.png"></input> <input type="hidden" name="request"
-							value=<%=requestID%>> <input type="hidden" name="event"
-							value=<%=eventID%>> <input type="hidden"
-							name="fromUserID" value=<%=fromUserID%>> <input
-							type="submit" style=" width:150px;"class="mailnumber" value="პასუხის გაცემა"></input>
+						<input type="radio" class="radio1" name="acc" value="yes"
+							tabindex="5"></input><img style="opacity: 1; float: left;"
+							src="style/images/onebit_34.png"> <input type="radio"
+							class="radio2" name="acc" value="no" tabindex="6"><img
+							style="opacity: 1;" src="style/images/onebit_35.png"></input> <input
+							type="hidden" name="request" value=<%=requestID%>> <input
+							type="hidden" name="event" value=<%=eventID%>> <input
+							type="hidden" name="fromUserID" value=<%=fromUserID%>> <input
+							type="submit" style="width: 150px;" class="mailnumber"
+							value="პასუხის გაცემა"></input>
 					</form>
 					<%
 						} else if (accept == 1) {
 					%>
 					<img style="opacity: 1; float: left;"
 						src="style/images/onebit_34.png">
-					<img style=" opacity: 0.4;"
-						src="style/images/onebit_35.png">
+					<img style="opacity: 0.4;" src="style/images/onebit_35.png">
 					<%
 						} else if (accept == 2) {
 					%>
 					<img style="opacity: 0.4; float: left;"
 						src="style/images/onebit_34.png">
-					<img style="opacity: 1;"
-						src="style/images/onebit_35.png">
+					<img style="opacity: 1;" src="style/images/onebit_35.png">
 					<%
 						}
 					%>
 					<p>
-					<div id="number<%=i%>" style="float:left; font-size:15px; color:#79bbff;"><strong>ტელეფონი:</strong> <%=" "+ tel %></div>
-				    <div id="mail<%=i%>" style="float:right;font-size:15px; color:#79bbff;"><strong>ელ-ფოსტა:</strong> <%=" " + mail %></div>
+					<div id="number<%=i%>"
+						style="float: left; font-size: 15px; color: #79bbff;">
+						<strong>ტელეფონი:</strong>
+						<%=" " + tel%></div>
+					<div id="mail<%=i%>"
+						style="float: right; font-size: 15px; color: #79bbff;">
+						<strong>ელ-ფოსტა:</strong>
+						<%=" " + mail%></div>
 					</p>
 				</ul>
 			</div>
-			<div class="line" style="margin-top:50px"></div>
+			<div class="line" style="margin-top: 50px"></div>
 			<%
 				}
 				}
