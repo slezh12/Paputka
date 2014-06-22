@@ -73,7 +73,7 @@
 			%> 
 			<div id="column">
 				<ul id="latestnews">
-							<strong><a style="font-size:17px; "href="Event.jsp?id=<%=temp.getID()%>"><%= from%> <i class="fa fa-arrow-right fa-spin"></i><%="  " +  to%></a></strong>
+							<strong><a style="font-size:17px; "href="Event.jsp?id=<%=eventID%>"><%= from%> <i class="fa fa-arrow-right fa-spin"></i><%="  " +  to%></a></strong>
 					<h4>
 						<%=temp.getText()%>
 					</h4>
