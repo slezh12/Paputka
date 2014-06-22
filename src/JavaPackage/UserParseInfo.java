@@ -223,4 +223,27 @@ public class UserParseInfo extends ParseInfo {
 		return ret;
 	}
 	
+	public ArrayList<User> getUsersBySearch(String firstName){
+		ArrayList<User> result = new ArrayList<User>();
+		UserConnection connect = new UserConnection((BasicDataSource) source);
+		ResultSet rs = connect.getUsersByName(firstName);
+		try {
+			while(rs.next()){
+				Integer id = rs.getInt("ID");
+				String first = rs.getString("FirstName");
+				String last = rs.getString("LastName");
+				boolean gender = rs.getBoolean("Gender");
+				Date birthdate = rs.getDate("BirthDate");
+				String email = rs.getString("EMail");
+				User user = new User(id, first, last, gender, birthdate, email);
+				result.add(user);
+			}
+			connect.CloseConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 }

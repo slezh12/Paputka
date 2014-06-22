@@ -132,4 +132,16 @@ public class UserConnection extends BaseConnection {
 				.executeQuery("select * from Ratings where FirstID = "+FirstID+" and SecondID="+SecondID);
 		return rs;
 	}
+	
+	public ResultSet getUsersByName(String firstName){
+		ResultSet rs = null;
+		try {
+			rs = stmt
+					.executeQuery("select * from Users where firstName = " + firstName);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rs;
+	}
+	
 }
