@@ -66,7 +66,7 @@ public class RatingServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();  
 		out.println("<script type=\"text/javascript\">");  
 		out.println("alert('User has been successfully rated!');");
-		out.println("window.location='SuccessfullyRated.jsp?id=" + userID +"'"); 
+		out.println("window.location='Profile.jsp?id=" + userID +"'"); 
 		out.println("</script>"); 
 	}
 

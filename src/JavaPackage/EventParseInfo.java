@@ -47,7 +47,7 @@ public class EventParseInfo extends ParseInfo {
 		ArrayList<Event> events = new ArrayList<Event>();
 		EventConnection base = new EventConnection((BasicDataSource) source);
 		try {
-			ResultSet rs =  base.selectLastEvents(15);
+			ResultSet rs = base.selectLastEvents(15);
 			while (rs.next()) {
 				int id = rs.getInt("ID");
 				int places = rs.getInt("Places");
@@ -65,9 +65,8 @@ public class EventParseInfo extends ParseInfo {
 						fromLatitude, toLongitude, toLatitude);
 				Event event = new Event(id, fee, user, places, validation,
 						type, route);
-				if (validation) {
-					events.add(event);
-				}
+				// validaciaze shemowmeba gavaketo tu ara?????
+				events.add(event);
 			}
 			base.CloseConnection();
 		} catch (SQLException e) {
