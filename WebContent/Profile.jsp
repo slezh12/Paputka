@@ -75,7 +75,7 @@
 					Integer rating = userParse.getRating(userID);
 					if (rating != null) {
 					%>
-					<strong style=" color:#6AA86B">	მომხმარებლის რეიტინგი:	</strong>				
+					<strong style=" color:#6AA86B">	მომხმარებლის რეიტინგი</strong>				
 							<form id="ratingsForm1">
 								<div class="stars">
 									<%
