@@ -14,24 +14,39 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Paputka</title>
-<link rel="shortcut icon" type="image/x-icon"
-	href="style/images/favicon.png" />
+<link rel="shortcut icon" type="image/x-icon" href="style/images/favicon.png" />
 <link rel="stylesheet" type="text/css" href="style.css" />
-<link
-    href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
-    rel="stylesheet" />
 
+<link rel="stylesheet" href="style/js/ForSearchButton.css">
+
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
 <script type="text/javascript" src="style/js/jquery-1.6.4.min.js"></script>
 <script type="text/javascript" src="style/js/ddsmoothmenu.js"></script>
 <script type="text/javascript" src="style/js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" charset="utf-8"
-	src="style/js/jquery.leanModal.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="style/js/jquery.leanModal.min.js"></script>
+
 </head>
+
 <body>
 	<!-- Begin Wrapper -->
+	<div class="search">
+				<div class="content-wrapper2">
+					<div class="search-button2">
+						<span><img style="display:initial" src="style/images/search-icon.png" /></span>
+					</div>
+					<div class="search-box2">
+					
+						<form action="UserSearch.jsp" method="post">
+							<input type="text"  name="search" placeholder="ძებნა"/>
+							<img style="display:initial"src="style/images/close.png" />
+						</form>
+					</div>
+				</div>
+	</div>
 	<div id="wrapper">
 		<!-- Begin Sidebar -->
 		<div id="sidebar">
+			
 			<div id="logo">
 				<img src="style/images/logo.png" alt="Paputka" />
 			</div>
@@ -70,8 +85,9 @@
 		<!-- End Sidebar -->
 		<!-- Begin Content -->
 		<div id="content">
+
 				<h2 style="color:#8693EE"><strong>რელევანტური  პოსტები</strong></h2>	
-			<div class="line"></div>
+			<div style="margin-top:23px;"class="line"></div>
 			<%
 				if(list.size() == 0){
 					ArrayList<Event> listOfEvents = parseEvent.getLastEvents();
@@ -207,6 +223,7 @@ summaryPanel.innerHTML='<strong><a id="link<%=j %>" href="Event.jsp?id=<%=e.getI
 		</div>
 		<div id="googleMap" ></div>
 	</div>
+	
 	<script type="text/javascript">
 		$(function() {
 			$('#registerform').submit(function(e) {
@@ -219,6 +236,24 @@ summaryPanel.innerHTML='<strong><a id="link<%=j %>" href="Event.jsp?id=<%=e.getI
 			});
 		});
 	</script>
-
+	<!--For Search Button  -->
+	<script type="text/javascript" src="style/js/modernizr.js"></script>
+	<script type="text/javascript" src="style/js/ForSearchButton.js"></script>
+	
+	<script type="text/javascript">
+		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">
+		try {
+			var pageTracker = _gat._getTracker("UA-2260508-2");
+			pageTracker._trackPageview();
+		} catch(err) {}
+	</script>
+	<script>
+		function GoSearch(){
+		}
+	</script>
+	<!--For Search Button  -->
 </body>
 </html>
