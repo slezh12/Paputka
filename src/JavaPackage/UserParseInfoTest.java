@@ -36,7 +36,7 @@ public class UserParseInfoTest {
 	 * insert into users (FirstName, LastName, Gender, BirthDate, Password, EMail)
 values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329ea1ff5c5ecbdbbeef', N'achi_baxlosania@yahoo.com');
 	 */
-//	@Test
+	@Test
 	public void testGetUser() {
 		
 		UserParseInfo info = new UserParseInfo((BasicDataSource) source);
@@ -49,7 +49,7 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 		assertEquals("achi_baxlosania@yahoo.com",newuser.getEmail());
 	}
 	
-//	@Test
+	@Test
 	public void testIsUserAlreadyInBase() {
 		
 	//	UserParseInfo info = new UserParseInfo((BasicDataSource) source);
@@ -96,7 +96,7 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 			}
 		}
 	
-//	@Test
+	@Test
 	public void testGetUserByID() {
 		
 	//	UserParseInfo info = new UserParseInfo((BasicDataSource) source);
@@ -157,7 +157,7 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 	
 
 	
-//	@Test
+	@Test
 	public void testCanRate() {
 		Date date = Date.valueOf("1994-02-04");
 		boolean type = true;
@@ -180,7 +180,7 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 					+ "'"
 					+ ","
 					+ "'"
-					+ "asdfhasefaasdasdasfvaasdasdaasdj"
+					+ "bbbbbaaaaaaaaaaaaaa"
 					+ "'"
 					+ ","
 					+ "'"
@@ -205,7 +205,7 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 					+ "'"
 					+ ","
 					+ "'"
-					+ "waeasdasdfasdasaddfasa"
+					+ "dddddasdfaddddddd"
 					+ "'"
 					+ ","
 					+ "'"
@@ -231,7 +231,7 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 					+ "'"
 					+ ","
 					+ "'"
-					+ "adfasdfasdadsadasafassdadg"
+					+ "adfasaaaaaaaaaa"
 					+ "'"
 					+ ","
 					+ "'"
@@ -300,7 +300,7 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 		}
 	}
 
-//	@Test
+	@Test
 	public void testGetMyRequestsAndOhterRequests() {
 		Date date = Date.valueOf("1994-02-04");
 		boolean type = true;
@@ -323,7 +323,7 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 					+ "'"
 					+ ","
 					+ "'"
-					+ "asdfhasefsdasdasfsadsdasdaj"
+					+ "asaaaaaaasdasdasdaj"
 					+ "'"
 					+ ","
 					+ "'"
@@ -348,7 +348,7 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 					+ "'"
 					+ ","
 					+ "'"
-					+ "waeasdasdfaasdxasdxaasxacaasddf"
+					+ "waeaaaaaa"
 					+ "'"
 					+ ","
 					+ "'"
@@ -374,7 +374,7 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 					+ "'"
 					+ ","
 					+ "'"
-					+ "adfasdfasdadsadasafaaasadg"
+					+ "adaaaaaaaaasadg"
 					+ "'"
 					+ ","
 					+ "'"
@@ -479,7 +479,7 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 					+ "'"
 					+ ","
 					+ "'"
-					+ "adfasasdaadsasdsdasdfads"
+					+ "aaaaaaaaadasdfads"
 					+ "'"
 					+ ","
 					+ "'"
@@ -532,4 +532,180 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 	}
 	
 
+	 @Test
+		public void testInsertIntoTel() {
+			 Date date = Date.valueOf("1994-02-04");
+			try {
+				Connection con = source.getConnection();
+				Statement stmt = con.createStatement();
+				stmt.executeQuery("USE " + database);
+				
+				stmt.executeUpdate("INSERT INTO Users (FirstName , LastName, EMail , Password , Gender, BirthDate) VALUES("
+						+ "'"
+						+ "userForStatus"
+						+ "'"
+						+ ","
+						+ "'"
+						+ "ar vici"
+						+ "'"
+						+ ","
+						+ "'"
+						+ "addddddddddddds"
+						+ "'"
+						+ ","
+						+ "'"
+						+ "password3"
+						+ "'"
+						+ ","
+						+ true + "," + "'" + date + "'" + ")");
+				
+
+				int lastID = 0;
+				ResultSet res = stmt.executeQuery("SELECT * FROM Users ORDER BY ID DESC LIMIT 1");
+				while(res.next()){
+					 lastID = res.getInt("ID");
+					
+				}	
+				
+				
+				UserParseInfo info = new UserParseInfo((BasicDataSource) source);
+				String stringForTel = "598-10-10-10";
+				info.insertIntoTel(stringForTel, lastID);
+				int lastIDForTel = 0;
+				ResultSet resForStatus = stmt.executeQuery("SELECT * FROM TEL ORDER BY ID DESC LIMIT 1");
+				
+				while(resForStatus.next()){
+					lastIDForTel = resForStatus.getInt("ID");
+					
+				}	
+				
+				
+				int userID = 0;
+				String userTel = "";
+				
+				
+				
+				ResultSet rs = stmt
+						.executeQuery("SELECT * FROM TEL WHERE ID = " + lastIDForTel );
+				rs.next();
+				userID  = rs.getInt("UserID");
+				userTel = rs.getString("PhoneNumber");
+			
+				assertTrue(userTel.equals("598-10-10-10"));
+				assertFalse(userTel.equals("shecdomit dawerili nomeri"));
+				assertEquals(lastID,userID);
+				
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+		
+		@Test
+		public void testGetUsersBySearch() {
+			Date date = Date.valueOf("1994-02-04");
+			boolean type = true;
+			boolean validation = false;
+			try {
+			
+				Connection con = source.getConnection();
+				Statement stmt = con.createStatement();
+				stmt.executeQuery("USE " + database);
+				
+				
+				
+				stmt.executeUpdate("INSERT INTO Users (FirstName , LastName, EMail , Password , Gender, BirthDate) VALUES("
+						+ "'"
+						+ "erti da igive"
+						+ "'"
+						+ ","
+						+ "'"
+						+ "ar vici"
+						+ "'"
+						+ ","
+						+ "'"
+						+ "wwwwwwwwwwwdasdaj"
+						+ "'"
+						+ ","
+						+ "'"
+						+ "password"
+						+ "'"
+						+ ","
+						+ true + "," + "'" + date + "'" + ")");
+				int lastID1 = 0;
+				ResultSet res1 = stmt.executeQuery("SELECT * FROM Users ORDER BY ID DESC LIMIT 1");
+				while(res1.next()){
+					 lastID1 = res1.getInt("ID");
+					
+				}	
+				
+				stmt.executeUpdate("INSERT INTO Users (FirstName , LastName, EMail , Password , Gender, BirthDate) VALUES("
+						+ "'"
+						+ "erti da igive"
+						+ "'"
+						+ ","
+						+ "'"
+						+ "ar vici"
+						+ "'"
+						+ ","
+						+ "'"
+						+ "aaaaaaaasdasdaaaaaa"
+						+ "'"
+						+ ","
+						+ "'"
+						+ "password"
+						+ "'"
+						+ ","
+						+ true + "," + "'" + date + "'" + ")");
+				
+				int lastID2 = 0;
+				ResultSet res2 = stmt.executeQuery("SELECT * FROM Users ORDER BY ID DESC LIMIT 1");
+				while(res2.next()){
+					 lastID2 = res2.getInt("ID");
+					
+				}	
+				
+				stmt.executeUpdate("INSERT INTO Users (FirstName , LastName, EMail , Password , Gender, BirthDate) VALUES("
+						+ "'"
+						+ "erti da igive"
+						+ "'"
+						+ ","
+						+ "'"
+						+ "ar vici"
+						+ "'"
+						+ ","
+						+ "'"
+						+ "adasaaaaaaaaaaaaa"
+						+ "'"
+						+ ","
+						+ "'"
+						+ "password3"
+						+ "'"
+						+ ","
+						+ true + "," + "'" + date + "'" + ")");
+
+				
+				int lastID3 = 0;
+				ResultSet res3 = stmt.executeQuery("SELECT * FROM Users ORDER BY ID DESC LIMIT 1");
+				while(res3.next()){
+					 lastID3 = res3.getInt("ID");
+					
+				}	
+				
+				
+				UserParseInfo info = new UserParseInfo((BasicDataSource) source);
+		
+				assertEquals(3,info.getUsersBySearch("erti da igive").size());
+				assertEquals(1,info.getUsersBySearch("beqa").size());
+				assertEquals(0,info.getUsersBySearch("ragac saxeli").size());
+				
+				
+				stmt.executeUpdate("DELETE FROM Users ORDER BY ID DESC LIMIT 3");
+				
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 }
