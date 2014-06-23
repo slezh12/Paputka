@@ -13,7 +13,6 @@
 	perspective : 1200px;
 }
 
-	
 .search-button2 {
 	display: block;
 	position: absolute;
@@ -21,15 +20,15 @@
 	height: 30px;
 	border: 1px solid #aa7818;
 	border-bottom: 1px solid rgba(255,255,255,0.2);
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#ffb700), to(#ff8c00));
-	background-image: -webkit-linear-gradient(top, #ffb700, #ff8c00);
-	background-image:    -moz-linear-gradient(top, #ffb700, #ff8c00); 
-   background-image:     -ms-linear-gradient(top, #ffb700, #ff8c00); 
-   background-image:      -o-linear-gradient(top, #ffb700, #ff8c00); 
-   background-image:         linear-gradient(to bottom, #ffb700, #ff8c00);
-	box-shadow: inset rgba(255, 254, 255, 0.2) 0 0.3em .3em, 
-					#8e620e 0 0.5em 0, 
-					rgba(0, 0, 0, 0.2) 0 0.9em 3px;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#E8F3F8), to(#E8F3F8));
+	background-image: -webkit-linear-gradient(top, #E8F3F8, #E8F3F8);
+	background-image:    -moz-linear-gradient(top, #E8F3F8, #E8F3F8); 
+   background-image:     -ms-linear-gradient(top, #E8F3F8, #E8F3F8); 
+   background-image:      -o-linear-gradient(top, #E8F3F8, #E8F3F8); 
+   background-image:         linear-gradient(to bottom, #E8F3F8, #E8F3F8);
+	box-shadow: inset rgba(255, 254, 255, 0.2) 0 0.15em .15em, 
+					#8e620e 0 0.25em 0, 
+					rgba(0, 0, 0, 0.2) 0 0.45em 1.5px;
 	padding: 10px 6px;
 	border-radius: 5px;
 	cursor: pointer;
@@ -43,7 +42,7 @@
  .search-button2 span {
 		display: block;
 		margin: 0 auto;
-		background: #643904;
+		background: #152B3C;
 		border-radius: 30px;
 		width: 30px;
 		height: 30px;
@@ -107,12 +106,13 @@
 		font-family: Arial;
 		font-weight: bold;
 		color: #1a3d51;
+		margin-top:7px;
 		background: #d8e6ef;
 		border-radius:2px;
-		padding: 10px 10px 15px 10px;
+		padding: 10px 10px 10px 10px;
 		width: 125px;
 		border: 0;
-		font-size: 16px;
+		font-size: 10px;
 		text-shadow: rgba(255, 255, 255, 0.7) 1px 1px 1px;
 		box-shadow: inset rgba(0,0,0,.4) 0 1px 1px;
 }
@@ -120,14 +120,14 @@
 .search-box2 input:focus{
 			background-color: #BAE4E5;
 }
-		input::-webkit-input-placeholder {
+input::-webkit-input-placeholder {
 			font-family: Arial;
 			font-weight: bold;
 			color: #1a3d51;
 			text-shadow: rgba(255, 255, 255, 0.7) 1px 1px 1px;
 		}
 		
-		input:-moz-placeholder {
+input:-moz-placeholder {
 			font-family: Arial;
 			font-weight: bold;
 			color: #1a3d51;
