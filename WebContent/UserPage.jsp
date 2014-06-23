@@ -17,19 +17,20 @@
 <link rel="shortcut icon" type="image/x-icon" href="style/images/favicon.png" />
 <link rel="stylesheet" type="text/css" href="style.css" />
 
-<link rel="stylesheet" href="style/js/ForSearchButton.css">
+<link rel="stylesheet" href="style/js/ForSearchButton.css"> 
 
-<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" /> 
 <script type="text/javascript" src="style/js/jquery-1.6.4.min.js"></script>
 <script type="text/javascript" src="style/js/ddsmoothmenu.js"></script>
 <script type="text/javascript" src="style/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="style/js/jquery.leanModal.min.js"></script>
-
+<script type="text/javascript" src="style/js/modernizr.js"></script>
+<script type="text/javascript" src="style/js/ForSearchButton.js"></script> 
 </head>
 
 <body>
 	<!-- Begin Wrapper -->
-	<div class="search">
+	<div class="search" style="margin-top:10px">
 				<div class="content-wrapper2">
 					<div class="search-button2">
 						<span><img style="display:initial" src="style/images/search-icon.png" /></span>
@@ -37,12 +38,12 @@
 					<div class="search-box2">
 					
 						<form action="UserSearch.jsp" method="post">
-							<input type="text"  name="search" placeholder="ძებნა"/>
+							<input type="text"  name="search" placeholder="მომხმარებლის სახელი"/>
 							<img style="display:initial"src="style/images/close.png" />
 						</form>
 					</div>
 				</div>
-	</div>
+	</div> 
 	<div id="wrapper">
 		<!-- Begin Sidebar -->
 		<div id="sidebar">
@@ -87,7 +88,7 @@
 		<div id="content">
 
 				<h2 style="color:#8693EE"><strong>რელევანტური  პოსტები</strong></h2>	
-			<div style="margin-top:23px;"class="line"></div>
+			<div style="margin-top:30px;"class="line"></div>
 			<%
 				if(list.size() == 0){
 					ArrayList<Event> listOfEvents = parseEvent.getLastEvents();
@@ -108,32 +109,18 @@
 				</ul>
 			</div>
 			<div class="line"></div>
-
-			<%
+			<% 
 					}
 				} else {
-					for(int i = 0; i < list.size(); i++){
-						WantToGo want = list.get(i);
-						if (want.getValidation()) { %>
+			%>						
 						<script
 			    src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
 						<script>
 						var directionsDisplay;
 						var directionsService = new google.maps.DirectionsService();
 						var dD;
-			    		var map;    		
-			            var waypts = [];
-			    		function initialize() {
-			    			var a = new google.maps.LatLng(<%=want.getFromLatitude() %>,<%= want.getFromLongitude()%>);
-			                var b = new google.maps.LatLng(<%=want.getToLatitude()%>,<%=want.getToLongitude() %>);
-			                waypts.push({
-			                    location:a,
-			                    stopover:true
-			                });
-			                waypts.push({
-			                    location:b,
-			                    stopover:true
-			                });
+			    		var map;    				            
+			    		function initialize() {			    			
 			    			directionsDisplay = new google.maps.DirectionsRenderer();
 			    			dD = new google.maps.DirectionsRenderer();
 			        		var mapProp = {
@@ -145,11 +132,14 @@
 			        		directionsDisplay.setMap(map);
 			        		dD.setMap(map);			        		
 			        	}
-			    		
-			            <%			            
+			    		<%					
+					for(int i = 0; i < list.size()-1; i++){
+						WantToGo want = list.get(i);
+						if (want.getValidation()) { 			            		            
 			            ArrayList<Event> arr = parseEvent.getEventsForSearch(want);
 			            for(int j = 0; j<arr.size(); j++) {
 			            	Event e = arr.get(j);
+			            	System.out.println(j);
 			            	if (e.getValidation()) {
 			                	Route r = e.getRoute();  
 			                	String p1 = r.getFromPlace();
@@ -159,6 +149,17 @@
 								User postOwner = userParse.getUserByID(eventOwnerID);
 			            %>			            			            
 			            function calcRoute<%=j %>() {
+			            	var waypts = [];				         
+			            	var a = new google.maps.LatLng(<%=want.getFromLatitude() %>,<%= want.getFromLongitude()%>);
+			                var b = new google.maps.LatLng(<%=want.getToLatitude()%>,<%=want.getToLongitude() %>);
+			                waypts.push({
+			                    location:a,
+			                    stopover:true
+			                });
+			                waypts.push({
+			                    location:b,
+			                    stopover:true
+			                });
 			            	var optimal = 0;
 				            var current = 0;
 				            var start = new google.maps.LatLng(<%=r.getFromLatitude() %>,<%= r.getFromLongitude()%>);
@@ -176,7 +177,7 @@
 			          	      		var route = response.routes[0];          	      		
 			          	      		for (var i = 0; i < route.legs.length; i++) {
 			                        	current+=route.legs[i].distance.value;                       
-			                   		}
+			                   		}			          	      	
 			          	    	} 
 			      	  		});   
 			                request = {
@@ -221,7 +222,7 @@ summaryPanel.innerHTML='<strong><a id="link<%=j %>" href="Event.jsp?id=<%=e.getI
 			%>
 			<!-- End Content -->
 		</div>
-		<div id="googleMap" ></div>
+		<div id="googleMap" style="width: 800px; height: 400px; visibility:hidden"></div>
 	</div>
 	
 	<script type="text/javascript">
@@ -236,24 +237,11 @@ summaryPanel.innerHTML='<strong><a id="link<%=j %>" href="Event.jsp?id=<%=e.getI
 			});
 		});
 	</script>
-	<!--For Search Button  -->
-	<script type="text/javascript" src="style/js/modernizr.js"></script>
-	<script type="text/javascript" src="style/js/ForSearchButton.js"></script>
-	
-	<script type="text/javascript">
-		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-	</script>
-	<script type="text/javascript">
-		try {
-			var pageTracker = _gat._getTracker("UA-2260508-2");
-			pageTracker._trackPageview();
-		} catch(err) {}
-	</script>
+	<!--For Search Button  -->	
 	<script>
 		function GoSearch(){
 		}
-	</script>
+	</script> 
 	<!--For Search Button  -->
 </body>
 </html>

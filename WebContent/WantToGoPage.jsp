@@ -213,10 +213,7 @@
           	      		var route = response.routes[0];          	      		
           	      		for (var i = 0; i < route.legs.length; i++) {
                         	current+=route.legs[i].distance.value;                         	
-                   		}  
-          	      	console.log('<%=p1%>');
-      	      		console.log('current'+route.legs.length);
-      	      		console.log('optimal'+waypts.length);
+                   		}          	      	
           	    	} 
       	  		});               
                 request = {
@@ -261,7 +258,7 @@
 <%				
 			}
 %>
-			<div id="googleMap" style="width: 800px; height: 400px;"></div>
+			<div id="googleMap" style="width: 800px; height: 400px; visibility:hidden;"></div>
 
 			<!-- End Content -->
 		</div>
