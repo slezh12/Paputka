@@ -12,6 +12,12 @@ public class BaseConnection {
 	protected Statement stmt;
 	private Connection con;
 
+	/**
+	 * Constructs BaseConnection object with provided BasicDataSource object.
+	 * 
+	 * @param BasicDataSource
+	 *            BasicDataSource object representing connection pool.
+	 */
 	public BaseConnection(BasicDataSource source) {
 		try {
 			con = source.getConnection();
@@ -22,6 +28,10 @@ public class BaseConnection {
 		}
 	}
 
+	/**
+	 * Method for closing connection.
+	 * 
+	 */
 	public void CloseConnection() {
 		try {
 			con.close();
@@ -30,7 +40,18 @@ public class BaseConnection {
 		}
 	}
 
-	// viyenebt statusebis telefoebis da msgavsi infromaciis ID it amosagebad.
+	/**
+	 * This method is used for many tables,it is not concrete,for example it
+	 * takes info from tables like:statuses,tel and so on.
+	 * 
+	 * @param table
+	 *            table is the name of table from which info is carried.
+	 * @param ID
+	 *            ID is unique number of value in table.
+	 * @param columnName
+	 *            name of column in the table.
+	 * @return rs ResultSet which contains all info.
+	 */
 	public ResultSet selectByID(String table, int ID, String columnName) {
 		ResultSet rs = null;
 		try {
@@ -42,6 +63,13 @@ public class BaseConnection {
 		return rs;
 	}
 
+	/**
+	 * Returns all info from the table which is provided.
+	 * 
+	 * @param table
+	 *            table is the name of table from which info is carried.
+	 * @return rs ResultSet which contains all info.
+	 */
 	public ResultSet selectAll(String table) {
 		ResultSet rs = null;
 		try {
@@ -51,10 +79,23 @@ public class BaseConnection {
 		}
 		return rs;
 	}
-	
-	// order by date desc limit 1 <- es selectia
-	public ResultSet selectEvent(int userID, String table,int num) throws SQLException {
-		ResultSet rs = stmt.executeQuery("SELECT * FROM " + table + " Where UserID  = " + userID + " ORDER BY ID DESC LIMIT " + num);
+
+	/**
+	 * Selects last num(integer) events of concrete user.
+	 * 
+	 * @param userID
+	 *            ID of user.
+	 * @param table
+	 *            table is the name of table in the base.
+	 * @param num
+	 *            number of results which should be carried out.
+	 * @return rs ResultSet which contains all info
+	 */
+	public ResultSet selectEvent(int userID, String table, int num)
+			throws SQLException {
+		ResultSet rs = stmt.executeQuery("SELECT * FROM " + table
+				+ " Where UserID  = " + userID + " ORDER BY ID DESC LIMIT "
+				+ num);
 		return rs;
 	}
 

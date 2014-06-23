@@ -5,6 +5,14 @@ import java.security.NoSuchAlgorithmException;
 
 public class Hash {
 
+	/**
+	 * Hashes text which is passed to method with SHA encryption algorithm.
+	 * 
+	 * @param s
+	 *            Any String.
+	 * @return Returns hashed string.
+	 * @throws NoSuchAlgorithmException
+	 */
 	public static String calculateHashCode(String s) {
 		String res = null;
 		try {
@@ -18,6 +26,10 @@ public class Hash {
 		return res;
 	}
 
+	/*
+	 * Given a byte[] array, produces a hex String, such as "234a6f". with 2
+	 * chars for each byte in the array. (provided code)
+	 */
 	private static String hexToString(byte[] bytes) {
 		StringBuffer buff = new StringBuffer();
 		for (int i = 0; i < bytes.length; i++) {
@@ -29,6 +41,5 @@ public class Hash {
 		}
 		return buff.toString();
 	}
-	
 
 }

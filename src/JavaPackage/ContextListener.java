@@ -30,6 +30,7 @@ public class ContextListener implements ServletContextListener {
 
 	/**
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
+     * saves connection pool in ServletContext context.
      */
     public void contextInitialized(ServletContextEvent arg0) {
     	DataSource source = new BasicDataSource();

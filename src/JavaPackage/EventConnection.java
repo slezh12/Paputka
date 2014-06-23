@@ -7,10 +7,43 @@ import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
 public class EventConnection extends BaseConnection {
 
+	/**
+	 * Constructs EventConnection object with provided BasicDataSource object.
+	 * 
+	 * @param source
+	 *            BasicDataSource object representing connection pool.
+	 */
 	public EventConnection(BasicDataSource source) {
 		super(source);
 	}
 
+	/**
+	 * inserts new value into Events table.
+	 * 
+	 * @param userID
+	 *            ID of user.
+	 * @param places
+	 *            number of places on event.
+	 * @param fee
+	 *            fee for participation on event.
+	 * @param FromLongitude
+	 *            longitude of start place.
+	 * @param FromLatitude
+	 *            latitude of start place.
+	 * @param ToLongitude
+	 *            longitude of finish place.
+	 * @param ToLatitude
+	 *            latitude of finish place.
+	 * @param fromPlace
+	 *            name of start place.
+	 * @param toPlace
+	 *            name of finish place.
+	 * @param type
+	 *            type of event,if true than it is held once,otherwise it is
+	 *            permanent.
+	 * @param validation
+	 *            validation of event.
+	 */
 	public void insertIntoEvents(int userID, int places, double fee,
 			double FromLongitude, double FromLatitude, double ToLongitude,
 			double ToLatitude, String fromPlace, String toPlace, boolean type,
@@ -46,6 +79,14 @@ public class EventConnection extends BaseConnection {
 		}
 	}
 
+	/**
+	 * inserts new value into Dates table.
+	 * 
+	 * @param eventID
+	 *            id of event.
+	 * @param date
+	 *            date of event.
+	 */
 	public void insertIntoDates(int eventID, String date) {
 		try {
 			super.stmt
@@ -56,6 +97,16 @@ public class EventConnection extends BaseConnection {
 		}
 	}
 
+	/**
+	 * inserts new value into Everyday table.
+	 * 
+	 * @param eventID
+	 *            id of event.
+	 * @param startTime
+	 *            time when event starts.
+	 * @param day
+	 *            day of the week when event is held.
+	 */
 	public void insertIntoEveryday(int eventID, String startTime, int day) {
 		try {
 			super.stmt
@@ -73,6 +124,14 @@ public class EventConnection extends BaseConnection {
 		}
 	}
 
+	/**
+	 * inserts new value into Participants table.
+	 * 
+	 * @param eventID
+	 *            ID of event.
+	 * @param userID
+	 *            ID of user.
+	 */
 	public void insertIntoParticipants(int eventID, int userID) {
 		try {
 			super.stmt
@@ -83,6 +142,14 @@ public class EventConnection extends BaseConnection {
 		}
 	}
 
+	/**
+	 * counts participants of concrete event.
+	 * 
+	 * @param eventID
+	 *            ID of event.
+	 * 
+	 * @return result number of participants.
+	 */
 	public int getParticipantsByEventID(int eventID) {
 		ResultSet rs;
 		int result = 0;
@@ -99,6 +166,16 @@ public class EventConnection extends BaseConnection {
 		return result;
 	}
 
+	/**
+	 * inserts new value into Comments table.
+	 * 
+	 * @param eventID
+	 *            id of event.
+	 * @param userID
+	 *            ID of user.
+	 * @param comment
+	 *            text of comment.
+	 */
 	public void insertIntoComments(int eventID, int userID, String comment) {
 		try {
 			super.stmt
@@ -115,6 +192,14 @@ public class EventConnection extends BaseConnection {
 		}
 	}
 
+	/**
+	 * updates value of Events table.
+	 * 
+	 * @param eventID
+	 *            id of event.
+	 * @param validation
+	 *            validation of event.
+	 */
 	public void updateEvent(int eventID, boolean validation) {
 		try {
 			super.stmt.executeUpdate("UPDATE Events Set Validation = "
@@ -124,6 +209,12 @@ public class EventConnection extends BaseConnection {
 		}
 	}
 
+	/**
+	 * selects comments on concrete event which are sorted in decreasing order.
+	 * 
+	 * @param eventID
+	 *            id of event.
+	 */
 	public ResultSet CommentsByID(int eventID) {
 		ResultSet rs = null;
 		try {
@@ -136,6 +227,16 @@ public class EventConnection extends BaseConnection {
 		return rs;
 	}
 
+	/**
+	 * inserts value into Requests table.
+	 * 
+	 * @param UserID
+	 *            id of user.
+	 * @param EventID
+	 *            id of event.
+	 * @param text
+	 *            text of request.
+	 */
 	public void InsertIntoRequsets(int UserID, int EventID, String text) {
 		try {
 			super.stmt
@@ -155,6 +256,15 @@ public class EventConnection extends BaseConnection {
 
 	}
 
+	/**
+	 * selects request for concrete user and event.
+	 * 
+	 * @param UserID
+	 *            id of user.
+	 * @param EventID
+	 *            id of event.
+	 * @return rs returns all info.
+	 */
 	public ResultSet Request(int UserID, int EventID) {
 		ResultSet rs = null;
 		try {
@@ -167,6 +277,13 @@ public class EventConnection extends BaseConnection {
 		return rs;
 	}
 
+	/**
+	 * selects last num(integer) events from Events table.
+	 * 
+	 * @param num
+	 *            number of events.
+	 * @return rs returns all info.
+	 */
 	public ResultSet selectLastEvents(int num) throws SQLException {
 		ResultSet rs = stmt
 				.executeQuery("SELECT * FROM Events ORDER BY ID DESC LIMIT "
