@@ -213,7 +213,10 @@
           	      		var route = response.routes[0];          	      		
           	      		for (var i = 0; i < route.legs.length; i++) {
                         	current+=route.legs[i].distance.value;                         	
-                   		}            	      	
+                   		}  
+          	      	console.log('<%=p1%>');
+      	      		console.log('current'+route.legs.length);
+      	      		console.log('optimal'+waypts.length);
           	    	} 
       	  		});               
                 request = {
@@ -229,10 +232,7 @@
           	      		for (var i = 0; i < route.legs.length; i++) {
                         	optimal+=route.legs[i].distance.value;                         	
                    		}
-          	      		optimal = optimal*1.15; 
-          	      	console.log('<%=p1%>');
-      	      		console.log('current'+current);
-      	      		console.log('optimal'+optimal);
+          	      		optimal = optimal*1.15;           	      	
                     	if (current < optimal) {                    		
                        		summaryPanel = document.getElementById("div"+<%=i %>);
                     summaryPanel.innerHTML= '<strong> <a id="link<%=i %>" href="Event.jsp?id=<%=e.getID()%>"><%=p1%> <i class="fa fa-arrow-right fa-spin"></i> <%=p2%></a></strong><div class="line"></div></div>';
@@ -261,7 +261,7 @@
 <%				
 			}
 %>
-			<div id="googleMap" ></div>
+			<div id="googleMap" style="width: 800px; height: 400px;"></div>
 
 			<!-- End Content -->
 		</div>
