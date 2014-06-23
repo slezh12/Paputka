@@ -133,11 +133,11 @@ public class UserConnection extends BaseConnection {
 		return rs;
 	}
 
-	public ResultSet getUsersByName(String firstName) {
+	public ResultSet getUsersByName(String firstName, String LastName) {
 		ResultSet rs = null;
 		try {
 			rs = stmt.executeQuery("SELECT * FROM Users WHERE FirstName ="
-					+ "'" + firstName + "'");
+					+ "'" + firstName + "'" + "and LastName =" + "'" + LastName + "'");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

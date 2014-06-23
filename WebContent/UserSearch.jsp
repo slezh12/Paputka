@@ -47,11 +47,25 @@
 		<!-- Begin Content -->
 		<div id="content">
 			<%
-				String firstName = request.getParameter("search");
+				String s = request.getParameter("search");
 				BasicDataSource source = (BasicDataSource) application
 						.getAttribute("connectionPool");
+				String firstName = "";
+				String LastName = "";
+				boolean check = true;
+				for(int i = 0; i< s.length(); i++){
+					if(s.charAt(i) == ' '){
+						check = false;
+					} else {
+						if(check){
+							firstName += s.charAt(i);
+						} else{
+							LastName += s.charAt(i);
+						}
+					}
+				}
 				UserParseInfo parse = new UserParseInfo(source);
-				ArrayList<User> list = parse.getUsersBySearch(firstName);
+				ArrayList<User> list = parse.getUsersBySearch(firstName, LastName);
 				if (list.size() == 0) {
 			%>
 			<h2 style="color: #8693EE">

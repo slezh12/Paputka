@@ -223,10 +223,10 @@ public class UserParseInfo extends ParseInfo {
 		return ret;
 	}
 	
-	public ArrayList<User> getUsersBySearch(String firstName){
+	public ArrayList<User> getUsersBySearch(String firstName, String LastName){
 		ArrayList<User> result = new ArrayList<User>();
 		UserConnection connect = new UserConnection((BasicDataSource) source);
-		ResultSet rs = connect.getUsersByName(firstName);
+		ResultSet rs = connect.getUsersByName(firstName, LastName);
 		try {
 			while(rs.next()){
 				Integer id = rs.getInt("ID");
