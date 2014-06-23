@@ -139,7 +139,6 @@
 			            ArrayList<Event> arr = parseEvent.getEventsForSearch(want);
 			            for(int j = 0; j<arr.size(); j++) {
 			            	Event e = arr.get(j);
-			            	System.out.println(j);
 			            	if (e.getValidation()) {
 			                	Route r = e.getRoute();  
 			                	String p1 = r.getFromPlace();
