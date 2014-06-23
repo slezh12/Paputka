@@ -2,6 +2,7 @@ package ServletPackage;
 
 import java.awt.Event;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -57,7 +58,11 @@ public class OtherRequestsServlet extends HttpServlet {
 		int fromUserID = Integer.parseInt(fromUser);
 		RequestDispatcher dispatch = null;
 		if (accept == null) {
-			dispatch = request.getRequestDispatcher("InvalidOtherRequests.jsp");
+			PrintWriter out = response.getWriter();  
+			out.println("<script type=\"text/javascript\">");  
+			out.println("alert('Please check one of the fields');");
+			out.println("window.location='OthersRequests.jsp'"); 
+			out.println("</script>"); 
 		} else {
 			ServletContext context = getServletContext();
 			DataSource source = (DataSource) context
@@ -77,12 +82,16 @@ public class OtherRequestsServlet extends HttpServlet {
 					updateRequest = true;
 					dispatch = request
 							.getRequestDispatcher("OthersRequests.jsp");
+					eventConnect.CloseConnection();
 				} else {
 					acceptance = 0;
-					dispatch = request
-							.getRequestDispatcher("NoMorePlacesOtherRequests.jsp");
+					eventConnect.CloseConnection();
+					PrintWriter out = response.getWriter();  
+					out.println("<script type=\"text/javascript\">");  
+					out.println("alert('No more free places');");
+					out.println("window.location='OthersRequests.jsp'"); 
+					out.println("</script>"); 
 				}
-				eventConnect.CloseConnection();
 			} else if (accept.equals("no")) {
 				updateRequest = true;
 				acceptance = 2;
@@ -93,8 +102,8 @@ public class OtherRequestsServlet extends HttpServlet {
 				connect.updateRequests(ID, acceptance);
 				connect.CloseConnection();
 				dispatch = request.getRequestDispatcher("OthersRequests.jsp");
+				dispatch.forward(request, response);
 			}
 		}
-		dispatch.forward(request, response);
 	}
 }
