@@ -29,7 +29,6 @@
 
 <script type="text/javascript">
 	function CheckAlerts() {
-		calcRoute();
 		if (check != 2) {
 			alert("მონიშნეთ ორი წერტილი რუკაზე");
 			return false;
@@ -155,7 +154,7 @@
 			<div id="menu" class="menu-v">
 				<ul>
 					<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
-					<li><a href="#registermodal" id="modaltrigger">შეავსეთ
+					<li><a id="modaltrigger">შეავსეთ
 							დეტალური ინფორმაცია</a></li>
 				</ul>
 			</div>
@@ -281,9 +280,13 @@
           	    travelMode: google.maps.TravelMode.DRIVING 	   
         };                
 		directionsService.route(request, function(response, status) {
-  	    	if (status != google.maps.DirectionsStatus.OK) {
-  	      		alert("მოცემულ ორ პუნქტს შორის საავტომობილო გზა არ არსებობს.");          	      	
-  	    	} 
+			if (status != google.maps.DirectionsStatus.OK) {
+	    		document.getElementById("modaltrigger").href = "";
+	      		alert("მოცემულ ორ პუნქტს შორის საავტომობილო გზა არ არსებობს.");          	      	
+	    	} else {
+	    		document.getElementById("modaltrigger").href = "#registermodal";
+	    		fun();
+	    	}
 	  	});    
 	}
 
@@ -330,6 +333,7 @@
 					{
 					    SavePosition(marker.getPosition(),2);
 					});
+			calcRoute();
 		}
 	}
 	
@@ -390,6 +394,7 @@
 				document.getElementById('to').value = document.getElementById('address').value;
                 document.getElementById('to').readOnly  = true;
 		        document.getElementById('address').value = "";
+		        calcRoute();
 		      }
 		      check++;
 		      
@@ -409,11 +414,13 @@
 			document.getElementById("hiddenField1").value=fromLongitude;
 			fromLatitude = pos.lat();
 			document.getElementById("hiddenField2").value=fromLatitude;
+			if(check==2) calcRoute();
 		} else {
 			toLongitude =pos.lng();
 			document.getElementById("hiddenField3").value=toLongitude;
 			toLatitude = pos.lat();
 			document.getElementById("hiddenField4").value=toLatitude;
+			calcRoute()
 		}
 	}
 	google.maps.event.addDomListener(window, 'load', initialize);
@@ -433,6 +440,7 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+	function fun(){
 		$(function() {
 
 			$('#modaltrigger').leanModal({
@@ -444,7 +452,7 @@
 		$(document).ready(function() {
 			$('.timepicker').timepicker();
 		});
+	}
 	</script>
-
 </body>
 </html>

@@ -31,7 +31,6 @@
 
 <script type="text/javascript">
 	function CheckAlerts() {
-		calcRoute();
 		if (check != 2) {
 			alert("მონიშნეთ ორი წერტილი რუკაზე");
 			return false;
