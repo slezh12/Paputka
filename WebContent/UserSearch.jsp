@@ -64,8 +64,13 @@
 						}
 					}
 				}
+				ArrayList<User> list;
 				UserParseInfo parse = new UserParseInfo(source);
-				ArrayList<User> list = parse.getUsersBySearch(firstName, LastName);
+				if(check){
+					list = parse.getUsersBySearch(firstName, firstName);
+				} else {
+					list = parse.getUsersBySearch(firstName, LastName);
+				}
 				if (list.size() == 0) {
 			%>
 			<h2 style="color: #8693EE">
@@ -93,7 +98,7 @@
 			<div id="column">
 				<ul id="latestnews">
 					<p>
-						<strong><a href="Profile.jsp?id=<%=userID%>"><%=firstName + " "%><%=lastName%></a></strong>
+						<strong><a href="Profile.jsp?id=<%=userID%>"><%=temp.getFirstName() + " "%><%=temp.getLastName()%></a></strong>
 					</p>
 				</ul>
 			</div>

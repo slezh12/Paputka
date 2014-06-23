@@ -136,8 +136,8 @@ public class UserConnection extends BaseConnection {
 	public ResultSet getUsersByName(String firstName, String LastName) {
 		ResultSet rs = null;
 		try {
-			rs = stmt.executeQuery("SELECT * FROM Users WHERE FirstName ="
-					+ "'" + firstName + "'" + "and LastName =" + "'" + LastName + "'");
+			rs = stmt.executeQuery("SELECT * FROM Users WHERE FirstName like "
+					+ "'%" + firstName + "%'" + "or LastName like" + "'%" + LastName + "%'");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
