@@ -50,6 +50,7 @@ public class FacebookServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		String firstname = request.getParameter("firstname");
 		String lastname = request.getParameter("lastname");
 		String mail = request.getParameter("mail");
