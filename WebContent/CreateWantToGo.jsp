@@ -155,7 +155,7 @@
 			<div id="menu" class="menu-v">
 				<ul>
 					<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
-					<li><a href="#registermodal" id="modaltrigger">შეავსეთ
+					<li><a id="modaltrigger">შეავსეთ
 							დეტალური ინფრომაცია</a></li>
 				</ul>
 			</div>
@@ -307,8 +307,12 @@ function calcRoute() {
     };                
 	directionsService.route(request, function(response, status) {
 	    	if (status != google.maps.DirectionsStatus.OK) {
+	    		document.getElementById("modaltrigger").href = "";
 	      		alert("მოცემულ ორ პუნქტს შორის საავტომობილო გზა არ არსებობს.");          	      	
-	    	} 
+	    	} else {
+	    		document.getElementById("modaltrigger").href = "#registermodal";
+	    		fun();
+	    	}
   	});    
 }
 
@@ -356,6 +360,7 @@ function placeMarker(location) {
 				{
 				    SavePosition(marker.getPosition(),2);
 				});
+		calcRoute();
 	}
 }
 
@@ -410,6 +415,7 @@ function codeAddress() {
 	    			{
 	    			    SavePosition(marker.getPosition(),2);
 	    			});
+			calcRoute();
 	      }
 	      check++;
 	    } else {
@@ -428,11 +434,13 @@ function SavePosition(pos, inti)
 		document.getElementById("hiddenField1").value=fromLongitude;
 		fromLatitude = pos.lat();
 		document.getElementById("hiddenField2").value=fromLatitude;
+		if(check ==2) calcRoute();
 	} else {
 		toLongitude =pos.lng();
 		document.getElementById("hiddenField3").value=toLongitude;
 		toLatitude = pos.lat();
 		document.getElementById("hiddenField4").value=toLatitude;
+		calcRoute();
 	}
 }
 google.maps.event.addDomListener(window, 'load', initialize);
@@ -452,6 +460,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 		</div>
 	</div>
 	<script type="text/javascript">
+	function fun(){
 		$(function() {
 
 			$('#modaltrigger').leanModal({
@@ -460,11 +469,11 @@ google.maps.event.addDomListener(window, 'load', initialize);
 				closeButton : ".modal_close"
 			});
 		});
-	</script>
-	<script type="text/javascript">
 		$(document).ready(function() {
 			$('.timepicker').timepicker();
 		});
+	}
 	</script>
+
 </body>
 </html>

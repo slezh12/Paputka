@@ -237,7 +237,6 @@ public class UserParseInfo extends ParseInfo {
 				String email = rs.getString("EMail");
 				User user = new User(id, first, last, gender, birthdate, email);
 				result.add(user);
-				System.out.println("1");
 			}
 			connect.CloseConnection();
 		} catch (SQLException e) {
