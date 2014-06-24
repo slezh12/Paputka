@@ -414,13 +414,15 @@
 			document.getElementById("hiddenField1").value=fromLongitude;
 			fromLatitude = pos.lat();
 			document.getElementById("hiddenField2").value=fromLatitude;
+			document.getElementById('from').readOnly  = false;
 			if(check==2) calcRoute();
 		} else {
 			toLongitude =pos.lng();
 			document.getElementById("hiddenField3").value=toLongitude;
 			toLatitude = pos.lat();
 			document.getElementById("hiddenField4").value=toLatitude;
-			calcRoute()
+			document.getElementById('to').readOnly  = false;
+			calcRoute();
 		}
 	}
 	google.maps.event.addDomListener(window, 'load', initialize);
