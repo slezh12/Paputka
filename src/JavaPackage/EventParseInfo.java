@@ -11,10 +11,9 @@ import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
 public class EventParseInfo extends ParseInfo {
 
-	
 	/**
 	 * Public constructor
-	 *
+	 * 
 	 */
 	public EventParseInfo(BasicDataSource source) {
 		super(source);
@@ -24,11 +23,10 @@ public class EventParseInfo extends ParseInfo {
 	 * returns Event by ID
 	 * 
 	 * @param ID
-	 * 			id of Event
+	 *            id of Event
 	 * 
-	 * @return Event
-	 * 			Event with given ID
-	 *
+	 * @return Event Event with given ID
+	 * 
 	 */
 	public Event getEventByID(int ID) {
 		Event event = null;
@@ -58,13 +56,11 @@ public class EventParseInfo extends ParseInfo {
 		return event;
 	}
 
-	
 	/**
 	 * Returns List of last added events
 	 * 
-	 * @return ArrayList<Event>
-	 * 			Last Added 15 Events
-	 *
+	 * @return ArrayList<Event> Last Added 15 Events
+	 * 
 	 */
 	public ArrayList<Event> getLastEvents() {
 		ArrayList<Event> events = new ArrayList<Event>();
@@ -77,18 +73,20 @@ public class EventParseInfo extends ParseInfo {
 				String fromPlace = rs.getString("FromPlace");
 				String toPlace = rs.getString("ToPlace");
 				boolean validation = rs.getBoolean("Validation");
-				boolean type = rs.getBoolean("Type");
-				int user = rs.getInt("UserID");
-				double fee = rs.getDouble("Fee");
-				double fromLatitude = rs.getDouble("FromLatitude");
-				double fromLongitude = rs.getDouble("FromLongitude");
-				double toLatitude = rs.getDouble("ToLatitude");
-				double toLongitude = rs.getDouble("ToLongitude");
-				Route route = new Route(fromPlace, toPlace, fromLongitude,
-						fromLatitude, toLongitude, toLatitude);
-				Event event = new Event(id, fee, user, places, validation,
-						type, route);
-				events.add(event);
+				if (validation) {
+					boolean type = rs.getBoolean("Type");
+					int user = rs.getInt("UserID");
+					double fee = rs.getDouble("Fee");
+					double fromLatitude = rs.getDouble("FromLatitude");
+					double fromLongitude = rs.getDouble("FromLongitude");
+					double toLatitude = rs.getDouble("ToLatitude");
+					double toLongitude = rs.getDouble("ToLongitude");
+					Route route = new Route(fromPlace, toPlace, fromLongitude,
+							fromLatitude, toLongitude, toLatitude);
+					Event event = new Event(id, fee, user, places, validation,
+							type, route);
+					events.add(event);
+				}
 			}
 			base.CloseConnection();
 		} catch (SQLException e) {
@@ -96,16 +94,15 @@ public class EventParseInfo extends ParseInfo {
 		}
 		return events;
 	}
-	
+
 	/**
 	 * returns Comments for given event
 	 * 
 	 * @param EventID
-	 * 			id of Event
+	 *            id of Event
 	 * 
-	 * @return ArrayList<Comment>
-	 * 			List of Comments for event
-	 *
+	 * @return ArrayList<Comment> List of Comments for event
+	 * 
 	 */
 	public ArrayList<Comment> getComments(int EventID) {
 		EventConnection ev = new EventConnection(source);
@@ -131,11 +128,10 @@ public class EventParseInfo extends ParseInfo {
 	 * Return Last ID of event Made by user
 	 * 
 	 * @param userID
-	 * 			author of Event
+	 *            author of Event
 	 * 
-	 * @return Integer
-	 * 			Last Event by user
-	 *
+	 * @return Integer Last Event by user
+	 * 
 	 */
 	public int getLastID(int userID) {
 		int ret = 0;
@@ -154,10 +150,9 @@ public class EventParseInfo extends ParseInfo {
 	/**
 	 * returns List of all Events
 	 * 
-	
-	 * @return ArrayList<Event>
-	 * 			all Events
-	 *
+	 * 
+	 * @return ArrayList<Event> all Events
+	 * 
 	 */
 	public ArrayList<Event> getEvents() {
 		BaseConnection base = new BaseConnection((BasicDataSource) source);
@@ -171,11 +166,10 @@ public class EventParseInfo extends ParseInfo {
 	 * returns Event made by certain user
 	 * 
 	 * @param UserID
-	 * 			author of Event
+	 *            author of Event
 	 * 
-	 * @return ArrayList<Event>
-	 * 			Events by user
-	 *
+	 * @return ArrayList<Event> Events by user
+	 * 
 	 */
 	public ArrayList<Event> getUsersEvents(int UserID) {
 		BaseConnection base = new BaseConnection((BasicDataSource) source);
@@ -189,11 +183,10 @@ public class EventParseInfo extends ParseInfo {
 	 * returns arraylist of events by given resultset
 	 * 
 	 * @param rs
-	 * 			ResultSet of selected events
+	 *            ResultSet of selected events
 	 * 
-	 * @return ArrayList<Event>
-	 * 			parsed result set into list
-	 *
+	 * @return ArrayList<Event> parsed result set into list
+	 * 
 	 */
 	public ArrayList<Event> formEvents(ResultSet rs) {
 		ArrayList<Event> res = new ArrayList<Event>();
@@ -224,19 +217,18 @@ public class EventParseInfo extends ParseInfo {
 		return res;
 	}
 
-	
 	/**
 	 * Inserts Comment Into base
 	 * 
 	 * @param eventID
-	 * 			event where comment is made
+	 *            event where comment is made
 	 * 
 	 * @param userID
-	 * 			user who made commment
+	 *            user who made commment
 	 * 
 	 * @param comment
-	 * 			text body of comment
-	 *
+	 *            text body of comment
+	 * 
 	 */
 	public void InsertIntoComments(int eventID, int userID, String comment) {
 		EventConnection ev = new EventConnection(source);
@@ -245,15 +237,14 @@ public class EventParseInfo extends ParseInfo {
 	}
 
 	/**
-	 * Returns list of Dates for Event,
-	 *  which is held everyday
+	 * Returns list of Dates for Event, which is held everyday
 	 * 
 	 * @param eventID
-	 * 			ID of Event
+	 *            ID of Event
 	 * 
-	 * @param ArrayList<EventDate>
-	 * 			Dates of Event
-	 *
+	 * @param ArrayList
+	 *            <EventDate> Dates of Event
+	 * 
 	 */
 	public ArrayList<EventDate> EveryDayDates(int EventID) {
 		BaseConnection base = new BaseConnection((BasicDataSource) source);
@@ -277,11 +268,10 @@ public class EventParseInfo extends ParseInfo {
 	 * Returns Time Stamp when event is held
 	 * 
 	 * @param EventID
-	 * 			id of Event
+	 *            id of Event
 	 * 
-	 * @return Timestamp
-	 * 			when Event is held
-	 *
+	 * @return Timestamp when Event is held
+	 * 
 	 */
 	public Timestamp EventDate(int EventID) {
 		Timestamp dt = null;
@@ -300,18 +290,16 @@ public class EventParseInfo extends ParseInfo {
 	}
 
 	/**
-	 * Returns boolean if user has sent
-	 * request to given event
+	 * Returns boolean if user has sent request to given event
 	 * 
 	 * @param UserID
-	 * 			sender of request
+	 *            sender of request
 	 * 
 	 * @param EventID
-	 * 			Event receiving request
+	 *            Event receiving request
 	 * 
-	 * @return boolean
-	 * 			true if has sent, esle false
-	 *
+	 * @return boolean true if has sent, esle false
+	 * 
 	 */
 	public boolean HasRequest(int EventID, int UserID) {
 		int check = 0;
@@ -332,14 +320,13 @@ public class EventParseInfo extends ParseInfo {
 	 * Returns if two events are similar
 	 * 
 	 * @param Want
-	 * 			want To go Event
+	 *            want To go Event
 	 * 
 	 * @param temp
-	 * 			second Event
+	 *            second Event
 	 * 
-	 * @return boolean
-	 * 			true if is similar, else false
-	 *
+	 * @return boolean true if is similar, else false
+	 * 
 	 */
 	private boolean onceToOnce(WantToGo want, Event temp) {
 		Timestamp current = null;
@@ -367,14 +354,13 @@ public class EventParseInfo extends ParseInfo {
 	 * Returns if two events are similar
 	 * 
 	 * @param Want
-	 * 			want To go Event
+	 *            want To go Event
 	 * 
 	 * @param temp
-	 * 			second Event
+	 *            second Event
 	 * 
-	 * @return boolean
-	 * 			true if is similar, else false
-	 *
+	 * @return boolean true if is similar, else false
+	 * 
 	 */
 	private boolean everyDayToEveryDay(WantToGo want, Event temp) {
 		boolean result = false;
@@ -410,11 +396,10 @@ public class EventParseInfo extends ParseInfo {
 	 * returns relevant Events after created WanttoGo
 	 * 
 	 * @param want
-	 * 			WantToGo object
+	 *            WantToGo object
 	 * 
-	 * @return ArrayList<Event>
-	 * 			Similar events to want
-	 *
+	 * @return ArrayList<Event> Similar events to want
+	 * 
 	 */
 	public ArrayList<Event> getEventsForSearch(WantToGo want) {
 		ArrayList<Event> result = new ArrayList<Event>();
