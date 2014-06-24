@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="java.sql.Date"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.sql.Timestamp"%>
 <%@page import="JavaPackage.EventConnection"%>
@@ -13,10 +14,7 @@
 <%@page import="JavaPackage.EventDate "%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="JavaPackage.Comment"%>
-<%
-	//@page import="java.sql.Date;"
-%>
-<%@page import="java.util.Date;"%>
+<%@page import="java.sql.Date;"%>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -73,8 +71,8 @@
 			    Timestamp dt =null;
 			    if(e.getType() && e.getValidation()){
 			    	dt = eventParse.EventDate(EventID);
-			    	java.util.Date date= new java.util.Date();
-			   	 	Timestamp now = new Timestamp(date.getTime());
+			    	java.util.Date today = new java.util.Date();
+			        Timestamp now = new java.sql.Timestamp(today.getTime());
 			   	 	System.out.print("dro=" + now);
 			    	if(dt.getYear() < now.getYear()){
 			    		e.setValidation(false);
@@ -247,65 +245,65 @@
 					<%=dt%></h3>
 				<%
 					} else {
-								    	 ArrayList<EventDate> ar = eventParse.EveryDayDates(EventID);
-								    	 for(int i = 0; i<ar.size(); i++){
-								    		 EventDate d = ar.get(i);
-								    		 switch(d.getDay()){
-								    		 case 0:
+												    	 ArrayList<EventDate> ar = eventParse.EveryDayDates(EventID);
+												    	 for(int i = 0; i<ar.size(); i++){
+												    		 EventDate d = ar.get(i);
+												    		 switch(d.getDay()){
+												    		 case 0:
 				%>
 				<h3>
 					ორშაბათი -
 					<%=d.getDate()%></h3>
 				<%
 					break; 
-								    		 case 1:
+												    		 case 1:
 				%>
 				<h3>
 					სამშაბათი -
 					<%=d.getDate()%></h3>
 				<%
 					break; 
-								    		 case 2:
+												    		 case 2:
 				%>
 				<h3>
 					ოთხშაბათი -
 					<%=d.getDate()%></h3>
 				<%
 					break; 
-								    		 case 3:
+												    		 case 3:
 				%>
 				<h3>
 					ხუთშაბათი -
 					<%=d.getDate()%></h3>
 				<%
 					break;
-								    		 case 4:
+												    		 case 4:
 				%>
 				<h3>
 					პარასკევი -
 					<%=d.getDate()%></h3>
 				<%
 					break; 
-								    		 case 5:
+												    		 case 5:
 				%>
 				<h3>
 					შაბათი -
 					<%=d.getDate()%></h3>
 				<%
 					break;
-								    		 case 6:
+												    		 case 6:
 				%>
 				<h3>
 					კვირა -
 					<%=d.getDate()%></h3>
 				<%
 					break; 
-								    			
-								    		 }
+												    			
+												    		 }
 				%>
 				<%
 					}
-								    }
+												    }
 				%>
 				<div class="line"></div>
 				<h2>კომენტარები</h2>
@@ -314,7 +312,7 @@
 					<ul id="latestnews">
 						<%
 							for(int i =0; i<arr.size(); i++){ 
-														          User temp = userParse.getUserByID(arr.get(i).getUserID());
+																						          User temp = userParse.getUserByID(arr.get(i).getUserID());
 						%>
 						<li><img src="images/demo/80x80.gif" alt="" />
 							<p>
