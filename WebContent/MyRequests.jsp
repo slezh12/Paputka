@@ -46,7 +46,9 @@
 		<!-- End Sidebar -->
 		<!-- Begin Content -->
 		<div id="content">
-						<h2 style="color:#8693EE"><strong>My Requests</strong></h2>	
+			<h2 style="color: #8693EE">
+				<strong>My Requests</strong>
+			</h2>
 			<div class="line"></div>
 			<%
 				BasicDataSource source = (BasicDataSource) application
@@ -60,20 +62,24 @@
 					int eventID = temp.getEventID();
 					EventParseInfo eventParse = new EventParseInfo(source);
 					Event tempEvent = eventParse.getEventByID(eventID);
-					Route route = tempEvent.getRoute();
-					String from = route.getFromPlace();
-					String to = route.getToPlace();
-					int accept = temp.getAcception();
-					ParseInfo parse = new ParseInfo(source);
-					String tel = parse.getPrivateInfo(tempEvent.getUserID(),
-							"PhoneNumber", "Tel");
-					UserParseInfo use = new UserParseInfo(source);
-					User eventOwner = use.getUserByID(tempEvent.getUserID());
-					String mail = eventOwner.getEmail();
-			%> 
+					boolean validation = tempEvent.getValidation();
+					if (validation) {
+						Route route = tempEvent.getRoute();
+						String from = route.getFromPlace();
+						String to = route.getToPlace();
+						int accept = temp.getAcception();
+						ParseInfo parse = new ParseInfo(source);
+						String tel = parse.getPrivateInfo(tempEvent.getUserID(),
+								"PhoneNumber", "Tel");
+						UserParseInfo use = new UserParseInfo(source);
+						User eventOwner = use.getUserByID(tempEvent.getUserID());
+						String mail = eventOwner.getEmail();
+			%>
 			<div id="column">
 				<ul id="latestnews">
-							<strong><a style="font-size:17px; "href="Event.jsp?id=<%=eventID%>"><%= from%> <i class="fa fa-arrow-right fa-spin"></i><%="  " +  to%></a></strong>
+					<strong><a style="font-size: 17px;"
+						href="Event.jsp?id=<%=eventID%>"><%=from%> <i
+							class="fa fa-arrow-right fa-spin"></i><%="  " + to%></a></strong>
 					<h4>
 						<%=temp.getText()%>
 					</h4>
@@ -94,24 +100,31 @@
 							style="float: left; opacity: 0.4;"
 							src="style/images/onebit_35.png"> <img
 							style="opacity: 0.4;" src="style/images/onebit_36.png">
-							<div id="number<%=i%>" style="float:left; font-size:15px; color:#79bbff;"><strong>Tel:</strong> <%=" "+ tel %></div>
-							<div id="mail<%=i%>" style="float:right;font-size:15px; color:#79bbff;"><strong>E-Mail:</strong> <%=" " + mail %></div>
-						<%
-							} else if (accept == 2) {
-						%>
-						<img style="opacity: 0.4; float: left;"
-							src="style/images/onebit_34.png">
-						<img style="float: left; opacity: 1;"
-							src="style/images/onebit_35.png">
-						<img style="opacity: 0.4;" src="style/images/onebit_36.png">
+					<div id="number<%=i%>"
+						style="float: left; font-size: 15px; color: #79bbff;">
+						<strong>Tel:</strong>
+						<%=" " + tel%></div>
+					<div id="mail<%=i%>"
+						style="float: right; font-size: 15px; color: #79bbff;">
+						<strong>E-Mail:</strong>
+						<%=" " + mail%></div>
+					<%
+						} else if (accept == 2) {
+					%>
+					<img style="opacity: 0.4; float: left;"
+						src="style/images/onebit_34.png">
+					<img style="float: left; opacity: 1;"
+						src="style/images/onebit_35.png">
+					<img style="opacity: 0.4;" src="style/images/onebit_36.png">
 					<%
 						}
 					%>
 					</p>
 				</ul>
 			</div>
-			<div style="margin-top:30px"class="line"></div>
+			<div style="margin-top: 30px" class="line"></div>
 			<%
+				}
 				}
 			%>
 			<!-- End Content -->
