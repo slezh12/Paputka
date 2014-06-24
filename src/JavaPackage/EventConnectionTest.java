@@ -24,12 +24,6 @@ public class EventConnectionTest {
 	private DataSource source;
 	private EventConnection base;
 
-	// testis chatarebamde sachiroa eventebis cxrilshi chaematos 5 minimum
-	// shemdegi
-	// record,romlis inserti shemdegnairad gamoiyureba:
-	// insert into Events
-	// (userID,places,fee,FromLongitude,FromLatitude,ToLongitude,ToLatitude,fromPlace,toPlace,type,validation)
-	// values(1, 5, 10, 1.1, 2.1, 3.1, 4.1, "tbilisi","batumi", false, true);
 
 	@Before
 	public void SetUp() {
@@ -51,17 +45,25 @@ public class EventConnectionTest {
 
 	@Test
 	public void testInsertIntoEvents() {
-		base.insertIntoEvents(1, 5, 10, 1.1, 2.1, 3.1, 4.1, "tbilisi",
-				"batumi", false, true);
 		try {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + database);
+			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
+			int ID = 0;
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM Events order by ID desc limit 1");
+					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
 			if (rs.isBeforeFirst()) {
 				rs.next();
-				assertEquals(1, rs.getInt("userID"));
+				ID = rs.getInt("ID");
+			}
+			base.insertIntoEvents(ID, 5, 10, 1.1, 2.1, 3.1, 4.1, "tbilisi",
+					"batumi", false, true);
+
+			rs = stmt.executeQuery("SELECT * FROM Events Where UserID = " + ID);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				assertEquals(ID, rs.getInt("userID"));
 				assertEquals(5, rs.getInt("places"));
 				double fee = rs.getDouble("fee");
 				double FromLongitude = rs.getDouble("FromLongitude");
@@ -76,7 +78,8 @@ public class EventConnectionTest {
 				assertEquals("tbilisi", rs.getString("fromPlace"));
 				assertEquals("batumi", rs.getString("toPlace"));
 				assertEquals(false, rs.getBoolean("type"));
-				stmt.executeUpdate("DELETE FROM Events ORDER BY ID DESC LIMIT 1");
+				stmt.executeUpdate("DELETE FROM Events where UserID = " + ID);
+				stmt.executeUpdate("DELETE FROM USERS where ID = " + ID);
 			} else
 				assertEquals(1, 2);
 			con.close();
@@ -91,143 +94,325 @@ public class EventConnectionTest {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + database);
-			ResultSet rs1 = stmt
-					.executeQuery("SELECT * FROM Events order by ID desc limit 1");
-			rs1.next();
-			int ID = rs1.getInt("ID");
-			base.insertIntoDates(ID, "1000-01-01 00:00:00");
+			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
+			int ID = 0;
+			int EventID = 0;
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM Dates order by ID desc limit 1");
+					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
 			if (rs.isBeforeFirst()) {
 				rs.next();
-				assertEquals(ID, rs.getInt("eventID"));
+				ID = rs.getInt("ID");
+			}
+			stmt.executeUpdate("INSERT INTO Events(UserID) Values (" + ID
+					+ " )");
+			rs = stmt
+					.executeQuery("SELECT ID FROM Events Where UserID = " + ID);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				EventID = rs.getInt("ID");
+			}
+			base.insertIntoDates(EventID, "1000-01-01 00:00:00");
+			rs = stmt.executeQuery("SELECT * FROM Dates Where EventID = "
+					+ EventID);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				assertEquals(EventID, rs.getInt("eventID"));
 				assertEquals("1000-01-01 00:00:00.0", rs.getString("date"));
-				stmt.executeUpdate("DELETE FROM Dates ORDER BY ID DESC LIMIT 1");
-				stmt.executeUpdate("DELETE FROM Events ORDER BY ID DESC LIMIT 1");
+				stmt.executeUpdate("DELETE FROM Dates Where EventID = "
+						+ EventID);
+				stmt.executeUpdate("DELETE FROM Events Where ID = " + EventID);
+				stmt.executeUpdate("DELETE FROM USERS WHERE ID = " + ID);
 			} else
 				assertEquals(1, 2);
 			con.close();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Test
-	public void testInsertIntoEveryday() {
+	public void testInsertIntoEveryDay() {
 		try {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + database);
-			ResultSet rs1 = stmt
-					.executeQuery("SELECT * FROM Events order by ID desc limit 1");
-			rs1.next();
-			int ID = rs1.getInt("ID");
-			base.insertIntoEveryday(ID, "00:00:00", 5);
+			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
+			int ID = 0;
+			int EventID = 0;
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM Everyday order by ID desc limit 1");
+					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
 			if (rs.isBeforeFirst()) {
 				rs.next();
-				assertEquals(ID, rs.getInt("eventID"));
+				ID = rs.getInt("ID");
+			}
+			stmt.executeUpdate("INSERT INTO Events(UserID) Values (" + ID
+					+ " )");
+			rs = stmt
+					.executeQuery("SELECT ID FROM Events Where UserID = " + ID);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				EventID = rs.getInt("ID");
+			}
+			base.insertIntoEveryday(EventID, "00:00:00", 5);
+			rs = stmt.executeQuery("SELECT * FROM Everyday Where EventID = "
+					+ EventID);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				assertEquals(EventID, rs.getInt("eventID"));
 				assertEquals(5, rs.getInt("day"));
 				assertEquals("00:00:00", rs.getString("StartTime"));
-				stmt.executeUpdate("DELETE FROM Everyday ORDER BY ID DESC LIMIT 1");
-				stmt.executeUpdate("DELETE FROM Events ORDER BY ID DESC LIMIT 1");
+				stmt.executeUpdate("DELETE FROM Everyday Where EventID = "
+						+ EventID);
+				stmt.executeUpdate("DELETE FROM Events Where ID = " + EventID);
+				stmt.executeUpdate("DELETE FROM Users Where ID = " + ID);
 			} else
 				assertEquals(1, 2);
 			con.close();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	@Test
-	public void testInsertIntoParticipants() {
-		try {
-			Connection con = source.getConnection();
-			Statement stmt = con.createStatement();
-			stmt.executeQuery("USE " + database);
-			ResultSet rs1 = stmt
-					.executeQuery("SELECT * FROM Events order by ID desc limit 1");
-			rs1.next();
-			int ID = rs1.getInt("ID");
-			base.insertIntoParticipants(ID, 1);
-			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM participants order by ID desc limit 1");
-			if (rs.isBeforeFirst()) {
-				rs.next();
-				assertEquals(ID, rs.getInt("eventID"));
-				assertEquals(1, rs.getInt("userID"));
-				stmt.executeUpdate("DELETE FROM Participants ORDER BY ID DESC LIMIT 1");
-				stmt.executeUpdate("DELETE FROM Events ORDER BY ID DESC LIMIT 1");
-			} else
-				assertEquals(1, 2);
-			con.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	// am testis chatarebis win sachiroa user-ebshi am insertis damateba
-	// mysqldan.
-	// insert into users (FirstName, LastName, Gender, BirthDate, Password,
-	// EMail)
-	// values (N'achi', N'baxlosania', true, '1994-08-23' ,
-	// N'40bd001563085fc35165329ea1ff5c5ecbdbbeef',
-	// N'achi_baxlosania@yahoo.com');
+	
 	@Test
 	public void testInsertIntoComments() {
 		try {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + database);
-			ResultSet rs1 = stmt
-					.executeQuery("SELECT * FROM Events order by ID desc limit 1");
-			rs1.next();
-			int ID = rs1.getInt("ID");
-			base.insertIntoComments(ID, 1, "sandro lezhava");
+			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
+			int ID = 0;
+			int EventID = 0;
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM Comments order by ID desc limit 1");
+					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
 			if (rs.isBeforeFirst()) {
 				rs.next();
-				assertEquals(ID, rs.getInt("eventID"));
-				assertEquals(1, rs.getInt("userID"));
-				assertEquals("sandro lezhava", rs.getString("comment"));
-				//assertEquals("1000-01-01 00:00:00.0", rs.getString("date"));
-				stmt.executeUpdate("DELETE FROM Comments ORDER BY ID DESC LIMIT 1");
-				stmt.executeUpdate("DELETE FROM Events ORDER BY ID DESC LIMIT 1");
+				ID = rs.getInt("ID");
+			}
+			stmt.executeUpdate("INSERT INTO Events(UserID) Values (" + ID
+					+ " )");
+			rs = stmt
+					.executeQuery("SELECT ID FROM Events Where UserID = " + ID);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				EventID = rs.getInt("ID");
+			}
+			base.insertIntoComments(EventID, ID, "nagdi testia");
+			rs = base.CommentsByID(EventID);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				assertEquals(EventID, rs.getInt("eventID"));
+				assertEquals(ID, rs.getInt("userID"));
+				assertEquals("nagdi testia", rs.getString("comment"));
+				stmt.executeUpdate("DELETE FROM Comments Where EventID = "
+						+ EventID);
+				stmt.executeUpdate("DELETE FROM Events Where ID = " + EventID);
+				stmt.executeUpdate("DELETE FROM Users Where ID = " + ID);
+			} else {
+				assertEquals(1, 2);
+			}
+			con.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	
+	@Test
+	public void testInsertIntoRequests(){
+		try {
+			Connection con = source.getConnection();
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
+			int ID = 0;
+			int EventID = 0;
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				ID = rs.getInt("ID");
+			}
+			stmt.executeUpdate("INSERT INTO Events(UserID) Values (" + ID
+					+ " )");
+			rs = stmt
+					.executeQuery("SELECT ID FROM Events Where UserID = " + ID);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				EventID = rs.getInt("ID");
+			}
+			base.InsertIntoRequsets(ID, EventID, "gamikole zma");
+			rs = base.Request(ID, EventID);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				assertEquals(EventID, rs.getInt("EventID"));
+				assertEquals(ID, rs.getInt("UserID"));
+				assertEquals("gamikole zma", rs.getString("Text"));
+				assertEquals(0, rs.getInt("Acception"));
+				stmt.executeUpdate("DELETE FROM Requests Where EventID = "
+						+ EventID);
+				stmt.executeUpdate("DELETE FROM Events Where ID = " + EventID);
+				stmt.executeUpdate("DELETE FROM Users Where ID = " + ID);
+			} else {
+				assertEquals(1, 2);
+			}
+			con.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testSelectLastEvents() {
+		try {
+			Connection con = source.getConnection();
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
+			int ID = 0;
+			int EventID = 0;
+			int EventID2 = 0;
+			int EventID3 = 0;
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				ID = rs.getInt("ID");
+			}
+			stmt.executeUpdate("INSERT INTO Events(UserID) Values (" + ID
+					+ " )");
+			rs = stmt
+					.executeQuery("SELECT ID FROM Events Where UserID = " + ID + " ORDER BY ID DESC");
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				EventID = rs.getInt("ID");
+			}
+			stmt.executeUpdate("INSERT INTO Events(UserID) Values (" + ID
+					+ " )");
+			rs = stmt
+					.executeQuery("SELECT ID FROM Events Where UserID = " + ID + " ORDER BY ID DESC");
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				EventID2 = rs.getInt("ID");
+			}
+			stmt.executeUpdate("INSERT INTO Events(UserID) Values (" + ID
+					+ " )");
+			rs = stmt
+					.executeQuery("SELECT ID FROM Events Where UserID = " + ID + " ORDER BY ID DESC");
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				EventID3 = rs.getInt("ID");
+			}
+			rs = base.selectLastEvents(2);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				assertEquals(EventID3, rs.getInt("ID"));
+				rs.next();
+				assertEquals(EventID2, rs.getInt("ID"));
+				stmt.executeUpdate("DELETE FROM Events Where UserID = " + ID);
+				stmt.executeUpdate("DELETE FROM Users Where ID = " + ID);
 			} else
 				assertEquals(1, 2);
 			con.close();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Test
-	public void testUpdateEvent() {
+	public void testUpdateEvent(){
 		try {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + database);
-			ResultSet rs1 = stmt
-					.executeQuery("SELECT * FROM Events order by ID desc limit 1");
-			rs1.next();
-			int ID = rs1.getInt("ID");
-			base.updateEvent(ID, false);
-			ResultSet rs = stmt.executeQuery("SELECT * FROM Events where ID ="
-					+ ID);
+			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
+			int ID = 0;
+			int EventID = 0;
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				ID = rs.getInt("ID");
+			}
+			stmt.executeUpdate("INSERT INTO Events(UserID, Validation) Values (" + ID
+					+ ", true )");
+			rs = stmt
+					.executeQuery("SELECT ID FROM Events Where UserID = " + ID);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				EventID = rs.getInt("ID");
+			}
+			base.updateEvent(EventID, false);
+			rs = stmt.executeQuery("SELECT * FROM Events where ID ="
+					+ EventID);
 			if (rs.isBeforeFirst()) {
 				rs.next();
 				assertEquals(false, rs.getBoolean("validation"));
-				stmt.executeUpdate("DELETE FROM Events ORDER BY ID DESC LIMIT 1");
+				assertEquals(EventID, rs.getInt("ID"));
+				stmt.executeUpdate("DELETE FROM Events Where ID = " + EventID);
+				stmt.executeUpdate("DELETE FROM Users Where ID = " + ID);
 			} else
 				assertEquals(1, 2);
 			con.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testInsertIntoParticipants() {
+		try {
+			Connection con = source.getConnection();
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
+			int ID = 0;
+			int EventID = 0;
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				ID = rs.getInt("ID");
+			}
+			stmt.executeUpdate("INSERT INTO Events(UserID) Values (" + ID
+					+ " )");
+			rs = stmt
+					.executeQuery("SELECT ID FROM Events Where UserID = " + ID);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				EventID = rs.getInt("ID");
+			}
+			base.insertIntoParticipants(EventID, ID);
+			rs = stmt
+					.executeQuery("SELECT * From Participants Where EventID = "
+							+ EventID);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				assertEquals(EventID, rs.getInt("eventID"));
+				assertEquals(ID, rs.getInt("userID"));
+				assertEquals(base.getParticipantsByEventID(EventID), 1);
+				stmt.executeUpdate("DELETE FROM Participants Where EventID = "
+						+ EventID);
+				stmt.executeUpdate("DELETE FROM Events Where ID = " + EventID);
+				stmt.executeUpdate("DELETE FROM Users Where ID = " + ID);
+			} else
+				assertEquals(1, 2);
+			con.close();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
+
+	
 	@After
 	public void after() {
 		base.CloseConnection();
