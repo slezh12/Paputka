@@ -6,10 +6,32 @@ import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
 public class WantToGoConnection extends BaseConnection {
 
+	/**
+	 * Public constructor
+	 * 
+	 */
 	public WantToGoConnection(BasicDataSource source) {
 		super(source);
 	}
 
+	/**
+	 * Void Inserts new WantToGo event
+	 * 
+	 * @param userID
+	 *            creator of want to go
+	 * @param title
+	 *            title of wantTogo
+	 * @param FromLongitude
+	 *            start place longiuted
+	 * @param FromLatitude
+	 *            start place latitude
+	 * @param ToLongitude
+	 *            destination longitude
+	 * @param ToLatitude
+	 *           destination latitude
+	 * @param type
+	 * 		type of event(everyday or once)
+	 */
 	public void insertIntoWantToGo(int userID, String title,
 			double FromLongitude, double FromLatitude, double ToLongitude,
 			double ToLatitude, boolean type) {
@@ -34,6 +56,21 @@ public class WantToGoConnection extends BaseConnection {
 		}
 	}
 
+	/**
+	 * Inserts into everyday events
+	 *            
+	 * @param wantToGoID
+	 * 			main event ID
+	 * 
+	 * @param startTime
+	 * 			starting time of event
+	 * 
+	 * @param endTime
+	 * 			ending time of event
+	 * 
+	 * @param day 
+	 * 			day when event is held
+	 */
 	public void insertIntoWantToGoEveryday(int wantToGoID, String startTime,
 			String endTime, int day) {
 		try {
@@ -51,7 +88,19 @@ public class WantToGoConnection extends BaseConnection {
 			e.printStackTrace();
 		}
 	}
-
+	/**
+	 * INserts into Dates when wantToGo event is held
+	 *
+	 *            
+	 * @param wantToGoID
+	 * 			ID of want to go event
+	 * 
+	 * @param startTime
+	 * 			Starting time event
+	 * 
+	 * @param endTime
+	 * 			ending time of event
+	 */
 	public void insertIntoWantToGoDates(int wantToGoID, String startTime,
 			String endTime) {
 		try {

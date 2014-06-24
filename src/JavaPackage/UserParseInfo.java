@@ -21,7 +21,6 @@ public class UserParseInfo extends ParseInfo {
 
 	/**
 	 * Returns if email is already in base
-	 *
 	 *            
 	 * @param email
 	 * 			email of user
