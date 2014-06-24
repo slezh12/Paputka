@@ -38,7 +38,7 @@
 			<!-- Begin Menu -->
 			<div id="menu" class="menu-v">
 				<ul>
-					<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
+					<li><a href="UserPage.jsp" class="active">Main Page</a></li>
 				</ul>
 			</div>
 			<!-- End Menu -->
@@ -46,7 +46,7 @@
 		<!-- End Sidebar -->
 		<!-- Begin Content -->
 		<div id="content">
-						<h2 style="color:#8693EE"><strong>ჩემი მოთხოვნები</strong></h2>	
+						<h2 style="color:#8693EE"><strong>My Requests</strong></h2>	
 			<div class="line"></div>
 			<%
 				BasicDataSource source = (BasicDataSource) application
@@ -94,8 +94,8 @@
 							style="float: left; opacity: 0.4;"
 							src="style/images/onebit_35.png"> <img
 							style="opacity: 0.4;" src="style/images/onebit_36.png">
-							<div id="number<%=i%>" style="float:left; font-size:15px; color:#79bbff;"><strong>ტელეფონი:</strong> <%=" "+ tel %></div>
-							<div id="mail<%=i%>" style="float:right;font-size:15px; color:#79bbff;"><strong>ელ-ფოსტა:</strong> <%=" " + mail %></div>
+							<div id="number<%=i%>" style="float:left; font-size:15px; color:#79bbff;"><strong>Tel:</strong> <%=" "+ tel %></div>
+							<div id="mail<%=i%>" style="float:right;font-size:15px; color:#79bbff;"><strong>E-Mail:</strong> <%=" " + mail %></div>
 						<%
 							} else if (accept == 2) {
 						%>
