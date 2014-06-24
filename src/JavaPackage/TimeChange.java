@@ -2,6 +2,16 @@ package JavaPackage;
 
 public class TimeChange {
 
+	/**
+	 * Returns String of Time
+	 *
+	 *            
+	 * @param time
+	 * 			time represented as string
+	 * 
+	 * @return string
+	 * 			parsed time
+	 */
 	public static String getCorrectDate(String time) {
 		String result = "";
 		int count = 0;
@@ -22,6 +32,18 @@ public class TimeChange {
 		result = year + "-" + month + "-" + day;
 		return result;
 	}
+	
+
+	/**
+	 * Returns String of Time
+	 *
+	 *            
+	 * @param time
+	 * 			time represented as string
+	 * 
+	 * @return string
+	 * 			parsed time into string
+	 */
 	public static String getCorrectDateForFacebook(String time) {
 		String result = "";
 		int count = 0;

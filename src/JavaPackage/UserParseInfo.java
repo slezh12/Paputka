@@ -10,10 +10,25 @@ import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
 public class UserParseInfo extends ParseInfo {
 
+
+	/**
+	 *Public Constructor
+	 */
 	public UserParseInfo(BasicDataSource source) {
 		super(source);
 	}
 
+
+	/**
+	 * Returns if email is already in base
+	 *
+	 *            
+	 * @param email
+	 * 			email of user
+	 * 
+	 * @return boolean
+	 * 			true if is in base, else false
+	 */
 	public boolean isUserAlreadyInBase(String email) {
 		UserConnection base = new UserConnection((BasicDataSource) source);
 		try {
@@ -29,6 +44,18 @@ public class UserParseInfo extends ParseInfo {
 		return false;
 	}
 
+	/**
+	 * Returns object User, after LogIn      
+	 *      
+	 * @param email
+	 * 			email of user
+	 * 
+	 * @param password
+	 *			password Entered By user
+	 * 
+	 * @return user
+	 * 			null if password or email doesn't match
+	 */
 	public User getUser(String email, String password) {
 		User user = null;
 		password = Hash.calculateHashCode(password);
@@ -52,6 +79,20 @@ public class UserParseInfo extends ParseInfo {
 		}
 		return user;
 	}
+	
+	
+	/**
+	 * Returns object User, after Facebook or Google LogIn      
+	 *      
+	 * @param email
+	 * 			email of user
+	 * 
+	 * @param password
+	 *			password Entered By user
+	 * 
+	 * @return user
+	 * 			null if password or email doesn't match
+	 */
 	public User getUserFBGoogle(String email, String password) {
 		User user = null;
 		UserConnection base = new UserConnection((BasicDataSource) source);
@@ -75,6 +116,16 @@ public class UserParseInfo extends ParseInfo {
 		return user;
 	}
 
+	
+	/**
+	 * Returns object User with Given ID     
+	 *      
+	 * @param ID
+	 *			ID of User
+	 * 
+	 * @return user
+	 * 			null if ID doesn't exists 
+	 */
 	public User getUserByID(int ID) {
 		User user = null;
 		BaseConnection base = new BaseConnection((BasicDataSource) source);
@@ -96,6 +147,15 @@ public class UserParseInfo extends ParseInfo {
 	}
 
 	// sxvisi requestebi chemtan
+	/**
+	 * Returns List of Requests, Sent To one User   
+	 *      
+	 * @param userID
+	 *			ID of user, whom requests are sent
+	 * 
+	 * @return ArrayList<Request>
+	 * 			List of recieved requests
+	 */
 	public ArrayList<Request> getOthrRequests(int userID) {
 		ArrayList<Request> requests = new ArrayList<Request>();
 		UserConnection base = new UserConnection((BasicDataSource) source);
@@ -120,6 +180,15 @@ public class UserParseInfo extends ParseInfo {
 	}
 
 	// chemi requestebi sxvebtan
+	/**
+	 * Returns List of Requests, Sent By one User   
+	 *      
+	 * @param userID
+	 *			ID of user, who sent requests
+	 * 
+	 * @return ArrayList<Request>
+	 * 			List of sent requests
+	 */
 	public ArrayList<Request> getMyRequests(int userID) {
 		ArrayList<Request> requests = new ArrayList<Request>();
 		BaseConnection base = new BaseConnection((BasicDataSource) source);
@@ -143,24 +212,63 @@ public class UserParseInfo extends ParseInfo {
 		return requests;
 	}
 
+	/**
+	 * Inserts After adding status to user Profile
+	 *      
+	 * @param id
+	 *			ID of user who changed status
+	 *
+	 * @param about 
+	 * 			String of status
+	 * 
+	 */
 	public void insertIntoStatuses(String about, int id) {
 		UserConnection connect = new UserConnection((BasicDataSource) source);
 		connect.insert("Statuses", "status", about, id);
 		connect.CloseConnection();
 	}
 
+	/**
+	 * Inserts After adding phone number to user Proifle
+	 *      
+	 * @param id
+	 *			ID of user who added phone Number
+	 *
+	 * @param tel
+	 * 			String of phone number
+	 * 
+	 */
 	public void insertIntoTel(String tel, int id) {
 		UserConnection connect = new UserConnection((BasicDataSource) source);
 		connect.insert("Tel", "PhoneNumber", tel, id);
 		connect.CloseConnection();
 	}
 
+	/**
+	 * Updates Base After Updating status to user Proifle
+	 *      
+	 * @param id
+	 *			ID of user who changed status
+	 *
+	 * @param about 
+	 * 			String of status
+	 * 
+	 */
 	public void updateStatuses(String about, int id) {
 		UserConnection connect = new UserConnection((BasicDataSource) source);
 		connect.update("Statuses", "status", about, id);
 		connect.CloseConnection();
 	}
-
+	/**
+	 * Updates Base After updating phone number to user Proifle
+	 *      
+	 * @param id
+	 *			ID of user who added phone Number
+	 *
+	 * @param tel
+	 * 			String of phone number
+	 * 
+	 */
 	public void updateTel(String tel, int id) {
 		UserConnection connect = new UserConnection((BasicDataSource) source);
 		connect.update("Tel", "PhoneNumber", tel, id);
@@ -175,6 +283,18 @@ public class UserParseInfo extends ParseInfo {
 		return false;
 	}
 	
+	/**
+	 * Returns boolean if User can be rated
+	 *      
+	 * @param firstUserID
+	 *			user who rates
+	 *
+	 *	@param SecondUserID
+	 *			user who is rated
+	 *
+	 * @return boolean
+	 * 			true if can rate, else false
+	 */
 	public boolean canRate(int firstUserID, int secondUserID) throws SQLException {
 		UserConnection connect = new UserConnection((BasicDataSource) source);
 		UserConnection con = new UserConnection((BasicDataSource) source);
@@ -188,6 +308,15 @@ public class UserParseInfo extends ParseInfo {
 		return timeFactor;	
 	}
 			
+	/**
+	 * Returns Integer of current rating for user
+	 *      
+	 * @param UserID
+	 *			User whose rates are displayed
+	 *
+	 * @return Integer
+	 * 			user's rating
+	 */
 	public Integer getRating(int userID) throws SQLException {
 		double rate = 0; 
 		Integer forReturn = null;
@@ -206,7 +335,7 @@ public class UserParseInfo extends ParseInfo {
 		connect.CloseConnection();
 		return forReturn;
 	}
-
+	
 	public Integer getRatingID(int FirstID,int SecondID)  { 
 		Integer ret = null;
 		UserConnection connect = new UserConnection((BasicDataSource) source); 
@@ -223,6 +352,18 @@ public class UserParseInfo extends ParseInfo {
 		return ret;
 	}
 	
+	/**
+	 * Returns List of similar users after search
+	 *      
+	 * @param firstName
+	 *			first name of user
+	 *
+	 *	@param LastName
+	 *			last name of user
+	 *
+	 * @return ArrayList<User>
+	 * 			Users similar to firstName or LastName
+	 */
 	public ArrayList<User> getUsersBySearch(String firstName, String LastName){
 		ArrayList<User> result = new ArrayList<User>();
 		UserConnection connect = new UserConnection((BasicDataSource) source);
