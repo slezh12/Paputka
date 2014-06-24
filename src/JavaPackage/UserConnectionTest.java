@@ -40,7 +40,7 @@ public class UserConnectionTest {
 	 * N'40bd001563085fc35165329ea1ff5c5ecbdbbeef',
 	 * N'achi_baxlosania@yahoo.com');
 	 */
-	 @Test
+	 //@Test
 	public void test() {
 		UserConnection base = new UserConnection((BasicDataSource) source);
 		try {
@@ -65,7 +65,7 @@ public class UserConnectionTest {
 
 	}
 
-	 @Test
+	 //@Test
 	public void testInsertIntoUsers() {
 		UserConnection base = new UserConnection((BasicDataSource) source);
 		String password1 = Hash.calculateHashCode("123456");
@@ -98,7 +98,7 @@ public class UserConnectionTest {
 	}
 
 	// chems bazashi gavakete ragac cvlilebebi rac damchirda testistvis
-	 @Test
+	 //@Test
 	public void testInsertIntoRequest() {
 		UserConnection base = new UserConnection((BasicDataSource) source);
 		Date date = Date.valueOf("2000-03-04");
@@ -148,7 +148,7 @@ public class UserConnectionTest {
 	}
 
 	// am metodis dasatestadac damchirda bazis cvlileba
-	 @Test
+	// @Test
 	public void testSelectRatings() {
 		int secondID = 1;
 		try {
@@ -180,7 +180,7 @@ public class UserConnectionTest {
 	}
 
 	// es ar imushavebs anu shecdomaze gava tu baza carielia
-	 @Test
+	// @Test
 	public void testUpdateRequest() {
 		UserConnection base = new UserConnection((BasicDataSource) source);
 		int requestID = 1;
@@ -215,7 +215,7 @@ public class UserConnectionTest {
 	}
 
 	// es ar imushavebs anu shecdomaze gava tu baza carielia
-	 @Test
+	// @Test
 	public void testUpdate() {
 		UserConnection base = new UserConnection((BasicDataSource) source);
 		int AvatarID = 1;
@@ -248,7 +248,7 @@ public class UserConnectionTest {
 
 	}
 
-	@Test
+	//@Test
 	public void testInsert() {
 		UserConnection base = new UserConnection((BasicDataSource) source);
 		String imageTrue = "she yvelaze lamazo";
@@ -284,7 +284,7 @@ public class UserConnectionTest {
 
 	}
 
-	 @Test
+	// @Test
 	public void test3() {
 		try {
 			UserConnection user = new UserConnection((BasicDataSource) source);
@@ -332,7 +332,7 @@ public class UserConnectionTest {
 
 	}
 
-	 @Test
+	 //@Test
 	public void getUsersRequestsTest() {
 		try {
 			UserConnection user = new UserConnection((BasicDataSource) source);
@@ -389,7 +389,7 @@ public class UserConnectionTest {
 		}
 	}
 
-	@Test
+	//@Test
 	public void getRaitingBooleanTest() {
 		try {
 			UserConnection user = new UserConnection((BasicDataSource) source);

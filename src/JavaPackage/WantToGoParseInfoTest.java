@@ -10,6 +10,7 @@ import java.sql.Statement;
 import javax.sql.DataSource;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
+import org.hamcrest.core.IsEqual;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,22 +34,26 @@ public class WantToGoParseInfoTest {
 				+ database);
 	}
 	
-	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
+
 	
 	@Test
 	public void testGetLastID() {
-		int userID = 1;
+		
 		
 		boolean type = false;
 		try {
-		//	WantToGoConnection base = new WantToGoConnection((BasicDataSource) source);
-		//	base.insertIntoWantToGo(userID, "bla", 0, 0, 0, 0, true);
-		//	base.CloseConnection();
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
+			int userID = 0;
+			int EventID = 0;
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				userID = rs.getInt("ID");
+			}
 			stmt.executeQuery("USE " + database);
 			stmt.executeUpdate("INSERT INTO WantToGo (UserID , title, FromLongitude , FromLatitude ,ToLongitude, ToLatitude , Type) VALUES("
 					+ userID
@@ -74,11 +79,11 @@ public class WantToGoParseInfoTest {
 				
 			}	
 			WantToGoParseInfo temp = new WantToGoParseInfo((BasicDataSource) source);
-			assertEquals(lastID, temp.getLastID(1));
-			assertFalse(isEqual(-1, temp.getLastID(1)));
+			assertEquals(lastID, temp.getLastID(userID));
+			assertFalse(isEqual(-1, temp.getLastID(userID)));
 			
-			stmt.executeUpdate("DELETE FROM WantToGO ORDER BY ID DESC LIMIT 1");
-				
+			stmt.executeUpdate("DELETE FROM WantToGo where UserID = " + userID);
+			stmt.executeUpdate("DELETE FROM Users where ID = " + userID);
 		//	stmt.executeUpdate("DELETE FROM WantToGO WHERE UserID  = "
 		//				+ 1);
 			
@@ -89,21 +94,28 @@ public class WantToGoParseInfoTest {
 	}
 	
 	// checks if two ints equla to each other
-	private boolean isEqual(int first, int second) {
+	private boolean isEqual(double first, double second) {
 		return (first == second);
 	}
 	
 	@Test
 	public void testgetWantToGos() {
-		int userID = 1;
+		
 		
 		boolean type = false;
 		try {
-		//	WantToGoConnection base = new WantToGoConnection((BasicDataSource) source);
-		//	base.insertIntoWantToGo(userID, "bla", 0, 0, 0, 0, true);
-		//	base.CloseConnection();
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
+			int userID = 0;
+			int EventID = 0;
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				userID = rs.getInt("ID");
+			}
 			stmt.executeQuery("USE " + database);
 			stmt.executeUpdate("INSERT INTO WantToGo (UserID , title, FromLongitude , FromLatitude ,ToLongitude, ToLatitude , Type) VALUES("
 					+ userID
@@ -141,11 +153,12 @@ public class WantToGoParseInfoTest {
 			
 			
 			WantToGoParseInfo temp = new WantToGoParseInfo((BasicDataSource) source);
-			assertEquals(2, temp.getWantToGos(1).size());
-			assertFalse(isEqual(3, temp.getLastID(1)));
+			assertEquals(2, temp.getWantToGos(userID).size());
+			assertFalse(isEqual(3, temp.getLastID(userID)));
 			
-			stmt.executeUpdate("DELETE FROM WantToGO ORDER BY ID DESC LIMIT 2");
-				
+			stmt.executeUpdate("DELETE FROM WantToGo Where UserID = " + userID);
+			stmt.executeUpdate("DELETE FROM Users where ID = " + userID);
+
 		//	stmt.executeUpdate("DELETE FROM WantToGO WHERE UserID  = "
 		//				+ 1);
 			
@@ -157,15 +170,21 @@ public class WantToGoParseInfoTest {
 	
 	@Test
 	public void testgetWantToGos2() {
-		int userID = 1;
 		
 		boolean type = false;
 		try {
-		//	WantToGoConnection base = new WantToGoConnection((BasicDataSource) source);
-		//	base.insertIntoWantToGo(userID, "bla", 0, 0, 0, 0, true);
-		//	base.CloseConnection();
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
+			int userID = 0;
+			int EventID = 0;
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				userID = rs.getInt("ID");
+			}
 			stmt.executeQuery("USE " + database);
 			
 			
@@ -187,18 +206,77 @@ public class WantToGoParseInfoTest {
 					+ type +")");
 			
 			
-			WantToGoParseInfo temp = new WantToGoParseInfo((BasicDataSource) source);
-			assertEquals(1, temp.getWantToGos(1).size());
-			assertEquals(1, temp.getWantToGos(1).get(0).getUserID());
-			assertTrue(temp.getWantToGos(1).get(0).getTitle().equals("bla2"));
-			assertFalse(type);
-			assertFalse(isEqual(4, temp.getLastID(1)));
 			
-			stmt.executeUpdate("DELETE FROM WantToGO ORDER BY ID DESC LIMIT 1");
+			WantToGoParseInfo temp = new WantToGoParseInfo((BasicDataSource) source);
+			assertEquals(1, temp.getWantToGos(userID).size());
+			assertEquals(userID, temp.getWantToGos(userID).get(0).getUserID());
+			assertTrue(temp.getWantToGos(userID).get(0).getTitle().equals("bla2"));
+			assertFalse(type);
+			
+			stmt.executeUpdate("DELETE FROM WantToGo where UserID = " + userID);
+			stmt.executeUpdate("DELETE FROM Users where ID = " + userID);
 				
 		//	stmt.executeUpdate("DELETE FROM WantToGO WHERE UserID  = "
 		//				+ 1);
 			
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testGetWantToGo(){
+		try {
+			Connection con = source.getConnection();
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
+			int userID = 0;
+			int EventID = 0;
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				userID = rs.getInt("ID");
+			}
+			stmt.executeQuery("USE " + database);
+			stmt.executeUpdate("INSERT INTO WantToGo (UserID , title, FromLongitude , FromLatitude ,ToLongitude, ToLatitude , Type) VALUES("
+					+ userID
+					+ ","
+					+ "'"
+					+ "bla"
+					+ "'"
+					+ ","
+					+ 0
+					+ ","
+					+ 0
+					+ ","
+					+ 0
+					+ ","
+					+ 0
+					+ ","
+					+ false +")");
+			int lastID = 0;
+			ResultSet res = stmt.executeQuery("SELECT * FROM WantToGo ORDER BY ID DESC LIMIT 1");
+			while(res.next()){
+				 lastID = res.getInt("ID");
+				
+			}	
+			WantToGoParseInfo temp = new WantToGoParseInfo((BasicDataSource) source);
+			WantToGo t = temp.getWantToGo(lastID, userID);
+			assertEquals(t.getID(), lastID);
+			assertEquals(t.getUserID(), userID);
+			assertEquals(t.getTitle(), "bla");
+			assertEquals(t.getType(), false);
+			assertEquals(isEqual(t.getFromLatitude(),0), true);
+			assertEquals(isEqual(t.getFromLongitude(),0), true);
+			assertEquals(isEqual(t.getToLatitude(),0), true);
+			assertEquals(isEqual(t.getToLongitude(),0), true);
+			
+			stmt.executeUpdate("DELETE FROM WantToGo where UserID = " + userID);
+			stmt.executeUpdate("DELETE FROM Users where ID = " + userID);
+		
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
