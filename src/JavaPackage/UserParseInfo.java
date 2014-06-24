@@ -276,7 +276,7 @@ public class UserParseInfo extends ParseInfo {
 	
 	private boolean rateHelper( ResultSet rs) throws SQLException {
 		while (rs.next()) {
-			if (rs.getBoolean("Events.Type") && !rs.getBoolean("Events.Validation"))
+			if ((rs.getBoolean("Events.Type") && !rs.getBoolean("Events.Validation")) || !rs.getBoolean("Events.Type"))
 				return true;
 		}
 		return false;
