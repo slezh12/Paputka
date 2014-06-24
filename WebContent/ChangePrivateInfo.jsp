@@ -21,11 +21,11 @@
 
 <script>function CheckAlerts() {
 		if ((registerform.about.value).length > 200) {
-			alert("ჩემს შესახებ ველი  არ უნდა აღემატებოდეს 200 სიმბოლოს");
+			alert("About Me should not be more than 200 symbols");
 			return false;
 		}
 		if ((registerform.tel.value).length > 25) {
-			alert("ტელეფონის ველი  არ უნდა აღემატებოდეს 25 სიმბოლოს");
+			alert("Tel should not be more than 25 symbols");
 			return false;
 		}
 		return true;
@@ -43,7 +43,7 @@
 			<!-- Begin Menu -->
 			<div id="menu" class="menu-v">
 				<ul>
-					<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
+					<li><a href="UserPage.jsp" class="active">Main Page</a></li>
 				</ul>
 			</div>
 			<!-- End Menu -->
@@ -51,15 +51,15 @@
 		<!-- End Sidebar -->
 		<!-- Begin Content -->
 		<div id="content">
-				<h2 style="color:#8693EE"><strong>პროფილის შეცვლა</strong></h2>				
+				<h2 style="color:#8693EE"><strong>Change Profile Settings</strong></h2>				
 				<div class="line"></div>
 					<form action="ChangeProfileServlet" id="registerform" name="registerform"
 						method="post">
-						<textarea style="resize:none;" class="textfield" rows="3" placeholder="ჩემს შესახებ" name="about" tabindex="1"></textarea>
-						<input type="text" name="tel" placeholder="ტელ" class="textfield" tabindex="2"></input>
+						<textarea style="resize:none;" class="textfield" rows="3" placeholder="About Me" name="about" tabindex="1"></textarea>
+						<input type="text" name="tel" placeholder="Tel" class="textfield" tabindex="2"></input>
 						<p>
 						<input type="submit" name="create" id="registerbtn"
-							class="flatbtn-blu hidemodal" value="შეცვლა" tabindex="3"
+							class="flatbtn-blu hidemodal" value="SUBMIT" tabindex="3"
 							onClick="return CheckAlerts();"></input>
 						</p>
 					</form>

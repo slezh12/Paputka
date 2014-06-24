@@ -55,27 +55,27 @@
 				<h3 id="welcomeUser"><%= user.getFirstName()+" "+user.getLastName() %> </h3> 				
 				<div id="menu" class="menu-v">
 					<ul>
-						<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
+						<li><a href="UserPage.jsp" class="active">Main Page</a></li>
 					</ul>
 				</div>
 				<div id="UserProfile">
-						<strong style="color:#6AA86B; float:left;">დაბადების თარიღი:</strong>  <%= user.getBirthdate() %>  
+						<strong style="color:#6AA86B; float:left;">Date of birth:</strong>  <%= user.getBirthdate() %>  
 					<br><br>
-						<div style="float:left" > <strong style="color:#6AA86B"> სქესი:</strong> 
+						<div style="float:left" > <strong style="color:#6AA86B"> Gender:</strong> 
 						</div>		
 						<% if (user.getGender()){%>
 							<img  style="margin-left:50px; " src="style/images/male.png"/>
 						<% }else{ %>
 							<img  style="margin-left: 50px; " src="style/images/female.png"/>
 						<%}%>
-						<div style="float:left;" ><strong style="float:left; color:#6AA86B;"> სტატუსი:</strong>  <%= statuses  %></div>
+						<div style="float:left;" ><strong style="float:left; color:#6AA86B;"> Status:</strong>  <%= statuses  %></div>
 					
 					<div style="float:left; margin-left:23px; margin-top:20px; margin-bottom:30px;" >
 					<% 
 					Integer rating = userParse.getRating(userID);
 					if (rating != null) {
 					%>
-					<strong style=" color:#6AA86B">	მომხმარებლის რეიტინგი</strong>				
+					<strong style=" color:#6AA86B">	User Rating</strong>				
 							<form id="ratingsForm1">
 								<div class="stars">
 									<%
@@ -89,13 +89,13 @@
 							</form>
 						<%} else { %>
 						<div style="margin-left:0px;">
-						<strong style="left:0px;float:left; color:#6AA86B">მომხარებელი შეუფასებელია</strong>
+						<strong style="left:0px;float:left; color:#6AA86B">Not Yet Rated</strong>
 						</div>
 						<%}%>
 					</div>
 					<br>
 					<% if (userParse.canRate(userIDGuest, userID)){%>
-						<strong style="color:#6AA86B">შეაფასეთ მომხმარებელი </strong>
+						<strong style="color:#6AA86B">Rate User</strong>
 							<form id="ratingsForm" action="RatingServlet" method="post">
 								<div style="width:60%; margin: 0 auto;"class="stars">
 									<input type="radio" name="star" class="star-1" id="star-1" value="1" /> 
@@ -110,7 +110,7 @@
 							 		<label class="star-5" for="star-5"></label>   
 									<span></span>
 								</div> 
-								<input type="submit" name="btn" class="mailnumber" value="გაგზავნა" ></input>
+								<input type="submit" name="btn" class="mailnumber" value="SEND" ></input>
 								<input type="hidden" name="userID" value="<%=userID%>" >
 							</form>
 					<%}%>
@@ -120,7 +120,7 @@
 			<!-- End Sidebar -->
 		<!-- Begin Content -->
 			<div id="content">
-				<h2 style="color:#8693EE"><strong>მომხმარებლის პოსტები</strong></h2>	
+				<h2 style="color:#8693EE"><strong><%=current.getFirstName()%>'s posts</strong></h2>	
 				<div class="line"></div>
 		<!-- End Content -->
 		<%for (int i = 0; i < list.size(); i++) {

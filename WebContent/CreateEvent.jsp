@@ -28,23 +28,23 @@
 </script>
 
 <script type="text/javascript">
-	function CheckAlerts() {		
+	function CheckAlerts() {
 		if ((registerform.from.value).length == 0
 				|| (registerform.from.value).length > 30) {
-			alert("გასვლის ადგილი უნდა იყოს 1-დან 30 სიმბოლომდე ზომის");
+			alert("Point of departure must be between 1-30 symbols");
 			return false;
 		}
 		if ((registerform.to.value).length == 0
 				|| (registerform.to.value).length > 30) {
-			alert("დანიშნულების ადგილი უნდა იყოს 1-დან 30 სიმბოლომდე ზომის");
+			alert("Destination must be between 1-30 symbols");
 			return false;
 		}
-		if((registerform.fee.value).length==0){
-			alert("შეიყვანეთ გადასახადი");
+		if ((registerform.fee.value).length == 0) {
+			alert("Enter fee");
 			return false;
 		}
-		if((registerform.places.value).length==0){
-			alert("შეიყვანეთ ადგილების რაოდენობა");
+		if ((registerform.places.value).length == 0) {
+			alert("Enter number of places");
 			return false;
 		}
 		var radios = document.getElementsByName('type');
@@ -63,13 +63,13 @@
 			}
 		}
 		if (Chcount == 0) {
-			alert("აირჩიეთ ყოველდღიური ან ერთჯერადი");
+			alert("Choose daily or one way");
 			return false;
 		}
 		if (once) {
 			if (((registerform.date.value).length == 0)
 					|| ((registerform.time.value).length == 0)) {
-				alert("ერთი ველი მაინც ერთჯერადისთვის ცარიელია");
+				alert("One of the field for one way is empty");
 				return false;
 			}
 		}
@@ -91,43 +91,43 @@
 				}
 			}
 			if (index == 0) {
-				alert("არც ერთი დღე არ არის მონიშნული");
+				alert("None of the days are checked");
 				return false;
 			}
 			for (var i = 0; i < index; i++) {
 				if (array[i] == "0") {
 					if ((registerform.time0.value).length == 0) {
-						alert("ორშაბათი დღე მონიშნულია,მაგრამ საწყისი დრო არ არის მითითებული");
+						alert("Monday is checked,but start time is not filled");
 						return false;
 					}
 				} else if (array[i] == "1") {
 					if ((registerform.time1.value).length == 0) {
-						alert("სამშაბათი დღე მონიშნულია,მაგრამ საწყისი დრო არ არის მითითებული");
+						alert("Tuesday is checked,but start time is not filled");
 						return false;
 					}
 				} else if (array[i] == "2") {
 					if ((registerform.time2.value).length == 0) {
-						alert("ოთხშაბათი დღე მონიშნულია,მაგრამ საწყისი დრო არ არის მითითებული");
+						alert("Wednesday is checked,but start time is not filled");
 						return false;
 					}
 				} else if (array[i] == "3") {
 					if ((registerform.time3.value).length == 0) {
-						alert("ხუთშაბათი დღე მონიშნულია,მაგრამ საწყისი დრო არ არის მითითებული");
+						alert("Thursday is checked,but start time is not filled");
 						return false;
 					}
 				} else if (array[i] == "4") {
 					if ((registerform.time4.value).length == 0) {
-						alert("პარასკევი დღე მონიშნულია,მაგრამ საწყისი დრო არ არის მითითებული");
+						alert("Friday is checked,but start time is not filled");
 						return false;
 					}
 				} else if (array[i] == "5") {
 					if ((registerform.time5.value).length == 0) {
-						alert("შაბათი დღე მონიშნულია,მაგრამ საწყისი დრო არ არის მითითებული");
+						alert("Saturday is checked,but start time is not filled");
 						return false;
 					}
 				} else if (array[i] == "6") {
 					if ((registerform.time6.value).length == 0) {
-						alert("კვირა დღე მონიშნულია,მაგრამ საწყისი დრო არ არის მითითებული");
+						alert("Sunday is checked,but start time is not filled");
 						return false;
 					}
 				}
@@ -149,81 +149,82 @@
 			<!-- Begin Menu -->
 			<div id="menu" class="menu-v">
 				<ul>
-					<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
-					<li><a id="modaltrigger">შეავსეთ
-							დეტალური ინფორმაცია</a></li>
+					<li><a href="UserPage.jsp" class="active">Main Page</a></li>
+					<li><a id="modaltrigger">Fill detailed info</a></li>
 				</ul>
 			</div>
 			<!-- End Menu -->
 			<!--Begin Login & Registration -->
 			<div id="registermodal" style="display: none;">
-				<h2 class="txt">დეტალური ინფორმაცია მგზავრობაზე</h2>
+				<h2 class="txt">Detailed info about trip</h2>
 				<h5>
-					<b>გთხოვთ შეავსოთ ყველა ველი</b>
+					<b>Please fill every field</b>
 				</h5>
 				<form action="EventServlet" id="registerform" name="registerform"
 					method="post">
 					<div class="txtfield">
-						<input type="text" name="from" placeholder="გასვლის ადგილი"
+						<input type="text" name="from" placeholder="Departure Point"
 							class="textfield" id="from" tabindex="1"></input>
 					</div>
 					<div class="txtfield">
-						<input type="text" name="to" placeholder="დანიშნულების ადგილი"
+						<input type="text" name="to" placeholder="Destination"
 							class="textfield" id="to" tabindex="2"></input>
 					</div>
 					<div class="txtfield">
 						<input type="number" min="0" step="0.01" name="fee"
-							placeholder="გადასახადი (ლარებში)" class="textfield" tabindex="3"></input>
+							placeholder="Fee(in GEL)" class="textfield" tabindex="3"></input>
 					</div>
 					<div class="txtfield">
 						<input type="number" min="1" name="places"
-							placeholder="ადგილების რაოდენობა" class="textfield" tabindex="3"></input>
+							placeholder="Number of Places" class="textfield" tabindex="3"></input>
 					</div>
 					<p>
-						ყოველდღიური <input type="radio" class="radio1" name="type"
+						Daily <input type="radio" class="radio1" name="type"
 							value="everyday" tabindex="5"></input>
 					</p>
 					<p>
-						ორშაბათი: <input type="checkbox" name="0" value="0" tabindex="5"></input> <input
-							type="text" data-field='time' name="time0" placeholder="დრო"
-							tabindex="4"></input> სამშაბათი: <input type="checkbox" name="1" value="1"
-							tabindex="5"></input> <input type="text" data-field='time'
-							name="time1" placeholder="დრო" tabindex="4"></input> ოთხშაბათი: <input
-							type="checkbox" name="2" value="2" tabindex="5"></input> <input type="text"
-							data-field='time' name="time2" placeholder="დრო" tabindex="4"></input>
+						Monday: <input type="checkbox" name="0" value="0" tabindex="5"></input>
+						<input type="text" data-field='time' name="time0"
+							placeholder="time" tabindex="4"></input> Tuesday: <input
+							type="checkbox" name="1" value="1" tabindex="5"></input> <input
+							type="text" data-field='time' name="time1" placeholder="time"
+							tabindex="4"></input> Wednesday: <input type="checkbox" name="2"
+							value="2" tabindex="5"></input> <input type="text"
+							data-field='time' name="time2" placeholder="time" tabindex="4"></input>
 					</p>
 					<p>
-						ხუთშაბათი: <input type="checkbox" name="3" value="3"tabindex="5"></input> <input
-							type="text" data-field='time' name="time3" placeholder="დრო"
-							tabindex="4"></input> პარასკევი: <input type="checkbox" name="4" value="4"
-							tabindex="5"></input> <input type="text" data-field='time'
-							name="time4" placeholder="დრო" tabindex="4"></input> შაბათი: <input
-							type="checkbox" name="5" value="5" tabindex="5"></input> <input type="text"
-							data-field='time' name="time5" placeholder="დრო" tabindex="4"></input>
+						Thursday: <input type="checkbox" name="3" value="3" tabindex="5"></input>
+						<input type="text" data-field='time' name="time3"
+							placeholder="time" tabindex="4"></input> Friday: <input
+							type="checkbox" name="4" value="4" tabindex="5"></input> <input
+							type="text" data-field='time' name="time4" placeholder="time"
+							tabindex="4"></input> Saturday: <input type="checkbox" name="5"
+							value="5" tabindex="5"></input> <input type="text"
+							data-field='time' name="time5" placeholder="time" tabindex="4"></input>
 					</p>
 					<p>
-						კვირა: <input type="checkbox" name="6" value="6" tabindex="5"></input> <input
-							type="text" data-field='time' name="time6" placeholder="დრო"
-							tabindex="4"></input>
+						Sunday: <input type="checkbox" name="6" value="6" tabindex="5"></input>
+						<input type="text" data-field='time' name="time6"
+							placeholder="time" tabindex="4"></input>
 					</p>
 					<p>
-						ერთჯერადი <input type="radio" class="radio2" name="type"
+						One Way <input type="radio" class="radio2" name="type"
 							value="oneway" tabindex="6"></input>
 					</p>
 					<p>
 						<input type="text" data-field='date' name="date"
-							placeholder="თარიღი" tabindex="4"></input> <input type="text"
-							data-field='time' name="time" placeholder="დრო" tabindex="4"></input>
+							placeholder="date" tabindex="4"></input> <input type="text"
+							data-field='time' name="time" placeholder="time" tabindex="4"></input>
 					</p>
 					<div id="datepicker"></div>
 					<div id="timepicker"></div>
 					<input type="submit" name="registerbtn" id="registerbtn"
-						class="flatbtn-blu hidemodal" value="შექმნა" tabindex="8"
-						onClick="return CheckAlerts();"></input>
-					<input type="hidden" id="hiddenField1" name="fromLongitude"/>
-					<input type="hidden" id="hiddenField2" name="fromLatitude"/>
-					<input type="hidden" id="hiddenField3" name="toLongitude"/>
-					<input type="hidden" id="hiddenField4" name="toLatitude"/>
+						class="flatbtn-blu hidemodal" value="Create" tabindex="8"
+						onClick="return CheckAlerts();"></input> <input type="hidden"
+						id="hiddenField1" name="fromLongitude" /> <input type="hidden"
+						id="hiddenField2" name="fromLatitude" /> <input type="hidden"
+						id="hiddenField3" name="toLongitude" /> <input type="hidden"
+						id="hiddenField4" name="toLatitude" />
 				</form>
 			</div>
 		</div>
@@ -246,7 +247,7 @@
 	var toLongitude;
 	var toLatitude;
 	var geocoder;
-	
+
 	function initialize() {
 		check = 0;
 		geocoder = new google.maps.Geocoder();
@@ -262,162 +263,178 @@
 		});
 		directionsDisplay.setMap(map);
 	}
-	
+
 	function calcRoute() {
 		var fLong = document.getElementById("hiddenField1").value;
 		var fLat = document.getElementById("hiddenField2").value;
 		var tLong = document.getElementById("hiddenField3").value;
 		var tLat = document.getElementById("hiddenField4").value;
-		var start = new google.maps.LatLng(fLat,fLong);
-		var end = new google.maps.LatLng(tLat,tLong);
+		var start = new google.maps.LatLng(fLat, fLong);
+		var end = new google.maps.LatLng(tLat, tLong);
 		var request = {
-				origin: start,
-          	    destination: end,          	  	
-          	    travelMode: google.maps.TravelMode.DRIVING 	   
-        };                
-		directionsService.route(request, function(response, status) {
-			if (status != google.maps.DirectionsStatus.OK) {
-	    		document.getElementById("modaltrigger").href = "";
-	      		alert("მოცემულ ორ პუნქტს შორის საავტომობილო გზა არ არსებობს.");          	      	
-	    	} else {
-	    		document.getElementById("modaltrigger").href = "#registermodal";
-	    		fun();
-	    	}
-	  	});    
+			origin : start,
+			destination : end,
+			travelMode : google.maps.TravelMode.DRIVING
+		};
+		directionsService
+				.route(
+						request,
+						function(response, status) {
+							if (status != google.maps.DirectionsStatus.OK) {
+								document.getElementById("modaltrigger").href = "";
+								alert("There is no car road between these two points.");
+							} else {
+								document.getElementById("modaltrigger").href = "#registermodal";
+								fun();
+							}
+						});
 	}
 
 	function placeMarker(location) {
 		check++;
-		if (check == 1) {			
-			var marker = new google.maps.Marker({
-				position : location,
-				map : map,
-				draggable : true,
-				icon :'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-			});
+		if (check == 1) {
+			var marker = new google.maps.Marker(
+					{
+						position : location,
+						map : map,
+						draggable : true,
+						icon : 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+					});
 
 			fromLongitude = location.lng();
-			document.getElementById("hiddenField1").value=fromLongitude;
+			document.getElementById("hiddenField1").value = fromLongitude;
 			fromLatitude = location.lat();
-			document.getElementById("hiddenField2").value=fromLatitude;
+			document.getElementById("hiddenField2").value = fromLatitude;
 			var infowindow = new google.maps.InfoWindow({
-				content : 'საწყისი პუნქტი'
+				content : 'Departure point'
 			});
 			infowindow.open(map, marker);
-			google.maps.event.addListener(marker, 'dragend', function() 
-					{
-					    SavePosition(marker.getPosition(),1);
-					});
+			google.maps.event.addListener(marker, 'dragend', function() {
+				SavePosition(marker.getPosition(), 1);
+			});
 		} else if (check == 2) {
 			var marker = new google.maps.Marker({
 				position : location,
 				map : map,
 				draggable : true,
-				icon :'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+				icon : 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
 			});
-			
 
 			toLongitude = location.lng();
-			document.getElementById("hiddenField3").value=toLongitude;
+			document.getElementById("hiddenField3").value = toLongitude;
 			toLatitude = location.lat();
-			document.getElementById("hiddenField4").value=toLatitude;
+			document.getElementById("hiddenField4").value = toLatitude;
 			var infowindow = new google.maps.InfoWindow({
-				content : 'საბოლოო პუნქტი'
+				content : 'Destination'
 			});
 			infowindow.open(map, marker);
-			google.maps.event.addListener(marker, 'dragend', function() 
-					{
-					    SavePosition(marker.getPosition(),2);
-					});
+			google.maps.event.addListener(marker, 'dragend', function() {
+				SavePosition(marker.getPosition(), 2);
+			});
 			calcRoute();
 		}
 	}
-	
+
 	function codeAddress() {
-		 if(check<2){
-		  var address = document.getElementById('address').value;
-		  geocoder.geocode( { 'address': address}, function(results, status) {
-		    if (status == google.maps.GeocoderStatus.OK) {
-		      map.setCenter(results[0].geometry.location);
-		      if(check == 0){
-		    	fromLongitude = results[0].geometry.location.lng();
-				document.getElementById("hiddenField1").value=fromLongitude;
-				fromLatitude = results[0].geometry.location.lat();
-				document.getElementById("hiddenField2").value=fromLatitude;
-		      var marker = new google.maps.Marker({
-		          map: map,
-		          position: results[0].geometry.location,
-				  draggable : true,
+		if (check < 2) {
+			var address = document.getElementById('address').value;
+			geocoder
+					.geocode(
+							{
+								'address' : address
+							},
+							function(results, status) {
+								if (status == google.maps.GeocoderStatus.OK) {
+									map.setCenter(results[0].geometry.location);
+									if (check == 0) {
+										fromLongitude = results[0].geometry.location
+												.lng();
+										document.getElementById("hiddenField1").value = fromLongitude;
+										fromLatitude = results[0].geometry.location
+												.lat();
+										document.getElementById("hiddenField2").value = fromLatitude;
+										var marker = new google.maps.Marker(
+												{
+													map : map,
+													position : results[0].geometry.location,
+													draggable : true,
 
-		          icon :'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-		          
-		      });
-		     
+													icon : 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
 
-		      var infowindow = new google.maps.InfoWindow({
-					content : 'საწყისი პუნქტი'
-				});
-				infowindow.open(map, marker);
-				 google.maps.event.addListener(marker, 'dragend', function() 
-			    		  {
-			    		      SavePosition(marker.getPosition(),1);
-			    		  });
-		        document.getElementById('from').value = document.getElementById('address').value;
-                document.getElementById('from').readOnly  = true;
-		        document.getElementById('address').value = "";
-		      } else {
-		    	var marker = new google.maps.Marker({
-			          map: map,
-					  draggable : true,
+												});
 
-			          position: results[0].geometry.location,
-			          icon :'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-			    });
-		    
+										var infowindow = new google.maps.InfoWindow(
+												{
+													content : 'Departure point'
+												});
+										infowindow.open(map, marker);
+										google.maps.event.addListener(marker,
+												'dragend', function() {
+													SavePosition(marker
+															.getPosition(), 1);
+												});
+										document.getElementById('from').value = document
+												.getElementById('address').value;
+										document.getElementById('from').readOnly = true;
+										document.getElementById('address').value = "";
+									} else {
+										var marker = new google.maps.Marker(
+												{
+													map : map,
+													draggable : true,
 
-		    	toLongitude = results[0].geometry.location.lng();
-				document.getElementById("hiddenField3").value=toLongitude;
-				toLatitude = results[0].geometry.location.lat();
-				document.getElementById("hiddenField4").value=toLatitude;
-		    	var infowindow = new google.maps.InfoWindow({
-					content : 'საბოლოო პუნქტი'
-				});
-				infowindow.open(map, marker);
-				google.maps.event.addListener(marker, 'dragend', function() 
-		    			{
-		    			    SavePosition(marker.getPosition(),2);
-		    			});
-				document.getElementById('to').value = document.getElementById('address').value;
-                document.getElementById('to').readOnly  = true;
-		        document.getElementById('address').value = "";
-		        calcRoute();
-		      }
-		      check++;
-		      
-		    } else {
-		      alert('თქვენს მიერ მითითებული ადგილი არ მოიძებნა. გთხოვთ რუქაზე მონიშნოთ ან შეიყვანოთ სხვა პუნქტი');
-		    }
-		  });
+													position : results[0].geometry.location,
+													icon : 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+												});
+
+										toLongitude = results[0].geometry.location
+												.lng();
+										document.getElementById("hiddenField3").value = toLongitude;
+										toLatitude = results[0].geometry.location
+												.lat();
+										document.getElementById("hiddenField4").value = toLatitude;
+										var infowindow = new google.maps.InfoWindow(
+												{
+													content : 'Destination'
+												});
+										infowindow.open(map, marker);
+										google.maps.event.addListener(marker,
+												'dragend', function() {
+													SavePosition(marker
+															.getPosition(), 2);
+												});
+										document.getElementById('to').value = document
+												.getElementById('address').value;
+										document.getElementById('to').readOnly = true;
+										document.getElementById('address').value = "";
+										calcRoute();
+									}
+									check++;
+
+								} else {
+									alert('Your requested destination has not been found. Please mark a new waypoint on the map');
+								}
+							});
 		} else {
-			alert('თქვენ უკვე შეყვანილი გყავთ საწყისი და საბოლოო პუნქტები');
+			alert('You have already marked departure and destination points');
 		}
 	}
-	
-	function SavePosition(pos, inti) 
-	{
-		if(inti == 1){
+
+	function SavePosition(pos, inti) {
+		if (inti == 1) {
 			fromLongitude = pos.lng();
-			document.getElementById("hiddenField1").value=fromLongitude;
+			document.getElementById("hiddenField1").value = fromLongitude;
 			fromLatitude = pos.lat();
-			document.getElementById("hiddenField2").value=fromLatitude;
-			document.getElementById('from').readOnly  = false;
-			if(check==2) calcRoute();
+			document.getElementById("hiddenField2").value = fromLatitude;
+			document.getElementById('from').readOnly = false;
+			if (check == 2)
+				calcRoute();
 		} else {
-			toLongitude =pos.lng();
-			document.getElementById("hiddenField3").value=toLongitude;
+			toLongitude = pos.lng();
+			document.getElementById("hiddenField3").value = toLongitude;
 			toLatitude = pos.lat();
-			document.getElementById("hiddenField4").value=toLatitude;
-			document.getElementById('to').readOnly  = false;
+			document.getElementById("hiddenField4").value = toLatitude;
+			document.getElementById('to').readOnly = false;
 			calcRoute();
 		}
 	}
@@ -430,27 +447,35 @@
 			</html>
 			<div class="line"></div>
 			<div id="footer">
-				<h3 style="color:#8693EE"><strong>აირჩიეთ მარშრუტის საწყისი და საბოლოო პუნქტები. ან შეიყვანეთ მათი დასახელებები (ქართულად)</strong></h3>	
- 				<input id="address" type="textbox" class="textfield" style="width:140px; height:14px"value="">
- 				<button class="mailnumber" style="width:150px;"onclick="codeAddress();" >შეიყვანეთ  <i style="color:#a5cc52; font-size:1.5em;" class="fa fa-map-marker"></i></button>
+				<h3 style="color: #8693EE">
+					<strong>Choose departure and destination points, or fill
+						the field to add points</strong>
+				</h3>
+				<input id="address" type="textbox" class="textfield"
+					style="width: 140px; height: 14px" value="">
+				<button class="mailnumber" style="width: 150px;"
+					onclick="codeAddress();">
+					შეიყვანეთ <i style="color: #a5cc52; font-size: 1.5em;"
+						class="fa fa-map-marker"></i>
+				</button>
 			</div>
 			<!-- End Content -->
 		</div>
 	</div>
 	<script type="text/javascript">
-	function fun(){
-		$(function() {
+		function fun() {
+			$(function() {
 
-			$('#modaltrigger').leanModal({
-				top : 5,
-				overlay : 0.45,
-				closeButton : ".modal_close"
+				$('#modaltrigger').leanModal({
+					top : 5,
+					overlay : 0.45,
+					closeButton : ".modal_close"
+				});
 			});
-		});
-		$(document).ready(function() {
-			$('.timepicker').timepicker();
-		});
-	}
+			$(document).ready(function() {
+				$('.timepicker').timepicker();
+			});
+		}
 	</script>
 </body>
 </html>

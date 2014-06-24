@@ -73,7 +73,6 @@
 			    	dt = eventParse.EventDate(EventID);
 			    	java.util.Date today = new java.util.Date();
 			        Timestamp now = new java.sql.Timestamp(today.getTime());
-			   	 	System.out.print("dro=" + now);
 			    	if(dt.getYear() < now.getYear()){
 			    		e.setValidation(false);
 			    		ev.updateEvent(e.getID(), false);

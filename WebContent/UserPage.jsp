@@ -38,7 +38,7 @@
 					<div class="search-box2">
 					
 						<form action="UserSearch.jsp" method="post">
-							<input type="text"  name="search" placeholder="მომხმარებლის სახელი"/>
+							<input type="text"  name="search" placeholder="User Name"/>
 							<img style="display:initial"src="style/images/close.png" />
 						</form>
 					</div>
@@ -69,15 +69,15 @@
 			</h3>
 			<div id="Usermenu" class="menu-v" style="marign-top: 20px;">
 				<ul>
-					<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
-					<li><a href="Profile.jsp?id=<%=userID%>">პროფილი</a></li>
-					<li><a href="ChangePrivateInfo.jsp">პროფილის შეცვლა</a></li>
-					<li><a href="CreateEvent.jsp">წავიყვან</a></li>
-					<li><a href="CreateWantToGo.jsp">წასვლა მინდა</a></li>
-					<li><a href="MyRequests.jsp">ჩემი მოთხოვნები</a></li>
-					<li><a href="OthersRequests.jsp">სხვისი მოთხოვნები</a></li>
-					<li><a href="MyWantToGos.jsp">ჩემივონთთუგოუ</a></li>
-					<li><a href="index.jsp">გამოსვლა </a></li>
+					<li><a href="UserPage.jsp" class="active">Main Page</a></li>
+					<li><a href="Profile.jsp?id=<%=userID%>">Profile</a></li>
+					<li><a href="ChangePrivateInfo.jsp">Change Profile Settings</a></li>
+					<li><a href="CreateEvent.jsp">Create Trip</a></li>
+					<li><a href="CreateWantToGo.jsp">Search Trips</a></li>
+					<li><a href="MyRequests.jsp">My Requests</a></li>
+					<li><a href="OthersRequests.jsp">Notifications</a></li>
+					<li><a href="MyWantToGos.jsp">Filtration</a></li>
+					<li><a href="index.jsp">Log Out </a></li>
 
 				</ul>
 			</div>
@@ -87,7 +87,7 @@
 		<!-- Begin Content -->
 		<div id="content">
 
-				<h2 style="color:#8693EE"><strong>რელევანტური  პოსტები</strong></h2>	
+				<h2 style="color:#8693EE"><strong>Relevant Posts</strong></h2>	
 			<div style="margin-top:30px;"class="line"></div>
 			<%
 				if(list.size() == 0){
