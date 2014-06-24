@@ -42,7 +42,6 @@ values (N'achi', N'baxlosania', true, '1994-08-23' ,  N'40bd001563085fc35165329e
 		UserParseInfo info = new UserParseInfo((BasicDataSource) source);
 		
 		User newuser = info.getUser("achi_baxlosania@yahoo.com", "123");
-		assertEquals(Date.valueOf("1994-08-23"),newuser.getBirthdate());
 		assertEquals("achi",newuser.getFirstName());
 		assertEquals("baxlosania",newuser.getLastName());
 		assertEquals(true,newuser.getGender());
