@@ -132,22 +132,28 @@
 			        		directionsDisplay.setMap(map);
 			        		dD.setMap(map);			        		
 			        	}
+			    		</script>
 			    		<%					
-					for(int i = 0; i < list.size()-1; i++){
-						WantToGo want = list.get(i);
+					for(int i = 0; i < list.size(); i++){
+						WantToGo want = list.get(i);						
 						if (want.getValidation()) { 			            		            
-			            ArrayList<Event> arr = parseEvent.getEventsForSearch(want);
-			            for(int j = 0; j<arr.size(); j++) {
-			            	Event e = arr.get(j);
-			            	if (e.getValidation()) {
-			                	Route r = e.getRoute();  
-			                	String p1 = r.getFromPlace();
-			                	String p2 = r.getToPlace();
-			                	int eventOwnerID = e.getUserID();
-								UserParseInfo userParse = new UserParseInfo(source);
-								User postOwner = userParse.getUserByID(eventOwnerID);
-			            %>			            			            
-			            function calcRoute<%=j %>() {
+							ArrayList<Event> arr = parseEvent.getEventsForSearch(want);							
+				            String a="";
+				            for (int k = 0; k < i; k++)
+				            	a+="a";
+				            System.out.println(a);
+				            for(int j = 0; j<arr.size(); j++) {
+				            	Event e = arr.get(j);
+				            	if (e.getValidation()) {
+				                	Route r = e.getRoute();  
+				                	String p1 = r.getFromPlace();
+				                	String p2 = r.getToPlace();
+				                	int eventOwnerID = e.getUserID();
+									UserParseInfo userParse = new UserParseInfo(source);
+									User postOwner = userParse.getUserByID(eventOwnerID);
+			            %>
+			            <script>			            			            
+			            function calcRoute<%=a%><%=j %>() {
 			            	var waypts = [];				         
 			            	var a = new google.maps.LatLng(<%=want.getFromLatitude() %>,<%= want.getFromLongitude()%>);
 			                var b = new google.maps.LatLng(<%=want.getToLatitude()%>,<%=want.getToLongitude() %>);
@@ -191,11 +197,13 @@
 			          	      		for (var i = 0; i < route.legs.length; i++) {
 			                        	optimal+=route.legs[i].distance.value;                     
 			                   		}
+			          	      		console.log('optimal '+optimal);
+			          	      	console.log('current '+current);
 			          	      		if (current < optimal*1.15) {			          	      		
-				                		var summaryPanel = document.getElementById("div<%=j %>");
-summaryPanel.innerHTML='<strong><a id="link<%=j %>" href="Event.jsp?id=<%=e.getID()%>"><%=p1%> <i class="fa fa-arrow-right fa-spin"></i> <%=p2%></a></strong><strong><a href="Profile.jsp?id=<%=eventOwnerID%>"><h4><%=postOwner.getFirstName()+" "%><%=postOwner.getLastName()%></h4></a></strong><div class="line"></div>';
+				                		var summaryPanel = document.getElementById("div<%=a%><%=j %>");
+summaryPanel.innerHTML='<strong><a id="link<%=a%>f<%=j %>" href="Event.jsp?id=<%=e.getID()%>"><%=p1%> <i class="fa fa-arrow-right fa-spin"></i> <%=p2%></a></strong><strong><a href="Profile.jsp?id=<%=eventOwnerID%>"><h4><%=postOwner.getFirstName()+" "%><%=postOwner.getLastName()%></h4></a></strong><div class="line"></div>';
 				                	} else {
-				                		var summaryPanel = document.getElementById("div"+<%=j %>);
+				                		var summaryPanel = document.getElementById("div"+<%=a%><%=j %>);
 				                		summaryPanel.innerHTML='';
 				                	}
 			          	    	} 
@@ -203,15 +211,16 @@ summaryPanel.innerHTML='<strong><a id="link<%=j %>" href="Event.jsp?id=<%=e.getI
 			                
 			          	} 
 			            </script>
-			            <div id="div<%=j %>">
+			            <div id="div<%=a %><%=j %>">
 			            </div>
 			            <script>
-			            calcRoute<%=j %>();
+			            calcRoute<%=a%><%=j %>();
+			            </script>
 			            <%
 			            	} 
 			            }
 			            %>
-			        
+			        	<script>
 			            google.maps.event.addDomListener(window, 'load', initialize);
 						</script>
 			<%			
@@ -221,7 +230,7 @@ summaryPanel.innerHTML='<strong><a id="link<%=j %>" href="Event.jsp?id=<%=e.getI
 			%>
 			<!-- End Content -->
 		</div>
-		<div id="googleMap" style="width: 800px; height: 400px; visibility:hidden"></div>
+		<div id="googleMap" style="width: 800px; height: 400px; visibility:hidden;"></div>
 	</div>
 	
 	<script type="text/javascript">
