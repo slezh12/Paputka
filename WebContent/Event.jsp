@@ -68,9 +68,9 @@
 			    User u = userParse.getUserByID(e.getUserID());
 			    Route r = e.getRoute();
 			    ArrayList<Comment> arr = eventParse.getComments(EventID);
-			    Timestamp dt =null;
+			    Timestamp dt = eventParse.EventDate(EventID);
 			    if(e.getType() && e.getValidation()){
-			    	dt = eventParse.EventDate(EventID);
+			    	//dt = eventParse.EventDate(EventID);
 			    	java.util.Date today = new java.util.Date();
 			        Timestamp now = new java.sql.Timestamp(today.getTime());
 			    	if(dt.getYear() < now.getYear()){
