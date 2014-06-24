@@ -455,16 +455,7 @@
 					style="width: 140px; height: 14px" value="">
 				<button class="mailnumber" style="width: 150px;"
 					onclick="codeAddress();">
-<<<<<<< HEAD
-<<<<<<< HEAD
-					Submit <i style="color: #a5cc52; font-size: 1.5em;"
-=======
-					Enter <i style="color: #a5cc52; font-size: 1.5em;"
->>>>>>> FETCH_HEAD
-=======
-					Enter <i style="color: #a5cc52; font-size: 1.5em;"
->>>>>>> FETCH_HEAD
-						class="fa fa-map-marker"></i>
+					Submit <i style="color: #a5cc52; font-size: 1.5em;"class="fa fa-map-marker"></i>
 				</button>
 			</div>
 			<!-- End Content -->
