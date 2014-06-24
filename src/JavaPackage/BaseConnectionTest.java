@@ -31,10 +31,7 @@ public class BaseConnectionTest {
 		((BasicDataSource) source).setPassword(password);
 		((BasicDataSource) source).setUrl("jdbc:mysql://" + server + ":3306/"
 				+ database);
-		UserConnection user = new UserConnection((BasicDataSource) source);
-		user.insertIntoUsers("Tedo", "Chubinidze", "tedochubinidze@yahoo.com",
-				"123", true, "'1994-02-04'");
-		user.CloseConnection();
+
 	}
 
 	public boolean isTrue(double first, double second) {
@@ -47,9 +44,10 @@ public class BaseConnectionTest {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + database);
+			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
 			int ID = 0;
 			ResultSet rs = stmt
-					.executeQuery("SELECT ID FROM Users Where EMail = 'tedochubinidze@yahoo.com'");
+					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
 			if (rs.isBeforeFirst()) {
 				rs.next();
 				ID = rs.getInt("ID");
@@ -60,12 +58,11 @@ public class BaseConnectionTest {
 				rs.next();
 				assertEquals(ID, rs.getInt("ID"));
 				assertEquals("123", rs.getString("Password"));
-				assertEquals("Tedo", rs.getString("FirstName"));
-				assertEquals("Chubinidze", rs.getString("LastName"));
+				assertEquals("tedo", rs.getString("FirstName"));
+				assertEquals("chubo", rs.getString("LastName"));
 				assertEquals(true, rs.getBoolean("Gender"));
-				assertEquals(Date.valueOf("1994-02-04"),
-						rs.getDate("BirthDate"));
-				assertEquals("tedochubinidze@yahoo.com", rs.getString("Email"));
+				;
+				assertEquals("tedo", rs.getString("Email"));
 				stmt.executeUpdate("DELETE FROM Users Where ID = " + ID);
 			} else {
 				assertEquals(1, 2);
@@ -83,29 +80,25 @@ public class BaseConnectionTest {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + database);
+			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
 			int ID = 0;
-			ResultSet rs = stmt.executeQuery("SELECT * from Users");
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
 			if (rs.isBeforeFirst()) {
 				rs.next();
 				ID = rs.getInt("ID");
 			}
+			rs = stmt.executeQuery("Select count(ID) from Users");
+			rs.next();
+			int count = rs.getInt("count(ID)");
 			BaseConnection base = new BaseConnection((BasicDataSource) source);
 			rs = base.selectAll("Users");
-			if (rs.isBeforeFirst()) {
-				rs.next();
-				assertEquals(ID, rs.getInt("ID"));
-				assertEquals("123", rs.getString("Password"));
-				assertEquals("Tedo", rs.getString("FirstName"));
-				assertEquals("Chubinidze", rs.getString("LastName"));
-				assertEquals(true, rs.getBoolean("Gender"));
-				assertEquals(Date.valueOf("1994-02-04"),
-						rs.getDate("BirthDate"));
-				assertEquals("tedochubinidze@yahoo.com", rs.getString("Email"));
-				assertEquals(false, rs.next());
-				stmt.executeUpdate("DELETE FROM Users Where ID = " + ID);
-			} else {
-				assertEquals(1, 2);
+			while(rs.next()){
+				count = count -1;
 			}
+			assertEquals(count, 0);
+			stmt.executeUpdate("DELETE FROM Users Where ID = " + ID);
+			
 			con.close();
 			base.CloseConnection();
 		} catch (SQLException e) {
@@ -119,19 +112,20 @@ public class BaseConnectionTest {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + database);
+			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
 			int ID = 0;
+			int EventID = 0;
 			ResultSet rs = stmt
-					.executeQuery("SELECT ID FROM Users Where EMail = 'tedochubinidze@yahoo.com'");
+					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
 			if (rs.isBeforeFirst()) {
 				rs.next();
 				ID = rs.getInt("ID");
 			}
-			EventConnection event = new EventConnection(
-					(BasicDataSource) source);
-			event.insertIntoEvents(ID, 1, 0, 4.2, 3.2, 1.2, 2.3, "Tbilisi",
-					"Batumi", true, true);
-			event.insertIntoEvents(ID, 2, 2.0, 1.1, 1.2, 1.3, 1.4, "terjola",
-					"bobokvati", false, false);
+			stmt.executeUpdate("INSERT INTO Events(UserID, Places, Fee, FromLongitude, FromLatitude, ToLongitude, ToLatitude, FromPlace, ToPlace, Type, Validation) Values ("
+					+ ID + ", 2 , 2.0 , 1.1, 1.2 , 1.3, 1.4 , 'terjola', 'bobokvati', false, false )");
+			rs = stmt
+					.executeQuery("SELECT ID FROM Events Where UserID = " + ID);
+			
 
 			BaseConnection base = new BaseConnection((BasicDataSource) source);
 			rs = base.selectEvent(ID, "Events", 1);
