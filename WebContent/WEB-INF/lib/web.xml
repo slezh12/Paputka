@@ -8,4 +8,12 @@
     <param-name>tempfile.dir</param-name>
     <param-value>tmpfiles</param-value>
   </context-param>
+<servlet>
+    <servlet-name>ServletFileUploadDownloadExample</servlet-name>
+    <servlet-class>ServletPackage</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>ServletFileUploadDownloadExample</servlet-name>
+    <url-pattern>/images</url-pattern>
+</servlet-mapping>
 </web-app>

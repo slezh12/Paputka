@@ -54,7 +54,7 @@
 				
 				%>
 				<h3 id="welcomeUser"><%= user.getFirstName()+" "+user.getLastName() %> </h3> 
-				<img src="style/null/<%=userParse.selectFromAvatars(user.getID())%>">				
+				<center><img style="width:50px; height:50px;"src="UploadDownloadFileServlet?fileName=<%=userParse.selectFromAvatars(user.getID())%>">	</center>				
 			
 				<div id="menu" class="menu-v">
 					<ul>

@@ -15,11 +15,11 @@ public class FileLocationContextListener implements ServletContextListener {
     	ServletContext ctx = servletContextEvent.getServletContext();
 
     	String relativePath = ctx.getInitParameter("tempfile.dir");
-    	File file = new File("C:\\Users\\Bero\\workspace\\Paputka\\WebContent\\style" + File.separator + relativePath);
+    	File file = new File("C:\\img" + File.separator + relativePath);
     	if(!file.exists()) file.mkdirs();
     	System.out.println("File Directory created to be used for storing files");
     	ctx.setAttribute("FILES_DIR_FILE", file);
-    	ctx.setAttribute("FILES_DIR", "C:\\Users\\Bero\\workspace\\Paputka\\WebContent\\style" + File.separator + relativePath);
+    	ctx.setAttribute("FILES_DIR", "C:\\img" + File.separator + relativePath);
     }
 
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
