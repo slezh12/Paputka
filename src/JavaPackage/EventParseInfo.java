@@ -178,13 +178,13 @@ public class EventParseInfo extends ParseInfo {
 		return res;
 	}
 
-	public Date EventDate(int EventID) {
-		Date dt = null;
+	public Timestamp EventDate(int EventID) {
+		Timestamp dt = null;
 		BaseConnection base = new BaseConnection((BasicDataSource) source);
 		ResultSet rs = base.selectByID("Dates", EventID, "EventID");
 		try {
 			while (rs.next()) {
-				dt = rs.getDate("Date");
+				dt = rs.getTimestamp("Date");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

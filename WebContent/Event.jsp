@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="java.sql.Timestamp"%>
 <%@page import="JavaPackage.EventConnection"%>
 <%@page import="org.apache.tomcat.dbcp.dbcp.BasicDataSource"%><%@page import="JavaPackage.Route"%>
 <%@page import="JavaPackage.Event"%>
@@ -64,7 +65,7 @@
     User u = userParse.getUserByID(e.getUserID());
     Route r = e.getRoute();
     ArrayList<Comment> arr = eventParse.getComments(EventID);
-    Date dt =null;
+    Timestamp dt =null;
     if(e.getType() && e.getValidation()){
     	dt = eventParse.EventDate(EventID);
     	Date now = new Date();
@@ -79,8 +80,13 @@
     			if(dt.getDay() < now.getDay()){
     				e.setValidation(false);
     				ev.updateEvent(e.getID(), false);
+    			} else if(dt.getDay() == now.getDay()){
+    				if(dt.getTime() < now.getTime()){
+    					e.setValidation(false);
+        				ev.updateEvent(e.getID(), false);
+    				}
     			}
-    		}
+    		} 
     	}
     }
   %>
