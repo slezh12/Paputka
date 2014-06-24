@@ -53,7 +53,11 @@
 		}
 		if (Chcount == 0) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			alert("Choose daily or one way");
+=======
+			alert("Choose daily or one-way");
+>>>>>>> FETCH_HEAD
 =======
 			alert("Choose daily or one-way");
 >>>>>>> FETCH_HEAD
