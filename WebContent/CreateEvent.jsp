@@ -455,7 +455,7 @@
 					style="width: 140px; height: 14px" value="">
 				<button class="mailnumber" style="width: 150px;"
 					onclick="codeAddress();">
-					შეიყვანეთ <i style="color: #a5cc52; font-size: 1.5em;"
+					Enter <i style="color: #a5cc52; font-size: 1.5em;"
 						class="fa fa-map-marker"></i>
 				</button>
 			</div>
