@@ -45,7 +45,6 @@ public class RatingServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
 		String stars = request.getParameter("star");
 		int rating = 0;
 		if (stars != null)

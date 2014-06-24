@@ -239,6 +239,7 @@ function loginFinishedCallback(authResult) {
 					class="register" href="#registermodal" id="modaltrigger">Register</a>
 			</form>
 			<div id="registermodal" style="display: none;">
+			<a href="#"><img class="modal_close" src="style/images/close.png"></a>
 				<h1 class="txt">Sign Up</h1>
 				<h4>
 					<b>Please fill every field</b>
@@ -255,6 +256,7 @@ function loginFinishedCallback(authResult) {
 							id="lastname" name="lastname" placeholder="Lastname"
 							class="textfield" tabindex="2"></input>
 					</div>
+					
 					<div class="txtfield">
 						<span id="icons" class="fa fa-envelope-o"></span> <input id="mail"
 							type="text" name="mail" placeholder="E-mail" class="textfield"
@@ -353,17 +355,11 @@ function loginFinishedCallback(authResult) {
 			</html>
 			<div class="line"></div>
 			<div id="footer">
-				<h3>About Us</h3>
-				<p>Paputka.ge is a web-site which focuses on making journeys
-					throught out the world, making journeys more comfortable and fun.
-					It is a great way to meet new people and make new friends.</p>
-				<h2>MADE BY DZMEBI Inc.</h2>
-				<p>
-					<span class="lite1">Tel:</span> 533 33 33 33 <span class="lite1">
-				</p>
-				<p>E-Mail:
-				</span> support@paputka.ge
-				</p>
+				<h2 style="font-size:30px;color:#8693EE">About Us</h2>
+				<p><strong>Paputka.ge is a web-site which focuses on making journeys
+					through out the world, making journeys more comfortable and fun.
+					It is a great way to meet new people and make new friends.</strong></p>
+				<h2>Made By <strong style="color:#BF0E45">DZMEBI</strong> Inc.</h2>
 			</div>
 			<!-- End Content -->
 		</div>

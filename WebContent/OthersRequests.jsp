@@ -42,7 +42,7 @@
 			<!-- Begin Menu -->
 			<div id="menu" class="menu-v">
 				<ul>
-					<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
+					<li><a href="UserPage.jsp" class="active">Main Page</a></li>
 				</ul>
 			</div>
 			<!-- End Menu -->
@@ -52,7 +52,7 @@
 		<!-- Begin Content -->
 		<div id="content">
 			<h2 style="color: #8693EE">
-				<strong>თხოვნები დასამგზავრებლად</strong>
+				<strong>Notifications</strong>
 			</h2>
 			<div class="line"></div>
 			<%
@@ -111,7 +111,7 @@
 							type="hidden" name="event" value=<%=eventID%>> <input
 							type="hidden" name="fromUserID" value=<%=fromUserID%>> <input
 							type="submit" style="width: 150px;" class="mailnumber"
-							value="პასუხის გაცემა"></input>
+							value="Execute"></input>
 					</form>
 					<%
 						} else if (accept == 1) {
@@ -131,11 +131,11 @@
 					<p>
 					<div id="number<%=i%>"
 						style="float: left; font-size: 15px; color: #79bbff;">
-						<strong>ტელეფონი:</strong>
+						<strong>Tel:</strong>
 						<%=" " + tel%></div>
 					<div id="mail<%=i%>"
 						style="float: right; font-size: 15px; color: #79bbff;">
-						<strong>ელ-ფოსტა:</strong>
+						<strong>E-Mail:</strong>
 						<%=" " + mail%></div>
 					</p>
 				</ul>

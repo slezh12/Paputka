@@ -40,7 +40,7 @@
 			<!-- Begin Menu -->
 			<div id="menu" class="menu-v">
 				<ul>
-					<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
+					<li><a href="UserPage.jsp" class="active">Main Page</a></li>
 				</ul>
 			</div>
 			<!-- End Menu -->
@@ -48,7 +48,7 @@
 		<!-- End Sidebar -->
 		<!-- Begin Content -->
 		<div id="content">
-			<h2>ჩემი მინდა წასვლები</h2>
+			<h2>My Filtres</h2>
 			<div class="line"></div>
 			<%
 				BasicDataSource source = (BasicDataSource) application
@@ -71,11 +71,11 @@
 							if (type) {
 						%>
 					
-					<h2>ერთჯერადი</h2>
+					<h2>One Way</h2>
 					<%
 						} else {
 					%>
-					<h2>განმეორებადი</h2>
+					<h2>Daily</h2>
 					<%
 						}
 					%>

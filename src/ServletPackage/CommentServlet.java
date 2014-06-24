@@ -43,7 +43,6 @@ public class CommentServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
 		String text = request.getParameter("comment");
 		ServletContext context = getServletContext();
 		DataSource source = (DataSource) context.getAttribute("connectionPool");

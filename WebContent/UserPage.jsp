@@ -87,7 +87,7 @@
 		<!-- Begin Content -->
 		<div id="content">
 
-				<h2 style="color:#8693EE"><strong>Relevant Posts</strong></h2>	
+				<h2 style="color:#8693EE"><strong>Suggested Posts</strong></h2>	
 			<div style="margin-top:30px;"class="line"></div>
 			<%
 				if(list.size() == 0){

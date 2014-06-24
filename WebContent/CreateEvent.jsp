@@ -150,13 +150,13 @@
 			<div id="menu" class="menu-v">
 				<ul>
 					<li><a href="UserPage.jsp" class="active">Main Page</a></li>
-					<li><a id="modaltrigger">Fill detailed info</a></li>
+					<li><a id="modaltrigger">Fill Detailed Info</a></li>
 				</ul>
 			</div>
 			<!-- End Menu -->
 			<!--Begin Login & Registration -->
 			<div id="registermodal" style="display: none;">
-				<h2 class="txt">Detailed info about trip</h2>
+				<h2 class="txt">Detailed Info About Trip</h2>
 				<h5>
 					<b>Please fill every field</b>
 				</h5>
@@ -365,7 +365,7 @@
 
 										var infowindow = new google.maps.InfoWindow(
 												{
-													content : 'Departure point'
+													content : 'Departure Point'
 												});
 										infowindow.open(map, marker);
 										google.maps.event.addListener(marker,
@@ -455,7 +455,11 @@
 					style="width: 140px; height: 14px" value="">
 				<button class="mailnumber" style="width: 150px;"
 					onclick="codeAddress();">
-					შეიყვანეთ <i style="color: #a5cc52; font-size: 1.5em;"
+<<<<<<< HEAD
+					Submit <i style="color: #a5cc52; font-size: 1.5em;"
+=======
+					Enter <i style="color: #a5cc52; font-size: 1.5em;"
+>>>>>>> FETCH_HEAD
 						class="fa fa-map-marker"></i>
 				</button>
 			</div>
