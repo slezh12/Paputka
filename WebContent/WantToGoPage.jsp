@@ -43,7 +43,7 @@
 			<!-- Begin Menu -->
 			<div id="menu" class="menu-v">
 				<ul>
-					<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
+					<li><a href="UserPage.jsp" class="active">Main Page</a></li>
 					<%
 				String id = request.getParameter("id");
 				User current = (User) session.getAttribute("user");
@@ -57,24 +57,24 @@
 				boolean type = want.getType();
 			%>
 			<li style="color: #fff;">
-				სათაური: <br><%=title%></li>
+				Title: <br><%=title%></li>
 
 			<%
 				if (type) {
 			%>
-			<li style="color: #fff;">ერთჯერადი</li>
+			<li style="color: #fff;">One Way</li>
 			<%
 				ArrayList<Timestamp> list = parse.getOnce(wantToGoID);
 			%>
 			<li style="color: #fff;">
-				დასაწყისი:<%=list.get(0)%><br>
-				დასასრული:<%=list.get(1)%></li>
+				Start Time:<%=list.get(0)%><br>
+				End Time:<%=list.get(1)%></li>
 			<%
 				} else {
 					ArrayList<WantToGoForEveryDay> list = parse
 							.getEveryDay(wantToGoID);
 			%>
-			<li style="color: #fff;">განმეორებადი</li>
+			<li style="color: #fff;">Daily</li>
 			<%
 				for (int i = 0; i < list.size(); i++) {
 						WantToGoForEveryDay temp = list.get(i);
@@ -84,7 +84,7 @@
 						if (day == 0) {
 			%>
 			<li style="color: #fff;">
-				ორშაბათი:<br>
+				Monday:<br>
 				<%=start%> -
 				<%=finish%>
 			</li>
@@ -92,7 +92,7 @@
 				} else if (day == 1) {
 			%>
 			<li style="color: #fff;">
-				სამშაბათი:<br>
+				Tuesday:<br>
 				<%=start%> -
 				<%=finish%>
 			</li>
@@ -100,7 +100,7 @@
 				} else if (day == 2) {
 			%>
 			<li style="color: #fff;">
-				ოთხშაბათი:<br>
+				Wednesday:<br>
 				<%=start%> -
 				<%=finish%>
 			</li>
@@ -109,7 +109,7 @@
 				} else if (day == 3) {
 			%>
 			<li style="color: #fff;">
-				ხუთშაბათი:<br>
+				Thursday:<br>
 				<%=start%> -
 				<%=finish%>
 			</li>
@@ -117,7 +117,7 @@
 				} else if (day == 4) {
 			%>
 			<li style="color: #fff;">
-				პარასკევი:<br>
+				Friday:<br>
 				<%=start%> -
 				<%=finish%>
 			</li>
@@ -125,7 +125,7 @@
 				} else if (day == 5) {
 			%>
 			<li style="color: #fff;">
-				შაბათი:<br>
+				Saturday:<br>
 				<%=start%> -
 				<%=finish%>
 			</li>
@@ -133,7 +133,7 @@
 				} else if (day == 6) {
 			%>
 			<li style="color: #fff;">
-				კვირა:<br>
+				Sunday:<br>
 				<%=start%> -
 				<%=finish%>
 			</li>
@@ -149,7 +149,7 @@
 		<!-- End Sidebar -->
 		<!-- Begin Content -->
 		<div id="content">
-			<h2>ძებნის შედეგები</h2>
+			<h2>Search Results</h2>
 			<div class="line"></div>
 			<%if (want.getValidation()) { %>
 			<script

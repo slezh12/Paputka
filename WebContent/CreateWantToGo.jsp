@@ -33,7 +33,7 @@
 	function CheckAlerts() {
 		if ((registerform.title.value).length == 0
 				|| (registerform.title.value).length > 100) {
-			alert("Title must be between 1 to 100 symbols");
+			alert("Title must be between 1-100 symbols");
 			return false;
 		}
 		var radios = document.getElementsByName('type');

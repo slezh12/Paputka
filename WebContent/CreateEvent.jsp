@@ -173,7 +173,7 @@
 					</div>
 					<div class="txtfield">
 						<input type="number" min="0" step="0.01" name="fee"
-							placeholder="Fee(in GEL)" class="textfield" tabindex="3"></input>
+							placeholder="Fee(GEL)" class="textfield" tabindex="3"></input>
 					</div>
 					<div class="txtfield">
 						<input type="number" min="1" name="places"

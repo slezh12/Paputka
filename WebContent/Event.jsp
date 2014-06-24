@@ -41,12 +41,12 @@
 <script>
 	function CheckAlerts() {
 		if ((registerform.comment.value).length == 0) {
-			alert("შეიყვანეთ ტექსტი");
+			alert("Please enter text");
 			return false;
 		}
 
 		if ((registerform.comment.value).length > 400) {
-			alert("კომენტარის სიგრძე არ უნდა აღემატებოდეს 400 სიმბოლოს");
+			alert("Comment must be between 1-400 symbols");
 			return false;
 		}
 
@@ -104,12 +104,12 @@
 			<!-- Begin Menu -->
 			<div id="menu" class="menu-v" style="marign-top: 20px;">
 				<ul>
-					<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
+					<li><a href="UserPage.jsp" class="active">Main Page</a></li>
 					<%
 						if(e.getValidation() && !eventParse.HasRequest(e.getID(), Currentuser.getID()) && (Currentuser.getID()!=e.getUserID())){
 					%>
-					<li><a href="#registermodal" id="modaltrigger">გააგზავნე
-							მოთხოვნა</a></li>
+					<li><a href="#registermodal" id="modaltrigger">Send
+							 Request</a></li>
 					<%
 						}
 					%>
@@ -122,7 +122,7 @@
 			<form id="validation" action="ValidationServlet" method="post">
 				<input type="submit" name="btn"
 					style="margin-top: 70px; margin-right: 30px; width: 80px; height: 40px;"
-					class="mailnumber" value="გაუქმება"></input> <input type="hidden"
+					class="mailnumber" value="Cancel"></input> <input type="hidden"
 					name="eventID" value="<%=EventID%>"></input>
 			</form>
 			<%
@@ -132,16 +132,16 @@
 			<!--Begin Login & Registration -->
 			<div id="registermodal" style="display: none;">
 				<a href="#"><img class="modal_close" src="style/images/close.png"></a>
-				<h2 class="txt">გააგზავნეთ მოთხოვნა</h2>
+				<h2 class="txt">Send Request</h2>
 				<form action="RequestServlet" id="sendrequest" name="sendrequest"
 					method="post">
 					<textarea style="resize: none;" class="textfield" rows="3"
-						placeholder="გთხოვთ შეიყვანოთ ტექსტი" name="requesttext"
+						placeholder="Please enter text" name="requesttext"
 						tabindex="1"></textarea>
 					<br>
 					<p>
 						<input type="submit" name="sendrequest" id="sendrequest"
-							class="flatbtn-blu hidemodal" value="მოთხოვნის გაგზავნა"
+							class="flatbtn-blu hidemodal" value="Send Request"
 							tabindex="3"></input>
 					</p>
 					<input type="hidden" name="EventID" value="<%=EventID%>"></input>
@@ -185,7 +185,7 @@
 						map : map,
 					});
 			var infowindow = new google.maps.InfoWindow({
-				content : 'საწყისი პუნქტი'
+				content : 'Departure Point'
 			});
 			infowindow.open(map, marker);
 
@@ -196,7 +196,7 @@
 			});
 
 			var infowindow = new google.maps.InfoWindow({
-				content : 'სააბოლოო პუნქტი'
+				content : 'Destination'
 			});
 			infowindow.open(map, marker2);
 		}
@@ -211,28 +211,28 @@
 				if (e.getValidation()) {
 			%>
 			<h2 style="color: #4D6DC1">
-				მოქმედი მგზავრობა</2>
+				Active Trip</2>
 				<%
 				}else{
 			%>
-				<h2 style="color: #4D6DC1">გაუქმებული მგზავრობა</h2>
+				<h2 style="color: #4D6DC1">Cancelled Trip</h2>
 				<%
 					}
 				%>
 				<h3>
-					გადასახადი :
+					Fee(GEL) :
 					<%=e.getPrice()%></h3>
 				<h3>
-					ადგილების რაოდენობა :
+					Number Of Places :
 					<%=e.getPlaces()%></h3>
 				<h3>
-					თავისუფალი ადგილების რაოდენობა :
+					Number Of Free Places :
 					<%=e.getPlaces()-ev.getParticipantsByEventID(EventID)%></h3>
 				<%
 					ev.CloseConnection();
 				%>
 				<h3>
-					მძღოლი : <a href="Profile.jsp?id=<%=u.getID()%>"><%=u.getFirstName()+ " " + u.getLastName()%></a>
+					Owner : <a href="Profile.jsp?id=<%=u.getID()%>"><%=u.getFirstName()+ " " + u.getLastName()%></a>
 				</h3>
 
 				<h3><%=r.getFromPlace() + " "%><i
@@ -241,7 +241,7 @@
 					if(e.getType()){
 				%>
 				<h3>
-					თარიღი
+					Date
 					<%=dt%></h3>
 				<%
 					} else {
@@ -252,49 +252,49 @@
 												    		 case 0:
 				%>
 				<h3>
-					ორშაბათი -
+					Monday -
 					<%=d.getDate()%></h3>
 				<%
 					break; 
 												    		 case 1:
 				%>
 				<h3>
-					სამშაბათი -
+					Tuesday -
 					<%=d.getDate()%></h3>
 				<%
 					break; 
 												    		 case 2:
 				%>
 				<h3>
-					ოთხშაბათი -
+					Wednesday -
 					<%=d.getDate()%></h3>
 				<%
 					break; 
 												    		 case 3:
 				%>
 				<h3>
-					ხუთშაბათი -
+					Thursday -
 					<%=d.getDate()%></h3>
 				<%
 					break;
 												    		 case 4:
 				%>
 				<h3>
-					პარასკევი -
+					Friday -
 					<%=d.getDate()%></h3>
 				<%
 					break; 
 												    		 case 5:
 				%>
 				<h3>
-					შაბათი -
+					Saturday -
 					<%=d.getDate()%></h3>
 				<%
 					break;
 												    		 case 6:
 				%>
 				<h3>
-					კვირა -
+					Sunday -
 					<%=d.getDate()%></h3>
 				<%
 					break; 
@@ -306,7 +306,7 @@
 												    }
 				%>
 				<div class="line"></div>
-				<h2>კომენტარები</h2>
+				<h2>Comments</h2>
 
 				<div id="column">
 					<ul id="latestnews">
@@ -320,24 +320,24 @@
 								<%=arr.get(i).getText()%>
 							</p> <br>
 							<p>
-								თარიღი:
+								Date:
 								<%=arr.get(i).getDate()%></p></li>
 
 						<%
 							}
 						%>
 						<li>
-							<H2>კომენტარის დამატება</H2>
+							<H2>Write a Comment</H2>
 							<form action="CommentServlet" method="post" id="registerform"
 								name="registerform">
-								<h4>კომენტარის სიგრძე არ უნდა აღემატებოდეს 400 სიმბოლოს</h4>
+								<h4>Comment must be between 1-400 symbols</h4>
 								<textarea style="resize: none;" class="textfield" rows="3"
-									placeholder="გთხოვთ შეიყვანოთ ტექსტი" name="comment"
+									placeholder="Please enter text" name="comment"
 									tabindex="1"></textarea>
 								<br>
 								<p>
 									<input type="submit" name="create" id="registerbtn"
-										class="flatbtn-blu hidemodal" value="კომენტარის დამატება"
+										class="flatbtn-blu hidemodal" value="Add Comment"
 										tabindex="3" onClick="return CheckAlerts();"></input>
 								</p>
 								<input type="hidden" name="eventID" value="<%=EventID%>"></input>

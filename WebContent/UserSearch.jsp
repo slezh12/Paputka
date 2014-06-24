@@ -38,7 +38,7 @@
 			<!-- Begin Menu -->
 			<div id="menu" class="menu-v">
 				<ul>
-					<li><a href="UserPage.jsp" class="active">მთავარი გვერდი</a></li>
+					<li><a href="UserPage.jsp" class="active">Main Page</a></li>
 				</ul>
 			</div>
 			<!-- End Menu -->
@@ -74,14 +74,13 @@
 				if (list.size() == 0) {
 			%>
 			<h2 style="color: #8693EE">
-				<strong>მსგავსი სახელით მომხმარებელი არ არის
-					დარეგისტრირებული</strong>
+				<strong>User with this name is not registered</strong>
 			</h2>
 			<%
 				} else {
 			%>
 			<h2 style="color: #8693EE">
-				<strong>ძებნის შედეგები</strong>
+				<strong>Search Results</strong>
 			</h2>
 			<%
 				}
