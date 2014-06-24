@@ -33,7 +33,7 @@ public class EventParseInfoTest {
 	}
 	
 	
-//	@Test
+	@Test
 	public void testGetEventByID() {
 		Date date = Date.valueOf("1994-02-04");
 		boolean type = true;
@@ -56,7 +56,7 @@ public class EventParseInfoTest {
 					+ "'"
 					+ ","
 					+ "'"
-					+ "bbbbbaaadsaaaaaaaaaaa"
+					+ "bbbbbaapouiuaaaaaaaaa"
 					+ "'"
 					+ ","
 					+ "'"
@@ -130,7 +130,7 @@ public class EventParseInfoTest {
 		}
 	}
 	
-//	@Test
+	@Test
 	public void testGetLastEvents() {
 		Date date = Date.valueOf("1994-02-04");
 		boolean type = true;
@@ -153,7 +153,7 @@ public class EventParseInfoTest {
 					+ "'"
 					+ ","
 					+ "'"
-					+ "bbbbbaaaadaadsaaaaaaaaa"
+					+ "bbbasdsxljkjkiiadsaaaaaaaaa"
 					+ "'"
 					+ ","
 					+ "'"
@@ -317,7 +317,7 @@ public class EventParseInfoTest {
 		}
 	}
 	
-//	@Test
+	@Test
 	public void testGetComments() {
 		Date date = Date.valueOf("1994-02-04");
 		
@@ -341,7 +341,7 @@ public class EventParseInfoTest {
 					+ "'"
 					+ ","
 					+ "'"
-					+ "bbadsaaaaaaaaa"
+					+ "bbasdasadsaaaaaaaaa"
 					+ "'"
 					+ ","
 					+ "'"
@@ -428,7 +428,7 @@ public class EventParseInfoTest {
 		}
 	}
 	
-//	@Test
+	@Test
 	public void testGetLastID() {
 		Date date = Date.valueOf("1994-02-04");
 		
@@ -452,7 +452,7 @@ public class EventParseInfoTest {
 					+ "'"
 					+ ","
 					+ "'"
-					+ "bbadsaaaaaaaaa"
+					+ "bbadsasdasaaaaaaaaa"
 					+ "'"
 					+ ","
 					+ "'"
@@ -512,7 +512,7 @@ public class EventParseInfoTest {
 		}
 	}
 	
-//	@Test
+	@Test
 	public void testgetEventsAndGetUsersEvents() {
 		Date date = Date.valueOf("1994-02-04");
 		
@@ -536,7 +536,7 @@ public class EventParseInfoTest {
 					+ "'"
 					+ ","
 					+ "'"
-					+ "bbadsaaaaaaaaa"
+					+ "bbasdadsaaaaaaaaa"
 					+ "'"
 					+ ","
 					+ "'"
@@ -596,7 +596,7 @@ public class EventParseInfoTest {
 	}
 	
 	
-//	@Test
+	@Test
 	public void testInsertIntoComments() {
 		Date date = Date.valueOf("1994-02-04");
 		
@@ -620,7 +620,7 @@ public class EventParseInfoTest {
 					+ "'"
 					+ ","
 					+ "'"
-					+ "bbadsaaaaaaaaa"
+					+ "bbadaaaaa"
 					+ "'"
 					+ ","
 					+ "'"
@@ -705,5 +705,250 @@ public class EventParseInfoTest {
 	}
 	
 	
+	@Test
+	public void testEveryDayDates() {
+		Date date = Date.valueOf("1994-02-04");
+		
+		boolean type = true;
+		boolean validation = false;
+		try {
+		
+			Connection con = source.getConnection();
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			
+			
+			
+			stmt.executeUpdate("INSERT INTO Users (FirstName , LastName, EMail , Password , Gender, BirthDate) VALUES("
+					+ "'"
+					+ "user1"
+					+ "'"
+					+ ","
+					+ "'"
+					+ "ar vici"
+					+ "'"
+					+ ","
+					+ "'"
+					+ "bbadsaaaaaaa"
+					+ "'"
+					+ ","
+					+ "'"
+					+ "password"
+					+ "'"
+					+ ","
+					+ true + "," + "'" + date + "'" + ")");
+			int lastID1 = 0;
+			ResultSet res1 = stmt.executeQuery("SELECT * FROM Users ORDER BY ID DESC LIMIT 1");
+			while(res1.next()){
+				 lastID1 = res1.getInt("ID");
+				
+			}	
+			
+			
+			stmt
+			.executeUpdate("INSERT INTO Events (userID,places,fee,FromLongitude,FromLatitude,ToLongitude,ToLatitude,fromPlace,toPlace,type,validation) VALUES("
+					+ lastID1
+					+ ","
+					+ 5
+					+ ","
+					+ 10
+					+ ","
+					+ 0
+					+ ","
+					+ 0
+					+ ","
+					+ 0
+					+ ","
+					+ 0
+					+ ","
+					+ "'"
+					+ "bla"
+					+ "'"
+					+ ","
+					+ "'"
+					+ "bla"
+					+ "'"
+					+ ","
+					+ type + "," + validation + ")");
+			
+			int eventsLastID = 0;
+			ResultSet resForEvents = stmt.executeQuery("SELECT * FROM EVENTS ORDER BY ID DESC LIMIT 1");
+			while(resForEvents.next()){
+				eventsLastID = resForEvents.getInt("ID");
+			}	
+			
+			
+			for(int i = 0;  i < 10 ; i++ ){
+				stmt
+				.executeUpdate("INSERT INTO EVERYDAY (EventID) VALUES("
+						+ eventsLastID
+						+ ")");
+			}
+			
+			EventParseInfo info = new EventParseInfo((BasicDataSource) source);
+			assertTrue(info.EveryDayDates(eventsLastID).size() > 9);
+			assertFalse(info.EveryDayDates(eventsLastID).size() < 10);
+			
+			stmt.executeUpdate("DELETE FROM EveryDay ORDER BY ID DESC LIMIT 10");
+			stmt.executeUpdate("DELETE FROM Events ORDER BY ID DESC LIMIT 1");
+			stmt.executeUpdate("DELETE FROM Users ORDER BY ID DESC LIMIT 1");
+			
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	@Test
+	public void testHasRequest() {
+		Date date = Date.valueOf("1994-02-04");
+		
+		boolean type = true;
+		boolean validation = false;
+		try {
+		
+			Connection con = source.getConnection();
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			
+			
+			
+			stmt.executeUpdate("INSERT INTO Users (FirstName , LastName, EMail , Password , Gender, BirthDate) VALUES("
+					+ "'"
+					+ "user1"
+					+ "'"
+					+ ","
+					+ "'"
+					+ "ar vici"
+					+ "'"
+					+ ","
+					+ "'"
+					+ "asaaaaaasdpklasdasdaj"
+					+ "'"
+					+ ","
+					+ "'"
+					+ "password"
+					+ "'"
+					+ ","
+					+ true + "," + "'" + date + "'" + ")");
+			int lastID1 = 0;
+			ResultSet res1 = stmt.executeQuery("SELECT * FROM Users ORDER BY ID DESC LIMIT 1");
+			while(res1.next()){
+				 lastID1 = res1.getInt("ID");
+				
+			}	
+			
+			stmt.executeUpdate("INSERT INTO Users (FirstName , LastName, EMail , Password , Gender, BirthDate) VALUES("
+					+ "'"
+					+ "user2"
+					+ "'"
+					+ ","
+					+ "'"
+					+ "ar vici"
+					+ "'"
+					+ ","
+					+ "'"
+					+ "waeaaalplkaplkaa"
+					+ "'"
+					+ ","
+					+ "'"
+					+ "password"
+					+ "'"
+					+ ","
+					+ true + "," + "'" + date + "'" + ")");
+			
+			int lastID2 = 0;
+			ResultSet res2 = stmt.executeQuery("SELECT * FROM Users ORDER BY ID DESC LIMIT 1");
+			while(res2.next()){
+				 lastID2 = res2.getInt("ID");
+				
+			}	
+			
+			stmt.executeUpdate("INSERT INTO Users (FirstName , LastName, EMail , Password , Gender, BirthDate) VALUES("
+					+ "'"
+					+ "user3"
+					+ "'"
+					+ ","
+					+ "'"
+					+ "ar vici"
+					+ "'"
+					+ ","
+					+ "'"
+					+ "adaaaaaaaaaasdasdg"
+					+ "'"
+					+ ","
+					+ "'"
+					+ "password3"
+					+ "'"
+					+ ","
+					+ true + "," + "'" + date + "'" + ")");
+
+			
+			int lastID3 = 0;
+			ResultSet res3 = stmt.executeQuery("SELECT * FROM Users ORDER BY ID DESC LIMIT 1");
+			while(res3.next()){
+				 lastID3 = res3.getInt("ID");
+				
+			}	
+			
+			stmt
+			.executeUpdate("INSERT INTO Events (userID,places,fee,FromLongitude,FromLatitude,ToLongitude,ToLatitude,fromPlace,toPlace,type,validation) VALUES("
+					+ lastID1
+					+ ","
+					+ 5
+					+ ","
+					+ 10
+					+ ","
+					+ 0
+					+ ","
+					+ 0
+					+ ","
+					+ 0
+					+ ","
+					+ 0
+					+ ","
+					+ "'"
+					+ "bla"
+					+ "'"
+					+ ","
+					+ "'"
+					+ "bla"
+					+ "'"
+					+ ","
+					+ type + "," + validation + ")");
+			
+			int eventsLastID = 0;
+			ResultSet resForEvents = stmt.executeQuery("SELECT * FROM EVENTS ORDER BY ID DESC LIMIT 1");
+			while(resForEvents.next()){
+				eventsLastID = resForEvents.getInt("ID");
+			}	
+			
+	
+			stmt.executeUpdate("INSERT INTO Requests(UserID, EventID, Text, Acception, Date) VALUES ("
+					+ lastID2
+					+ ","
+					+ eventsLastID
+					+ ","
+					+ "'"
+					+ "ragac texti"
+					+ "'"
+					+ ", 0, now())");
+			
+			EventParseInfo info = new EventParseInfo((BasicDataSource) source);
+			assertTrue(info.HasRequest(eventsLastID, lastID2));
+			assertFalse(info.HasRequest(eventsLastID, lastID3));
+			
+			stmt.executeUpdate("DELETE FROM Requests ORDER BY ID DESC LIMIT 1");
+			stmt.executeUpdate("DELETE FROM Events ORDER BY ID DESC LIMIT 1");
+			stmt.executeUpdate("DELETE FROM Users ORDER BY ID DESC LIMIT 3");
+			
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	
 }

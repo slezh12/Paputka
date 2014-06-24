@@ -206,7 +206,6 @@ public class EventParseInfo extends ParseInfo {
 			e.printStackTrace();
 		}
 		ev.CloseConnection();
-		System.out.println(check);
 		return (check != 0);
 	}
 
