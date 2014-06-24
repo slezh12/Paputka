@@ -70,14 +70,14 @@
 						<%}%>
 						<div style="float:left;" ><strong style="float:left; color:#6AA86B;"> Status:</strong>  <%= statuses  %></div>
 					
-					<div style="float:left; margin-left:23px; margin-top:20px; margin-bottom:30px;" >
+					<div style="float:left; margin-top:20px; margin-bottom:30px;" >
 					<% 
 					Integer rating = userParse.getRating(userID);
 					if (rating != null) {
 					%>
-					<strong style=" color:#6AA86B">	User Rating</strong>				
+					<strong style=" color:#6AA86B; margin-right:40px;">	User Rating</strong>				
 							<form id="ratingsForm1">
-								<div class="stars">
+								<div class="stars" style="margin-right:35px;">
 									<%
 										for (int i = 1; i <= userParse.getRating(userID); i++) {
 									%>
@@ -88,8 +88,8 @@
 								</div>
 							</form>
 						<%} else { %>
-						<div style="margin-left:0px;">
-						<strong style="left:0px;float:left; color:#6AA86B">Not Yet Rated</strong>
+						<div style="margin-left:70px;">
+						<strong style=" color:#6AA86B">Not Yet Rated</strong>
 						</div>
 						<%}%>
 					</div>
@@ -97,7 +97,7 @@
 					<% if (userParse.canRate(userIDGuest, userID)){%>
 						<strong style="color:#6AA86B">Rate User</strong>
 							<form id="ratingsForm" action="RatingServlet" method="post">
-								<div style="width:60%; margin: 0 auto;"class="stars">
+								<div style="margin-left:50px;"class="stars">
 									<input type="radio" name="star" class="star-1" id="star-1" value="1" /> 
 									<label class="star-1" for="star-1"></label>
 					 				<input type="radio" name="star" class="star-2" id="star-2" value="2" />
