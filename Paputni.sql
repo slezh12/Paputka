@@ -1,4 +1,4 @@
-drop database if exists paputka;
+	drop database if exists paputka;
 create database paputka;
 use paputka;
 
@@ -22,7 +22,7 @@ create table Statuses(
 create table Avatars(
 	ID int auto_increment not null primary key,
 	UserID int,
-	Image varchar(50),
+	Image varchar(10000),
 	constraint foreign key (UserID) references Users(ID)
 );
 
@@ -130,4 +130,5 @@ create table Requests(
 	Date datetime,
 	constraint foreign key (UserID) references Users(ID),
 	constraint foreign key (EventID) references Events(ID)
-);
+);	
+select * from avatars;

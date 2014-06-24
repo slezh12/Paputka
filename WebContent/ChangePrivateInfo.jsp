@@ -63,6 +63,10 @@
 							onClick="return CheckAlerts();"></input>
 						</p>
 					</form>
+					<form action="UploadDownloadFileServlet" method="post" enctype="multipart/form-data">
+						<b>Select Avatar to Upload:</b><input type="file" name="fileName">
+					<input type="submit" class="flatbtn-blu hidemodal" value="Upload">
+					</form>
 			<!-- End Content -->
 		</div>
 	</div>

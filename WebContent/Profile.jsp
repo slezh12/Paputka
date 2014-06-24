@@ -30,6 +30,7 @@
 			<!-- Begin Sidebar -->
 			<div id="sidebar">
 				<div id="logo"><img src="style/images/logo.png" alt="Paputka" /></div>
+				
 				<!-- Begin Menu -->
 				<% 
 				
@@ -52,7 +53,9 @@
 
 				
 				%>
-				<h3 id="welcomeUser"><%= user.getFirstName()+" "+user.getLastName() %> </h3> 				
+				<h3 id="welcomeUser"><%= user.getFirstName()+" "+user.getLastName() %> </h3> 
+				<img src="style/null/<%=userParse.selectFromAvatars(user.getID())%>">				
+			
 				<div id="menu" class="menu-v">
 					<ul>
 						<li><a href="UserPage.jsp" class="active">Main Page</a></li>

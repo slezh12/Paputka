@@ -386,4 +386,20 @@ public class UserParseInfo extends ParseInfo {
 		return result;
 	}
 	
+	public void insertIntoAvatars(String avatar, int id){
+		UserConnection connect = new UserConnection((BasicDataSource) source);
+		connect.insert("Avatars", "Image", avatar, id);
+		connect.CloseConnection();
+	}
+	public String selectFromAvatars(int id){
+		String res = "";
+		ParseInfo parse = new ParseInfo((BasicDataSource) source);
+		res = parse.getPrivateInfo(id, "image", "Avatars");
+		return res;
+	}
+	public void updateAvatars(String avatar, int id) {
+		UserConnection connect = new UserConnection((BasicDataSource) source);
+		connect.update("Avatars", "Image", avatar, id);
+		connect.CloseConnection();
+	}
 }
