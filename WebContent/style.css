@@ -8,7 +8,6 @@ html,body,div,span,applet,object,iframe,h1,p,blockquote,pre,a,acronym,address,bi
 	border: 0;
 	outline: 0;
 	font-size: 100%;
-	vertical-align: baseline;
 	background: transparent
 }
 
@@ -97,10 +96,13 @@ br {
 /*-------------------------------------------------------*/
 html,body {
 	height: 100%;
+	
 }
 
 body {
 	background-color: #FCFCFC;
+	border: 1px solid transparent;
+	
 	font-family: Arial, sans-serif;
 	font-size: 13px;
 	color: #585858;
@@ -415,16 +417,25 @@ input[class="login"] {
 
 /** modal window styles **/
 #lean_overlay {
-	position: fixed;
-	z-index: 100;
-	top: 0px;
-	left: 0px;
-	height: 100%;
-	width: 100%;
-	background: #000;
-	display: none;
+    position: relative;
+    z-index:100;
+    top: 0px;
+    left: 0px;
+    height:0;
+    width:0;
+    background: #000;
+    display: none;
 }
-
+.modal_close {
+position: absolute;
+top: 4px;
+right: 4px;
+display: block;
+width: 50px;
+height: 50px;
+background: url(styles/images/close.png);
+z-index: 100;
+}
 #registermodal {
 	width: 800px;
 	height: 600px;
@@ -651,6 +662,9 @@ cite {
 }
 
 #sidebar {
+	z-index:1;
+	position: fixed;
+	display:block;
 	height: 100%;
 	width: 258px;
 	background: #596d7f url(style/images/noize.png) repeat 100% 0;
@@ -660,7 +674,6 @@ cite {
 	border-left: 1px solid rgba(0, 0, 0, 0.50);
 	border-right: 1px solid rgba(0, 0, 0, 0.50);
 	float: left;
-	position: fixed;
 }
 
 #logo {
