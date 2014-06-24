@@ -48,7 +48,7 @@
 		<!-- End Sidebar -->
 		<!-- Begin Content -->
 		<div id="content">
-			<h2>My Filtres</h2>
+			<h2 style="color:#8693EE"><strong>My Filtres</strong></h2>
 			<div class="line"></div>
 			<%
 				BasicDataSource source = (BasicDataSource) application
@@ -65,17 +65,17 @@
 			%>
 			<div id="column">
 				<ul id="latestnews">
-					<strong><a href="WantToGoPage.jsp?id=<%=wantToGoID%>"><h2><%=title%></h2></a></strong>
+					<a href="WantToGoPage.jsp?id=<%=wantToGoID%>"><h3 "><strong><%=title%></strong></h3></a>
 					<p>
 						<%
 							if (type) {
 						%>
 					
-					<h2>One Way</h2>
+					<h4>One Way</h4>
 					<%
 						} else {
 					%>
-					<h2>Daily</h2>
+					<h4>Daily</h4>
 					<%
 						}
 					%>

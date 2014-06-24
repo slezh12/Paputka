@@ -44,6 +44,8 @@
 			<div id="menu" class="menu-v">
 				<ul>
 					<li><a href="UserPage.jsp" class="active">Main Page</a></li>
+				</ul>
+			</div>
 					<%
 				String id = request.getParameter("id");
 				User current = (User) session.getAttribute("user");
@@ -56,100 +58,101 @@
 				String title = want.getTitle();
 				boolean type = want.getType();
 			%>
-			<li style="color: #fff;">
-				Title: <br><%=title%></li>
-
+			<div id="wanttogoinfo" >
+			<strong style="color: #6AA86B; ">
+				Title:</strong> <%=title%>
+				<br>
 			<%
 				if (type) {
 			%>
-			<li style="color: #fff;">One Way</li>
+			<strong style="color: #6AA86B; ">Type: </strong>One Way
+			<br>
 			<%
 				ArrayList<Timestamp> list = parse.getOnce(wantToGoID);
 			%>
-			<li style="color: #fff;">
-				Start Time:<%=list.get(0)%><br>
-				End Time:<%=list.get(1)%></li>
+			<strong style="color: #6AA86B; ">
+				Start Time:</strong><%=list.get(0)%><br>
+				<strong style="color: #6AA86B; ">End Time:</strong><%=list.get(1)%>
 			<%
 				} else {
 					ArrayList<WantToGoForEveryDay> list = parse
 							.getEveryDay(wantToGoID);
 			%>
-			<li style="color: #fff;">Daily</li>
-			<%
+			<strong style="color: #6AA86B; ">Type: </strong>Daily
+							<%
 				for (int i = 0; i < list.size(); i++) {
 						WantToGoForEveryDay temp = list.get(i);
 						int day = temp.getDay();
 						Time start = temp.getStart();
 						Time finish = temp.getFinish();
-						if (day == 0) {
+				if (day == 0) {
 			%>
-			<li style="color: #fff;">
-				Monday:<br>
+			<br>
+			<strong style="color: #6AA86B; ">
+				Monday:</strong><br>
 				<%=start%> -
 				<%=finish%>
-			</li>
 			<%
 				} else if (day == 1) {
 			%>
-			<li style="color: #fff;">
-				Tuesday:<br>
+			<br>
+			<strong style="color: #6AA86B; ">
+				Tuesday:</strong><br>
 				<%=start%> -
 				<%=finish%>
-			</li>
 			<%
 				} else if (day == 2) {
 			%>
-			<li style="color: #fff;">
-				Wednesday:<br>
+			<br>
+			<strong style="color: #6AA86B; ">
+				Wednesday:</strong><br>
 				<%=start%> -
 				<%=finish%>
-			</li>
 
 			<%
 				} else if (day == 3) {
 			%>
-			<li style="color: #fff;">
-				Thursday:<br>
+			<br>			
+			<strong style="color: #6AA86B; ">
+				Thursday:</strong><br>
 				<%=start%> -
 				<%=finish%>
-			</li>
 			<%
 				} else if (day == 4) {
 			%>
-			<li style="color: #fff;">
-				Friday:<br>
+			<br>
+			<strong style="color: #6AA86B; ">
+				Friday:</strong><br>
 				<%=start%> -
 				<%=finish%>
-			</li>
 			<%
 				} else if (day == 5) {
 			%>
-			<li style="color: #fff;">
-				Saturday:<br>
+			<br>
+			<strong style="color: #6AA86B; ">
+				Saturday:</strong><br>
 				<%=start%> -
 				<%=finish%>
-			</li>
 			<%
 				} else if (day == 6) {
 			%>
-			<li style="color: #fff;">
-				Sunday:<br>
+			<br>
+			<strong style="color: #6AA86B; ">
+				Sunday:</strong><br>
 				<%=start%> -
 				<%=finish%>
-			</li>
 			<%
 				}
 					}
 				}
 			%>
-				</ul>
 			</div>
 			<!-- End Menu -->
 		</div>
 		<!-- End Sidebar -->
 		<!-- Begin Content -->
 		<div id="content">
-			<h2>Search Results</h2>
+			<h2 style="color:#8693EE"><strong>Search Results</strong></h2>
 			<div class="line"></div>
 			<%if (want.getValidation()) { %>
 			<script

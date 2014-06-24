@@ -216,8 +216,18 @@ input[class="radio2"] {
 .radio2 {
 	float: left;
 }
-#UserProfile br{
+#UserProfile br,#wanttogoinfo br{
 	line-height:20px;
+}
+#wanttogoinfo{
+	font-family: 'Amaranth', sans-serif;
+	font-size: 15px;
+	margin-top: 50px;
+	float:left;
+	margin-left:30px;
+	position: relative;
+	color:#fff;
+	text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
 }
 #UserProfile {
 	font-family: 'Amaranth', sans-serif;
