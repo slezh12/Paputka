@@ -52,7 +52,7 @@
 			}
 		}
 		if (Chcount == 0) {
-			alert("აირჩიეთ ყოველდღიური ან ერთჯერადი");
+			alert("Choose daily or one-way");
 			return false;
 		}
 		if (once) {

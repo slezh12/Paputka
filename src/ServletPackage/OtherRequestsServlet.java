@@ -49,7 +49,6 @@ public class OtherRequestsServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
 		String accept = request.getParameter("acc");
 		String requestID = request.getParameter("request");
 		String event = request.getParameter("event");
