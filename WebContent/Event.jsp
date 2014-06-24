@@ -131,6 +131,7 @@
 			<!-- End Menu -->
 			<!--Begin Login & Registration -->
 			<div id="registermodal" style="display: none;">
+				<a href="#"><img class="modal_close" src="style/images/close.png"></a>
 				<h2 class="txt">გააგზავნეთ მოთხოვნა</h2>
 				<form action="RequestServlet" id="sendrequest" name="sendrequest"
 					method="post">

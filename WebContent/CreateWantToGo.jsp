@@ -157,6 +157,8 @@
 			<!--Begin Login & Registration -->
 
 			<div id="registermodal" style="display: none;">
+						<a href="#"><img class="modal_close" src="style/images/close.png"></a>
+			
 				<h2 class="txt">Detailed Info About Filter</h2>
 				<h5>
 					<b>Please fill every field</b>
