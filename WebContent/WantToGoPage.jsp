@@ -147,6 +147,14 @@
 				}
 			%>
 			</div>
+			<form id="delete" action="DeleteWantToGoServlet" method="post">
+				<input type="submit" name="btn"
+					style="margin-top: 70px; margin-right: 30px; width: 80px; height: 40px;"
+					class="mailnumber" value="Delete"></input> <input type="hidden"
+					name="wantToGoID" value="<%=want.getID()%>"></input>
+					<input type="hidden"
+					name="type" value="<%=want.getType()%>"></input>
+			</form>
 			<!-- End Menu -->
 		</div>
 		<!-- End Sidebar -->

@@ -13,19 +13,19 @@ import javax.sql.DataSource;
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
-import JavaPackage.EventConnection;
+import JavaPackage.WantToGoConnection;
 
 /**
- * Servlet implementation class ValidationServlet
+ * Servlet implementation class DeleteWantToGoServlet
  */
-@WebServlet("/ValidationServlet")
-public class ValidationServlet extends HttpServlet {
+@WebServlet("/DeleteWantToGoServlet")
+public class DeleteWantToGoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ValidationServlet() {
+    public DeleteWantToGoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,13 +43,17 @@ public class ValidationServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletContext context = getServletContext();
 		DataSource source = (DataSource) context.getAttribute("connectionPool");
-		EventConnection connect = new EventConnection((BasicDataSource) source);
-		String id = request.getParameter("eventID");
-		int eventID = Integer.parseInt(id);
-		connect.updateEvent(eventID, false);
+		WantToGoConnection connect = new WantToGoConnection((BasicDataSource) source);
+		String id = request.getParameter("wantToGoID");
+		String bool = request.getParameter("type");
+		int wantToGoID = Integer.parseInt(id);
+		boolean type = false;
+		if (bool.equals("true"))
+			type = true;
+		connect.deleteWantToGo(wantToGoID, type);
 		connect.CloseConnection();
 		RequestDispatcher dispatch = null;
-		dispatch = request.getRequestDispatcher("Event.jsp?id="+ eventID);
+		dispatch = request.getRequestDispatcher("MyWantToGos.jsp");
 		dispatch.forward(request, response);
 	}
 

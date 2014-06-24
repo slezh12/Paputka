@@ -118,5 +118,19 @@ public class WantToGoConnection extends BaseConnection {
 			e.printStackTrace();
 		}
 	}
+	
+	public void deleteWantToGo(int wantToGoID, boolean type) {
+		try {
+			if (type) {
+				stmt.executeUpdate("delete from WantToGoDates where WantToGoID ="+wantToGoID);
+			} else {
+				stmt.executeUpdate("delete from WantToGoEveryday where WantToGoID ="+wantToGoID);
+			}
+			stmt.executeUpdate("delete from WantToGo where ID ="+wantToGoID);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }
