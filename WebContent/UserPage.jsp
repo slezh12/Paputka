@@ -119,7 +119,8 @@
 						var directionsDisplay;
 						var directionsService = new google.maps.DirectionsService();
 						var dD;
-			    		var map;    				            
+			    		var map;	
+			    		var set = [];
 			    		function initialize() {			    			
 			    			directionsDisplay = new google.maps.DirectionsRenderer();
 			    			dD = new google.maps.DirectionsRenderer();
@@ -134,14 +135,13 @@
 			        	}
 			    		</script>
 			    		<%					
-					for(int i = 0; i < list.size(); i++){
+					for(int i =0; i<list.size(); i++){
 						WantToGo want = list.get(i);						
 						if (want.getValidation()) { 			            		            
 							ArrayList<Event> arr = parseEvent.getEventsForSearch(want);							
 				            String a="";
 				            for (int k = 0; k < i; k++)
-				            	a+="a";
-				            System.out.println(a);
+				            	a+="a";				         
 				            for(int j = 0; j<arr.size(); j++) {
 				            	Event e = arr.get(j);
 				            	if (e.getValidation()) {
@@ -153,7 +153,7 @@
 									User postOwner = userParse.getUserByID(eventOwnerID);
 			            %>
 			            <script>			            			            
-			            function calcRoute<%=a%><%=j %>() {
+			            function calcRoute<%=a%><%=j %>() {			            	
 			            	var waypts = [];				         
 			            	var a = new google.maps.LatLng(<%=want.getFromLatitude() %>,<%= want.getFromLongitude()%>);
 			                var b = new google.maps.LatLng(<%=want.getToLatitude()%>,<%=want.getToLongitude() %>);
@@ -196,13 +196,19 @@
 			          	      		var route = response.routes[0];
 			          	      		for (var i = 0; i < route.legs.length; i++) {
 			                        	optimal+=route.legs[i].distance.value;                     
-			                   		}
-			          	      		console.log('optimal '+optimal);
-			          	      	console.log('current '+current);
-			          	      		if (current < optimal*1.15) {			          	      		
-				                		var summaryPanel = document.getElementById("div<%=a%><%=j %>");
-summaryPanel.innerHTML='<strong><a id="link<%=a%>f<%=j %>" href="Event.jsp?id=<%=e.getID()%>"><%=p1%> <i class="fa fa-arrow-right fa-spin"></i> <%=p2%></a></strong><strong><a href="Profile.jsp?id=<%=eventOwnerID%>"><h4><%=postOwner.getFirstName()+" "%><%=postOwner.getLastName()%></h4></a></strong><div class="line"></div>';
-				                	} else {
+			                   		}			          	      		
+			          	      		if (current < optimal*1.15) {
+			          	      			var bool = true;
+		          	      				for (var i = 0; i < set.length; i++) {
+											if (set[i] == <%=e.getID()%>)
+												bool = false;
+										}
+		          	      				if (bool) {
+			          	      				set[set.length] = <%= e.getID()%>;			          	      			
+				                			var summaryPanel = document.getElementById("div<%=a%><%=j %>");
+summaryPanel.innerHTML='<strong><a id="link<%=a%><%=j %>" href="Event.jsp?id=<%=e.getID()%>"><%=p1%> <i class="fa fa-arrow-right fa-spin"></i> <%=p2%></a></strong><strong><a href="Profile.jsp?id=<%=eventOwnerID%>"><h4><%=postOwner.getFirstName()+" "%><%=postOwner.getLastName()%></h4></a></strong><div class="line"></div>';
+		          	      				}
+		          	      			} else {
 				                		var summaryPanel = document.getElementById("div"+<%=a%><%=j %>);
 				                		summaryPanel.innerHTML='';
 				                	}

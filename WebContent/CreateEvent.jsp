@@ -28,11 +28,7 @@
 </script>
 
 <script type="text/javascript">
-	function CheckAlerts() {
-		if (check != 2) {
-			alert("მონიშნეთ ორი წერტილი რუკაზე");
-			return false;
-		}
+	function CheckAlerts() {		
 		if ((registerform.from.value).length == 0
 				|| (registerform.from.value).length > 30) {
 			alert("გასვლის ადგილი უნდა იყოს 1-დან 30 სიმბოლომდე ზომის");

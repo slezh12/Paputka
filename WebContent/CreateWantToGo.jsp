@@ -31,10 +31,6 @@
 
 <script type="text/javascript">
 	function CheckAlerts() {
-		if (check != 2) {
-			alert("მონიშნეთ ორი წერტილი რუკაზე");
-			return false;
-		}
 		if ((registerform.title.value).length == 0
 				|| (registerform.title.value).length > 100) {
 			alert("სახელი უნდა იყოს 1-დან 100 სიმბოლომდე ზომის");
