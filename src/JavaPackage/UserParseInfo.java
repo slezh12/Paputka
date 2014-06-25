@@ -386,17 +386,50 @@ public class UserParseInfo extends ParseInfo {
 		return result;
 	}
 	
+
+	/**
+	 * Inserts New Image
+	 *      
+	 * @param Avatar
+	 *			image file 
+	 *
+	 *	@param id
+	 *			ID of user
+	 *
+	 */
 	public void insertIntoAvatars(String avatar, int id){
 		UserConnection connect = new UserConnection((BasicDataSource) source);
 		connect.insert("Avatars", "Image", avatar, id);
 		connect.CloseConnection();
 	}
+	/**
+	 * Returns String of Image, by UserID 
+	 *      
+	 *
+	 *	@param id
+	 *			ID of user
+	 *
+	 *  @return String
+	 *  		image for user
+	 *
+	 */
 	public String selectFromAvatars(int id){
 		String res = "";
 		ParseInfo parse = new ParseInfo((BasicDataSource) source);
 		res = parse.getPrivateInfo(id, "image", "Avatars");
 		return res;
 	}
+	
+	/**
+	 * Updates Current Image
+	 *      
+	 * @param Avatar
+	 *			image file
+	 *
+	 *	@param id
+	 *			ID of user
+	 *
+	 */
 	public void updateAvatars(String avatar, int id) {
 		UserConnection connect = new UserConnection((BasicDataSource) source);
 		connect.update("Avatars", "Image", avatar, id);

@@ -119,6 +119,17 @@ public class WantToGoConnection extends BaseConnection {
 		}
 	}
 	
+	/**
+	 * Deletes WantToGo, Checks if
+	 * It is every day or once. 
+	 *            
+	 * @param wantToGoID
+	 * 			Which Event Is Deleted
+	 * 
+	 * @param type
+	 * 			true if once, else false
+	 * 
+	 */
 	public void deleteWantToGo(int wantToGoID, boolean type) {
 		try {
 			if (type) {

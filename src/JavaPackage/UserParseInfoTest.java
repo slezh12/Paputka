@@ -299,7 +299,6 @@ public class UserParseInfoTest {
 
 			stmt.executeUpdate("DELETE FROM Users ORDER BY ID DESC LIMIT 3");
 
-
 			con.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -448,8 +447,6 @@ public class UserParseInfoTest {
 					+ "'" + ", 0, now())");
 
 			UserParseInfo info = new UserParseInfo((BasicDataSource) source);
-			
-
 
 			assertEquals(0, info.getMyRequests(lastID1).size());
 			assertEquals(2, info.getOthrRequests(lastID1).size());
@@ -740,4 +737,101 @@ public class UserParseInfoTest {
 			e.printStackTrace();
 		}
 	}
+
+	@Test
+	public void TestInsertIntoAvatars() {
+		try {
+			Connection con = source.getConnection();
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
+			int ID = 0;
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				ID = rs.getInt("ID");
+			}
+			UserParseInfo parse = new UserParseInfo((BasicDataSource) source);
+			parse.insertIntoAvatars("snimkebi", ID);
+			rs = stmt
+					.executeQuery("SELECT * FROM Avatars Where UserID = " + ID);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				assertEquals("snimkebi", rs.getString("Image"));
+				stmt.executeUpdate("DELETE FROM Avatars ORDER BY ID DESC LIMIT 1");
+				stmt.executeUpdate("DELETE FROM Users ORDER BY ID DESC LIMIT 1");
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void TestSelectFromAvatars() {
+		try {
+			Connection con = source.getConnection();
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
+			int ID = 0;
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				ID = rs.getInt("ID");
+			}
+			stmt.executeUpdate("INSERT INTO Avatars(UserID, Image) Values(" + ID
+					+ ", 'snimkebi')");
+			UserParseInfo parse = new UserParseInfo((BasicDataSource) source);
+			String res = parse.selectFromAvatars(ID);
+			
+			
+			assertEquals(res, "snimkebi");
+
+			stmt.executeUpdate("DELETE FROM Avatars ORDER BY ID DESC LIMIT 1");
+			stmt.executeUpdate("DELETE FROM Users ORDER BY ID DESC LIMIT 1");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void TestUpdateAvatars() {
+		try {
+			Connection con = source.getConnection();
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
+			int ID = 0;
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				ID = rs.getInt("ID");
+			}
+			stmt.executeUpdate("INSERT INTO Avatars(UserID, Image) Values(" + ID
+					+ ", 'snimkebi')");
+			UserParseInfo parse = new UserParseInfo((BasicDataSource) source);
+			parse.updateAvatars("surati", ID);
+			
+			rs = stmt
+					.executeQuery("SELECT * FROM Avatars Where UserID = " + ID);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				
+				assertEquals("surati", rs.getString("Image"));
+				stmt.executeUpdate("DELETE FROM Avatars ORDER BY ID DESC LIMIT 1");
+				stmt.executeUpdate("DELETE FROM Users ORDER BY ID DESC LIMIT 1");
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+
 }
