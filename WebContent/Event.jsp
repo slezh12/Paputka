@@ -313,7 +313,7 @@
 							for(int i =0; i<arr.size(); i++){ 
 																						          User temp = userParse.getUserByID(arr.get(i).getUserID());
 						%>
-						<li><img src="images/demo/80x80.gif" alt="" />
+						<li><img style="width:50px; height:50px;"src="UploadDownloadFileServlet?fileName=<%=userParse.selectFromAvatars(temp.getID())%>"/>
 							<p>
 								<strong><a href="Profile.jsp?id=<%=temp.getID()%>"><%=temp.getFirstName() + " " + temp.getLastName()%></a></strong>
 								<%=arr.get(i).getText()%>
