@@ -54,8 +54,12 @@
 				
 				%>
 				<h3 id="welcomeUser"><%= user.getFirstName()+" "+user.getLastName() %> </h3> 
-				<center><img style="width:50px; height:50px;"src="UploadDownloadFileServlet?fileName=<%=userParse.selectFromAvatars(user.getID())%>">	</center>				
-			
+				<%if(userParse.selectFromAvatars(user.getID()).equals("")){ %>
+				<center><img style="width:75px; height:75px;"src="style/images/images.jpg">	</center>				
+		
+				<%}else{ %>
+				<center><img style="width:75px; height:75px;"src="UploadDownloadFileServlet?fileName=<%=userParse.selectFromAvatars(user.getID())%>">	</center>				
+				<%} %>
 				<div id="menu" class="menu-v">
 					<ul>
 						<li><a href="UserPage.jsp" class="active">Main Page</a></li>

@@ -313,7 +313,12 @@
 							for(int i =0; i<arr.size(); i++){ 
 																						          User temp = userParse.getUserByID(arr.get(i).getUserID());
 						%>
-						<li><img style="width:50px; height:50px;"src="UploadDownloadFileServlet?fileName=<%=userParse.selectFromAvatars(temp.getID())%>"/>
+						<li>
+							<%if(userParse.selectFromAvatars(temp.getID()).equals("")){ %>
+							<center><img style="width:75px; height:75px;"src="style/images/images.jpg">	</center>				
+						<%}else{ %>
+						<center><img style="width:75px; height:75px;"src="UploadDownloadFileServlet?fileName=<%=userParse.selectFromAvatars(temp.getID())%>">	</center>				
+						<%} %>
 							<p>
 								<strong><a href="Profile.jsp?id=<%=temp.getID()%>"><%=temp.getFirstName() + " " + temp.getLastName()%></a></strong>
 								<%=arr.get(i).getText()%>
