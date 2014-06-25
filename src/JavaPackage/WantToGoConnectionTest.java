@@ -172,5 +172,83 @@ public class WantToGoConnectionTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void DeleteWantToGo(){
+		try {
+			Connection con = source.getConnection();
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
+			int ID = 0;
+			int EventID = 0;
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				ID = rs.getInt("ID");
+			}
+			stmt.executeUpdate("INSERT INTO WantToGo(UserID) Values (" + ID
+					+ " )");
+			rs = stmt
+					.executeQuery("SELECT ID FROM WantToGo Where UserID = " + ID);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				EventID = rs.getInt("ID");
+			}
+			int check =0;
+			stmt.executeUpdate("INSERT INTO WantToGoEveryDay(WantToGoID) Values (" + EventID + ")");
+			base.deleteWantToGo(EventID, false);
+			rs = stmt.executeQuery("SELECT * FROM WantToGoEveryDay Where WantToGoID = " + EventID);
+			while(rs.next()) check++;
+			assertEquals(check,0);
+			rs = stmt.executeQuery("SELECT * FROM WantToGo Where UserID = " + ID);
+			while(rs.next()) check++;
+			assertEquals(check,0);
+			stmt.executeUpdate("DELETE FROM Users Where ID = " + ID);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Test
+	public void DeleteWantToGo2(){
+		try {
+			Connection con = source.getConnection();
+			Statement stmt = con.createStatement();
+			stmt.executeQuery("USE " + database);
+			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
+			int ID = 0;
+			int EventID = 0;
+			ResultSet rs = stmt
+					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				ID = rs.getInt("ID");
+			}
+			stmt.executeUpdate("INSERT INTO WantToGo(UserID) Values (" + ID
+					+ " )");
+			rs = stmt
+					.executeQuery("SELECT ID FROM WantToGo Where UserID = " + ID);
+			if (rs.isBeforeFirst()) {
+				rs.next();
+				EventID = rs.getInt("ID");
+			}
+			int check = 0;
+			stmt.executeUpdate("INSERT INTO WantToGoDates(WantToGoID) Values (" + EventID + ")");
+			base.deleteWantToGo(EventID, true);
+			rs = stmt.executeQuery("SELECT * FROM WantToGoDates Where WantToGoID = " + EventID);
+			while(rs.next()) check++;
+			assertEquals(check,0);
+			rs = stmt.executeQuery("SELECT * FROM WantToGo Where UserID = " + ID);
+			while(rs.next()) check++;
+			assertEquals(check,0);
+			stmt.executeUpdate("DELETE FROM Users Where ID = " + ID);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 }
