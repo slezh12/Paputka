@@ -744,18 +744,45 @@ public class UserParseInfoTest {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + database);
-			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
-			int ID = 0;
-			ResultSet rs = stmt
-					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
-			if (rs.isBeforeFirst()) {
-				rs.next();
-				ID = rs.getInt("ID");
-			}
+			ResultSet rs;
+//			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
+//			int ID = 0;
+//			
+//			ResultSet rs = stmt
+//					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
+//			if (rs.isBeforeFirst()) {
+//				rs.next();
+//				ID = rs.getInt("ID");
+//			}
+			Date date = Date.valueOf("1994-02-04");
+			stmt.executeUpdate("INSERT INTO Users (FirstName , LastName, EMail , Password , Gender, BirthDate) VALUES("
+					+ "'"
+					+ "user1"
+					+ "'"
+					+ ","
+					+ "'"
+					+ "ar vici"
+					+ "'"
+					+ ","
+					+ "'"
+					+ "asaalkksdasdaj"
+					+ "'"
+					+ ","
+					+ "'"
+					+ "password"
+					+ "'"
+					+ ","
+					+ true + "," + "'" + date + "'" + ")");
+			int lastID1 = 0;
+			ResultSet res1 = stmt.executeQuery("SELECT * FROM Users ORDER BY ID DESC LIMIT 1");
+			while(res1.next()){
+				 lastID1 = res1.getInt("ID");
+				
+			}	
 			UserParseInfo parse = new UserParseInfo((BasicDataSource) source);
-			parse.insertIntoAvatars("snimkebi", ID);
+			parse.insertIntoAvatars("snimkebi", lastID1);
 			rs = stmt
-					.executeQuery("SELECT * FROM Avatars Where UserID = " + ID);
+					.executeQuery("SELECT * FROM Avatars Where UserID = " + lastID1);
 			if (rs.isBeforeFirst()) {
 				rs.next();
 				assertEquals("snimkebi", rs.getString("Image"));
@@ -770,22 +797,48 @@ public class UserParseInfoTest {
 
 	@Test
 	public void TestSelectFromAvatars() {
+		Date date = Date.valueOf("1994-02-04");
 		try {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + database);
-			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
-			int ID = 0;
-			ResultSet rs = stmt
-					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
-			if (rs.isBeforeFirst()) {
-				rs.next();
-				ID = rs.getInt("ID");
-			}
-			stmt.executeUpdate("INSERT INTO Avatars(UserID, Image) Values(" + ID
+			ResultSet rs;
+//			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
+//			int ID = 0;
+//			ResultSet rs = stmt
+//					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
+//			if (rs.isBeforeFirst()) {
+//				rs.next();
+//				ID = rs.getInt("ID");
+//			}
+			stmt.executeUpdate("INSERT INTO Users (FirstName , LastName, EMail , Password , Gender, BirthDate) VALUES("
+					+ "'"
+					+ "user1"
+					+ "'"
+					+ ","
+					+ "'"
+					+ "ar vici"
+					+ "'"
+					+ ","
+					+ "'"
+					+ "asaalkksdasdaj"
+					+ "'"
+					+ ","
+					+ "'"
+					+ "password"
+					+ "'"
+					+ ","
+					+ true + "," + "'" + date + "'" + ")");
+			int lastID1 = 0;
+			ResultSet res1 = stmt.executeQuery("SELECT * FROM Users ORDER BY ID DESC LIMIT 1");
+			while(res1.next()){
+				 lastID1 = res1.getInt("ID");
+				
+			}	
+			stmt.executeUpdate("INSERT INTO Avatars(UserID, Image) Values(" + lastID1
 					+ ", 'snimkebi')");
 			UserParseInfo parse = new UserParseInfo((BasicDataSource) source);
-			String res = parse.selectFromAvatars(ID);
+			String res = parse.selectFromAvatars(lastID1);
 			
 			
 			assertEquals(res, "snimkebi");
@@ -800,25 +853,51 @@ public class UserParseInfoTest {
 	
 	@Test
 	public void TestUpdateAvatars() {
+		Date date = Date.valueOf("1994-02-04");
 		try {
 			Connection con = source.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE " + database);
-			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
-			int ID = 0;
-			ResultSet rs = stmt
-					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
-			if (rs.isBeforeFirst()) {
-				rs.next();
-				ID = rs.getInt("ID");
-			}
-			stmt.executeUpdate("INSERT INTO Avatars(UserID, Image) Values(" + ID
+			ResultSet rs;
+//			stmt.executeUpdate("INSERT INTO Users (FirstName, LastName, Gender, Password, EMail) Values ('tedo' ,'chubo', true, '123', 'tedo')");
+//			int ID = 0;
+//			ResultSet rs = stmt
+//					.executeQuery("SELECT ID FROM Users Where EMail = 'tedo'");
+//			if (rs.isBeforeFirst()) {
+//				rs.next();
+//				ID = rs.getInt("ID");
+//			}
+			stmt.executeUpdate("INSERT INTO Users (FirstName , LastName, EMail , Password , Gender, BirthDate) VALUES("
+					+ "'"
+					+ "user1"
+					+ "'"
+					+ ","
+					+ "'"
+					+ "ar vici"
+					+ "'"
+					+ ","
+					+ "'"
+					+ "asaalkksdasdaj"
+					+ "'"
+					+ ","
+					+ "'"
+					+ "password"
+					+ "'"
+					+ ","
+					+ true + "," + "'" + date + "'" + ")");
+			int lastID1 = 0;
+			ResultSet res1 = stmt.executeQuery("SELECT * FROM Users ORDER BY ID DESC LIMIT 1");
+			while(res1.next()){
+				 lastID1 = res1.getInt("ID");
+				
+			}	
+			stmt.executeUpdate("INSERT INTO Avatars(UserID, Image) Values(" + lastID1
 					+ ", 'snimkebi')");
 			UserParseInfo parse = new UserParseInfo((BasicDataSource) source);
-			parse.updateAvatars("surati", ID);
+			parse.updateAvatars("surati", lastID1);
 			
 			rs = stmt
-					.executeQuery("SELECT * FROM Avatars Where UserID = " + ID);
+					.executeQuery("SELECT * FROM Avatars Where UserID = " + lastID1);
 			if (rs.isBeforeFirst()) {
 				rs.next();
 				
